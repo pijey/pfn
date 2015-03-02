@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h2 class="text-center">Températures du cycle {{model.id}}</h2>
+    <div>
+      {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender}}
+      <table class="table">
+        <tr class="text-center">
+          <td><span class="glyphicon glyphicon-certificate temperature" aria-hidden="true"></span> Températures relevées</td>
+          <td><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{date-format model.profile.temperature_taking_hour "HH:mm"}}</td>
+        </tr>
+        <tr class="text-center">
+          <td><span class="glyphicon glyphicon-certificate temperatureCorrected" aria-hidden="true"></span> Températures corrigées</td>
+          <td><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {{model.profile.temperature_taking_mode}}</td>
+        </tr>
+      </table>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Jour du cycle</th>
+          <th>Date</th>
+          <th>Température relevée</th>
+          <th>Température corrigée</th>
+          <th>Commentaire</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each temperature in model.temperatures}}
+        <tr class="text-center">
+          <td>{{temperature.cycle_day_number}}</td>
+          <td>{{date-format temperature.date "DD/MM/YY HH:mm"}}</td>
+          <td>{{temperature.temperature}} °</td>
+          <td>{{temperature.temperature_corrected}} °</td>
+          <td>{{temperature.comment}}</td>
+          <td>
+            <button {{action 'showModal' 'temperatureModal' 'Modifier la température' temperature}} type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#temperature">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </button>
+            <button {{action 'removeTemperature' temperature.id}} type="button" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+    <div>
+      <button {{action 'showModal' 'temperatureModal' 'Ajouter une température' 'new'}} type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#temperature">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Ajouter
+      </button> 
+      </div>
+  </div>
+</div>

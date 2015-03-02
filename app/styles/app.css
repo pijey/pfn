@@ -1,0 +1,19 @@
+/* Charts */
+.line-legend span {
+	width: 5px;
+}
+
+/* Temperature */
+
+span.temperature {
+	color: rgba(220,220,220,1);
+}
+
+span.temperatureCorrected {
+	color: rgba(151,187,205,1);
+}
+
+/* Bootstrap override */
+.no-padding-left {
+	padding-left: 0px;
+}

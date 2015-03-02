@@ -1,0 +1,107 @@
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h2 class="text-center">Cycle {{model.id}}</h2>
+      <form class="form-horizontal">
+        {{#with model}}
+        <div class="form-group">
+          <label for="inputOngoing" class="col-sm-3 control-label">Etat</label>
+          <div class="input-group col-sm-6">
+            {{#if ongoing}}
+              <div class="input-group-addon">En cours</div>
+            {{else}}
+              <div class="input-group-addon">Terminé</div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputStartDate" class="col-sm-3 control-label">Date de début</label>
+          <div class="input-group col-sm-6">
+            {{bs-datetimepicker date=start_date format='dddd Do MMMM YYYY'}}
+          </div>
+        </div>
+         <div class="form-group">
+          <label for="inputStartDate" class="col-sm-3 control-label">Date de fin</label>
+          <div class="input-group col-sm-6">
+            {{bs-datetimepicker date=end_date format='dddd Do MMMM YYYY'}}
+          </div>
+        </div>
+        <div class="form-group">
+          {{#if cycle_length}}
+            <label for="inputStartDate" class="col-sm-3 control-label">Durée</label>
+            <div class="input-group col-sm-6 col-sm-offset-3">
+              {{input type="text" class="form-control" value=cycle_length id="inputCycleLength" placeholder="Nombre de jours du cycle"}}
+              <div class="input-group-addon">jours</div>
+            </div>
+            {{else}}
+              <label for="inputStartDate" class="col-sm-3 control-label">Durée (provisoire)</label>
+              <div class="input-group col-sm-6 col-sm-offset-3">
+                {{input type="text" class="form-control" value=temperatures.length id="inputCycleLengthProv" placeholder="Nombre de jours du cycle (provisoires)"}}
+              <div class="input-group-addon">jours</div>
+            </div>
+          {{/if}}
+        </div>
+        <div class="form-group">
+          <label for="" class="col-sm-3 control-label">Glaires</label>
+          <div class="input-group col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              {{#if first_day_of_mucus_or_wet}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">{{first_day_of_mucus_or_wet}}</span>
+              </li>
+              {{/if}}
+              {{#if mucus_peak}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic de glaire <span class="badge">{{mucus_peak}}</span>
+              </li>
+              {{/if}}
+              {{#if mucus_peak_plus_3_days}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">{{mucus_peak_plus_3_days}}</span>
+              </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="col-sm-3 control-label">Col</label>
+          <div class="input-group col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              {{#if first_day_of_cervix_change}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de changement du col <span class="badge">{{first_day_of_cervix_change}}</span>
+              </li>
+              {{/if}}
+              {{#if cervix_peak}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic du col <span class="badge">{{cervix_peak}}</span>
+              </li>
+              {{/if}}
+              {{#if cervix_peak_plus_3_days}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic du col + 3j <span class="badge">{{cervix_peak_plus_3_days}}</span>
+              </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="col-sm-3 control-label">Température</label>
+          <div class="input-group col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              {{#if third_day_hot_temperature}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 3e jour de température haute <span class="badge">{{third_day_hot_temperature}}</span>
+              </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        {{/with}}
+        <div class="form-group">
+          <div class="col-sm-offset-3">
+            <button {{action "save" model}} class="btn btn-default">Enregistrer</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

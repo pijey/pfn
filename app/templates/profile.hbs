@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h2 class="text-center">Mon profil</h2>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="inputSurname" class="col-sm-3 control-label">Surnom</label>
+        <div class="input-group col-sm-6">
+          {{input type="text" class="form-control" value=model.surname id="inputSurname" placeholder="Surnom"}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Heure de prise de température</label>
+        <div class="input-group col-sm-6">
+          {{bs-datetimepicker date=model.temperature_taking_hour format='HH:mm'}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Mode de prise de température</label>
+        <div class="input-group col-sm-6 col-sm-offset-3">
+          {{input type="text" class="form-control" value=model.temperature_taking_mode id="inputTemperatureTakingMode" placeholder="Vaginal, anal ou oral"}}
+        </div>
+      </div>
+      {{#if model.cycles}}
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label">Cycles</label>
+        <div class="input-group col-sm-6 col-sm-offset-3">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Nombre de cycles<span class="badge">{{model.cycles.length}}</span>
+            </li>
+            <li class="list-group-item">
+              <span class="glyphicon glyphicon-time" aria-hidden="true"></span> Cycle le plus court <span class="badge">{{model.shortest_cycle}}</span>
+            </li>
+            <li class="list-group-item">
+              <span class="glyphicon glyphicon-time" aria-hidden="true"></span> Cycle le plus long <span class="badge">{{model.longest_cycle}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {{/if}}
+      <div class="form-group">
+        <div class="col-sm-offset-3">
+          <button {{action "save" model}} class="btn btn-default">Enregistrer</button>
+        </div>
+      </div>  
+    </form>
+  </div>
+  <div class="col-md-4 col-md-offset-4 no-padding-left">
+    
+  </div>
+</div>

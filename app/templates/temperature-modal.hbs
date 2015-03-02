@@ -1,0 +1,27 @@
+{{#my-modal title=title ok="save" close="removeModal"}}
+<form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
+  <div class="form-group">
+    <label for="inputCycleDayNumber" class="col-sm-4 control-label">Jour du cycle</label>
+    <div class="col-sm-8">
+      {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number}}
+    </div>
+    <label for="inputDate" class="col-sm-4 control-label">Date</label>
+    <div class="col-sm-8">
+      {{bs-datetimepicker date=model.date format='DD/MM/YYYY HH:mm'}}
+      {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+    </div>
+    <label for="inputTemperature" class="col-sm-4 control-label">Température</label>
+    <div class="col-sm-8">
+      {{input type="text" class="form-control" id="inputTemperature" value=model.temperature}}
+    </div>
+    <label for="inputTemperatureCorrected" class="col-sm-4 control-label">Température corrigée</label>
+    <div class="col-sm-8">
+      {{input type="text" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
+    </div>
+    <label for="inputCommentaire" class="col-sm-4 control-label">Commentaires</label>
+    <div class="col-sm-8">
+      {{input type="text" class="form-control" id="inputCommentaire" value=model.comment}}
+    </div>
+  </div>
+</form>
+{{/my-modal}}

@@ -1,3 +1,42 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="#"> PFN </a> 
+        <p class="navbar-text">Mon planning familial naturel</p>
+      </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li>{{#link-to 'temperatures' model.activeCycle.id}}Températures{{/link-to}}</li>
+            <li>{{#link-to 'mucus-samples' model.activeCycle.id}}Glaires{{/link-to}}</li>
+            <li>{{#link-to 'cervix-feelings' model.activeCycle.id}}Col{{/link-to}}</li>
+            <li>{{#link-to 'periods' model.activeCycle.id}}Règles{{/link-to}}</li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden='true'></span>{{model.surname}}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>{{#link-to 'cycle' model.activeCycle.id}}Détails du cycle actif {{model.activeCycle.id}}{{/link-to}}</li>
+                <li>{{#link-to 'cycles' model.id}}Tous les cycles{{/link-to}}</li>
+                <li>{{#link-to 'cycle' "new"}}Nouveau cycle{{/link-to}}</li>
+                <li class="divider"></li>
+                <li>{{#link-to 'profile'}}Profil{{/link-to}}</li>
+              </ul>
+            </li>
+          </ul>
+      </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
 
-{{outlet}}
+<div class="container-fluid">
+  {{outlet}}
+  {{outlet "modal"}}
+</div>
