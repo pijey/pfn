@@ -32,12 +32,15 @@ export default DS.Model.extend({
       return moment(this.get('start_date')).add(this.get('first_day_of_cervix_change')-1, 'days');
     }
   }.property('start_date', 'first_day_of_cervix_change'),
-  cervix_peak: DS.attr('number'),
-  cervix_peak_date: function(){
-    if(this.get('cervix_peak')){
-      return moment(this.get('start_date')).add(this.get('cervix_peak')-1, 'days');
-    }
-  }.property('start_date', 'cervix_peak'),
+  cervix_peak: function(){
+    var previousCervixFeeling = null;
+    this.get('cervixFeelings').sortBy('cycle_day_number').forEach(function(cervixFeeling){
+      if(previousCervixFeeling !== null && previousCervixFeeling.get('position') === "HIGH" && cervixFeeling.get('position') !== "HIGH"){
+        return previousCervixFeeling;
+      }
+      previousCervixFeeling = cervixFeeling;
+    });
+  }.property('cervixFeelings.@each.position'),
   cervix_peak_plus_3_days: function() {
     if(this.get('cervix_peak')){
       return this.get('cervix_peak') + 3;
@@ -56,7 +59,7 @@ export default DS.Model.extend({
   }.property('start_date', 'third_day_hot_temperature'),
   cycle_length: function(){
     if(this.get('start_date') && this.get("end_date")){
-      return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days') + 1;
+      return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days');
     }
   }.property('start_date', 'end_date'),
   profile: DS.belongsTo('profile'),

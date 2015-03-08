@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h2 class="text-center">Température {{model.id}}</h2>
+    <h2 class="text-center">Col {{model.id}}</h2>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
         <label for="inputCycleDayNumber" class="col-sm-3 control-label">Jour du cycle</label>
@@ -12,17 +12,13 @@
           {{bs-datetimepicker date=model.date format='DD/MM/YYYY HH:mm'}}
           {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
         </div>
-        <label for="inputTemperature" class="col-sm-3 control-label">Température</label>
+        <label for="inputPresent" class="col-sm-3 control-label">Présence</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputTemperature" value=model.temperature}}
+          {{input type="text" class="form-control" id="inputPresent" value=model.present}}
         </div>
-        <label for="inputTemperatureCorrected" class="col-sm-3 control-label">Température corrigée</label>
+        <label for="inputComment" class="col-sm-3 control-label">Commentaire</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
-        </div>
-        <label for="inputCommentaire" class="col-sm-3 control-label">Commentaires</label>
-        <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputCommentaire" value=model.comment}}
+          {{input type="text" class="form-control" id="inputComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">

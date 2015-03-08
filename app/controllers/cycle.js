@@ -9,7 +9,7 @@ export default Ember.ObjectController.extend({
 	    	} else {
 	    		cycle.set('ongoing', true);
 	    	}
-	    	cycle.set('start_date', moment(cycle.get('start_date').format("YYYY-MM-DD HH:mm:ss")));
+	    	
 	    	cycle.set('profile', this.get('controllers.application.model'));
 	    	var that = this;
 	      	cycle.save().then(function(){

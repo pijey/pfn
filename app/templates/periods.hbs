@@ -15,7 +15,7 @@
       {{#each period in model.periods}}
         <tr class="text-center">
           <td>{{period.cycle_day_number}}</td>
-          <td>{{period.formatted_date}}</td>
+          <td>{{date-format period.date "DD/MM/YY HH:mm"}}</td>
           <td>
           {{#if period.present}}
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -24,14 +24,23 @@
           {{/if}}
           </td>
           <td>{{period.comment}}</td>
-          <td><a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> <a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+          <td>
+            {{#link-to 'period' model.id period.id classNames="btn btn-default btn-sm"}}
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            {{/link-to}}
+            <button {{action 'remove' period}} type="button" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </td>
         </tr>
       {{/each}}
       
       </tbody>
     </table>
     <div>
-      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Ajouter</button> 
+      {{#link-to 'period' model.id 'new' classNames="btn btn-default btn-sm"}}
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
+      {{/link-to}}
     </div>
   </div>
 </div>
