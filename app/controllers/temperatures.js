@@ -35,7 +35,7 @@ export default Ember.ObjectController.extend({
 	            data: []
 	        }
 	    ];
-    	this.get('model.temperatures').forEach(function(temperature){
+    	this.get('model.temperatures').sortBy('cycle_day_number').forEach(function(temperature){
 	    	chartLabels.push(temperature.get('cycle_day_number'));
 	       	chartDatasets[0].data.push(parseFloat(temperature.get('temperature')));
 	       	chartDatasets[1].data.push(parseFloat(temperature.get('temperature_corrected')));
@@ -47,10 +47,8 @@ export default Ember.ObjectController.extend({
 		};    
  	}.property('model.temperatures.@each.temperature_corrected'),
   	actions: {
-	    removeTemperature: function(id) {
-	      this.store.find('temperature', id).then(function (temperature) {
-	        temperature.destroyRecord(); 
-	      });
+	    remove: function(temperature) {
+	       temperature.destroyRecord(temperature); 
 	    },
   		
   	}

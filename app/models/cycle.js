@@ -2,7 +2,7 @@ import DS from "ember-data";
 
 export default DS.Model.extend({
   ongoing: DS.attr('boolean'),
-  start_date: DS.attr('string'),
+  start_date: DS.attr('mydatetime'),
   end_date: DS.attr('string'),
   first_day_of_mucus_or_wet: DS.attr('number'),
   first_day_of_mucus_or_wet_date: function(){

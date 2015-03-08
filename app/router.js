@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
 	this.route("temperatures", {path: "/temperatures/:cycle_id"});
+	this.route("temperature", {path: "/temperature/:cycle_id/:temperature_id"});
 	this.route("periods", {path: "/periods/:cycle_id"});
 	this.route("mucus-samples", {path: "/mucus-samples/:cycle_id"});
 	this.route("cervix-feelings", {path: "/cervix-feelings/:cycle_id"});

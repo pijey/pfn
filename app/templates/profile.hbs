@@ -40,7 +40,18 @@
       {{/if}}
       <div class="form-group">
         <div class="col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default">Enregistrer</button>
+          <button {{action "save" model}} class="btn btn-default">
+            {{#if model.isSaving}}
+              <img src="assets/images/loader.gif" alt="">
+            {{else}}
+              {{#if model.isDirty}}
+                <span class="glyphicon glyphicon-floppy-save"></span>
+              {{else}}
+                <span class="glyphicon glyphicon-floppy-saved"></span>
+              {{/if}}
+            {{/if}}
+            &nbsp;Enregistrer
+          </button>
         </div>
       </div>  
     </form>

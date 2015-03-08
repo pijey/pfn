@@ -34,10 +34,10 @@
           <td>{{temperature.temperature_corrected}} °</td>
           <td>{{temperature.comment}}</td>
           <td>
-            <button {{action 'showModal' 'temperatureModal' 'Modifier la température' temperature}} type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#temperature">
+            {{#link-to 'temperature' model.id temperature.id classNames="btn btn-default btn-sm"}}
               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-            </button>
-            <button {{action 'removeTemperature' temperature.id}} type="button" class="btn btn-default btn-sm">
+            {{/link-to}}
+            <button {{action 'remove' temperature}} type="button" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
           </td>
@@ -46,9 +46,9 @@
       </tbody>
     </table>
     <div>
-      <button {{action 'showModal' 'temperatureModal' 'Ajouter une température' 'new'}} type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#temperature">
+      {{#link-to 'temperature' model.id 'new' classNames="btn btn-default btn-sm"}}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Ajouter
-      </button> 
+      {{/link-to}}
       </div>
   </div>
 </div>

@@ -14,5 +14,6 @@ export default Ember.Route.extend({
   },
   afterModel: function() {
     return this.get('store').find('cycle');
+    return this.get('store').find('temperature');
   }
 });
