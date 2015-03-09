@@ -2,11 +2,10 @@
     <div class="col-md-6 col-md-offset-3">
       <h2 class="text-center">Cycle {{model.id}}</h2>
       <form class="form-horizontal">
-        {{#with model}}
         <div class="form-group">
-          {{#if isNew}}
+          {{#if model.isNew}}
           {{else}}
-              {{#if ongoing}}
+              {{#if model.ongoing}}
               <div class="alert alert-info col-sm-6 col-sm-offset-3" role="alert">En cours</div>
               {{else}}
               <div class="alert alert-success col-sm-6 col-sm-offset-3" role="alert">Terminé</div>
@@ -16,17 +15,17 @@
         <div class="form-group">
           <label for="inputStartDate" class="col-sm-3 control-label">Date de début</label>
           <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=start_date format='dddd Do MMMM YYYY'}}
+            {{bs-datetimepicker date=model.start_date format='dddd Do MMMM YYYY'}}
           </div>
         </div>
          <div class="form-group">
-          <label for="inputStartDate" class="col-sm-3 control-label">Date de fin</label>
+          <label for="inputEndDate" class="col-sm-3 control-label">Date de fin</label>
           <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=end_date format='dddd Do MMMM YYYY'}}
+            {{bs-datetimepicker date=model.end_date format='dddd Do MMMM YYYY'}}
           </div>
         </div>
         <div class="form-group">
-          {{#if cycle_length}}
+          {{#if model.cycle_length}}
             <label for="inputStartDate" class="col-sm-3 control-label">Durée</label>
             <div class="input-group col-sm-6 col-sm-offset-3">
               {{input type="text" class="form-control" value=cycle_length id="inputCycleLength" placeholder="Nombre de jours du cycle" readonly="true"}}
@@ -35,30 +34,54 @@
             {{else}}
               <label for="inputStartDate" class="col-sm-3 control-label">Durée (provisoire)</label>
               <div class="input-group col-sm-6 col-sm-offset-3">
-                {{input type="text" class="form-control" value=temperatures.length id="inputCycleLengthProv" placeholder="Nombre de jours du cycle (provisoires)" readonly="true"}}
+                {{input type="text" class="form-control" value=model.temperatures.length id="inputCycleLengthProv" placeholder="Nombre de jours du cycle (provisoires)" readonly="true"}}
               <div class="input-group-addon">jours</div>
             </div>
           {{/if}}
         </div>
-        {{#if isNew}}
+        <div class="form-group">
+          <label for="" class="col-sm-3 control-label">Phases</label>
+          <div class="input-group col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              {{#if model.endOfPhaseI}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase I <span class="badge">1 à {{model.endOfPhaseI}}</span>
+              </li>
+              {{/if}}
+             {{#if model.beginningOfPhaseII}}
+             {{#if model.endOfPhaseII}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase II <span class="badge">{{model.beginningOfPhaseII}} à {{endOfPhaseII}}</span>
+              </li>
+              {{/if}}
+              {{/if}}
+              {{#if model.beginningOfPhaseIII}}
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase III <span class="badge">{{beginningOfPhaseIII}} à {{model.cycle_length}}</span>
+              </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        {{#if model.isNew}}
         {{else}}
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Glaires</label>
             <div class="input-group col-sm-6 col-sm-offset-3">
               <ul class="list-group">
-                {{#if first_day_of_mucus_or_wet}}
+                {{#if model.first_day_of_mucus_or_wet}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">{{first_day_of_mucus_or_wet}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">{{model.first_day_of_mucus_or_wet.cycle_day_number}}</span>
                 </li>
                 {{/if}}
-                {{#if mucus_peak}}
+                {{#if model.mucus_peak}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic de glaire <span class="badge">{{mucus_peak}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic de glaire <span class="badge">{{model.mucus_peak.cycle_day_number}}</span>
                 </li>
                 {{/if}}
-                {{#if mucus_peak_plus_3_days}}
+                {{#if model.mucus_peak_plus_3_days}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">{{mucus_peak_plus_3_days}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">{{model.mucus_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
               </ul>
@@ -68,19 +91,19 @@
             <label for="" class="col-sm-3 control-label">Col</label>
             <div class="input-group col-sm-6 col-sm-offset-3">
               <ul class="list-group">
-                {{#if first_day_of_cervix_change}}
+                {{#if model.first_day_of_cervix_change}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de changement du col <span class="badge">{{first_day_of_cervix_change}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de changement du col <span class="badge">{{model.first_day_of_cervix_change.cycle_day_number}}</span>
                 </li>
                 {{/if}}
-                {{#if cervix_peak}}
+                {{#if model.cervix_peak}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic du col <span class="badge">{{cervix_peak.cycle_day_number}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic du col <span class="badge">{{model.cervix_peak.cycle_day_number}}</span>
                 </li>
                 {{/if}}
-                {{#if cervix_peak_plus_3_days}}
+                {{#if model.cervix_peak_plus_3_days}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic du col + 3j <span class="badge">{{cervix_peak_plus_3_days}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic du col + 3j <span class="badge">{{model.cervix_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
               </ul>
@@ -90,17 +113,20 @@
             <label for="" class="col-sm-3 control-label">Température</label>
             <div class="input-group col-sm-6 col-sm-offset-3">
               <ul class="list-group">
-                {{#if third_day_hot_temperature}}
+                {{#if model.cacheTemperature}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 3e jour de température haute <span class="badge">{{third_day_hot_temperature}}</span>
+                  <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Seuil de température haute <span class="badge">{{model.cacheTemperature}} °</span>
+                </li>
+                {{/if}}
+                {{#if model.third_day_hot_temperature}}
+                <li class="list-group-item">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 3e jour de température haute <span class="badge">{{model.third_day_hot_temperature}}</span>
                 </li>
                 {{/if}}
               </ul>
             </div>
           </div>
         {{/if}}
-        
-        {{/with}}
         <div class="form-group">
           <div class="col-sm-offset-3">
             <button {{action "save" model}} class="btn btn-default">

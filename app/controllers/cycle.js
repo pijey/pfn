@@ -24,5 +24,8 @@ export default Ember.ObjectController.extend({
 	    remove: function(cycle){
 	    	cycle.destroyRecord();
 	    }
-  	}
+  	},
+  	observesSelectedCycle: function() {
+  	  this.transitionToRoute('cycle', this.get('controllers.application.selectedCycle.id'));
+  	}.observes("controllers.application.selectedCycle"),
 });

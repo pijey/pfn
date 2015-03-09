@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h2 class="text-center">Synthèse du cycle {{model.id}}</h2>
+    <div>
+      {{!-- <table class="table">
+        <tr class="text-center">
+          <td><span class="glyphicon glyphicon-certificate temperature" aria-hidden="true"></span> Températures relevées</td>
+          <td><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{date-format model.profile.temperature_taking_hour "HH:mm"}}</td>
+        </tr>
+        <tr class="text-center">
+          <td><span class="glyphicon glyphicon-certificate temperatureCorrected" aria-hidden="true"></span> Températures corrigées</td>
+          <td><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {{model.profile.temperature_taking_mode}}</td>
+        </tr>
+      </table> --}}
+      {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender}}
+    </div>
+    <table class="table table-bordered synthese">
+      <tbody>
+        <tr class="phases">
+          {{!-- {{#each fertility in daysOfPhases}} --}}
+            <td class="INFERTILE text-center" {{bindAttr colspan=phaseIDuration }}>Phase I</td>
+            <td class="FERTILE text-center" {{bindAttr colspan=phaseIIDuration }}>Phase II</td>
+            <td class="INFERTILE text-center" {{bindAttr colspan=phaseIIIDuration }}>Phase III</td>
+          {{!-- {{/each}} --}}
+        </tr>
+        <tr class="period text-center">
+          {{#each period in periods}}
+            {{#if period.present}}
+            <td class="PERIOD"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></td>
+            {{else}}
+            <td>&nbsp;</td>
+            {{/if}}
+          {{/each}}
+        </tr>
+        <tr class="mucus-sample text-center">
+          {{#each mucus in mucusSamples}}
+          <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
+          {{/each}}
+        </tr>
+        <tr class="text-center">
+          {{#each mucus in mucusSamples}}
+          <td class="rotated_cell"><div class='rotate_text'>{{mucus.apparency_at_vulva}}</div></td>
+          {{/each}}
+        </tr>
+        <tr class="text-center">
+          {{#each mucus in mucusSamples}}
+          {{#if mucus.at_cervix}}
+            <td><span class="glyphicon glyphicon-ok"></span></td>
+            {{else}}
+            <td>&nbsp;</td>
+          {{/if}}
+          
+          {{/each}}
+        </tr>
+        <tr class="cervix-feeling text-center">
+          {{#each cervixFeeling in cervixFeelings}}
+            <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
+          {{/each}}
+        </tr>
+        <tr class="cervix-feeling text-center">
+          {{#each cervixFeeling in cervixFeelings}}
+            <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
+          {{/each}}
+        </tr>
+        <tr class="cervix-feeling text-center">
+          {{#each cervixFeeling in cervixFeelings}}
+            <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
+          {{/each}}
+        </tr>
+        <tr class="cervix-feeling text-center">
+          {{#each cervixFeeling in cervixFeelings}}
+            <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
+          {{/each}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

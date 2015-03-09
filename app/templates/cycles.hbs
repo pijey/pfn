@@ -15,10 +15,10 @@
       {{#each cycle in model.cycles}}
         <tr class="text-center">
           <td>{{cycle.id}}</td>
-          <td>{{date-format cycle.start_date "DD/MM/YY HH:mm"}}</td>
+          <td>{{date-format cycle.start_date "DD/MM/YY"}}</td>
           <td>
           {{#if cycle.end_date}}
-            {{date-format cycle.end_date "DD/MM/YY HH:mm"}}
+            {{date-format cycle.end_date "DD/MM/YY"}}
           {{/if}}
           </td>
           <td>{{cycle.cycle_length}}</td>

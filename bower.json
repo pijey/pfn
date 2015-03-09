@@ -18,5 +18,8 @@
     "bootstrap": "~3.3.2",
     "ember-addons.bs_for_ember": "~0.7.0",
     "bootswatch": "~3.3.2"
+  },
+  "devDependencies": {
+    "handlebars-helpers": "~2.0.0"
   }
 }

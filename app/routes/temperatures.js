@@ -6,7 +6,7 @@ export default Ember.Route.extend({
 		this.cycle = this.store.find('cycle', params.cycle_id);
 		return this.cycle;
 	},
-	afterModel: function() {
-	    return this.get('store').find('temperature');
+	afterModel: function(model) {
+	    this.get('store').find('temperature', {cycle:model.get('id')});
 	}
 });

@@ -3,14 +3,7 @@ import Ember from "ember";
 export default Ember.Route.extend({
 
   model: function(params) {
-  	if(params.cycle_id === 'new'){
-  		return this.store.createRecord('cycle', {
-  			start_date:moment()
-  		});
-  	}
-  	else {
-  		return this.store.find('cycle', params.cycle_id);
-  	}
+  	return this.store.find('cycle', params.cycle_id);
   },
   afterModel: function(model) {
     this.get('store').find('temperature', {cycle: model.get('id')});

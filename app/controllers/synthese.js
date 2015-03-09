@@ -10,9 +10,62 @@ export default Ember.ObjectController.extend({
 		multiTooltipTemplate: "<%= value %> °",
 		scaleLabel: "<%= value %> °",
 		datasetFill: false,
-		animation:false
+		animation: false
 
 	},
+	phaseIDuration: function(){
+		return this.get('model.endOfPhaseI');
+	}.property('model.endOfPhaseI'),
+	phaseIIDuration: function(){
+		return this.get('model.beginningOfPhaseIII') - this.get('model.beginningOfPhaseII');
+	}.property('model.beginningOfPhaseIII', 'model.beginningOfPhaseII'),
+	phaseIIIDuration: function(){
+		return this.get('model.cycle_day_number') - this.get('model.endOfPhaseII');
+	}.property('model.cycle_day_number', 'model.endOfPhaseII'),
+	daysOfPhases: function(){
+		var ps = [];
+		for (var i = 0; i < this.get("model.cycle_length"); i++) {
+			if(i + 1 > this.get('model.endOfPhaseII') || i + 1 < this.get('model.beginningOfPhaseII')){
+				ps.push("INFERTILE");
+			}
+			else {
+				ps.push("FERTILE");
+			}
+		}
+		return ps;
+	}.property('model.endOfPhaseII', 'model.beginningOfPhaseII'),
+	periods: function(){
+		var ps = [];
+		for (var i = 0; i < this.get("model.cycle_length"); i++) {
+			ps.push("");
+		}
+		this.get('model.periods').forEach(function(period){
+			ps[period.get('cycle_day_number')-1] = period;
+		});
+		return ps;
+	}.property('model.cycle_length', 'model.periods.@each.present'),
+	mucusSamples: function(){
+		var ps = [];
+		for (var i = 0; i < this.get("model.cycle_length"); i++) {
+			ps.push("");
+		}
+		this.get('model.mucusSamples').forEach(function(mucus){
+			ps[mucus.get('cycle_day_number')-1] = mucus;
+		});
+		
+		return ps;
+	}.property('model.cycle_length', 'model.mucusSamples.@each.sensation'),
+	cervixFeelings: function(){
+		var ps = [];
+		for (var i = 0; i < this.get("model.cycle_length"); i++) {
+			ps.push("");
+		}
+		this.get('model.cervixFeelings').forEach(function(cervixFeeling){
+			ps[cervixFeeling.get('cycle_day_number')-1] = cervixFeeling;
+		});
+		
+		return ps;
+	}.property('model.cycle_length', 'model.cervixFeelings.@each.sensation'),
  	dataChart: function(){
  		var chartLabels = [];
  		var chartDatasets = [
@@ -56,7 +109,9 @@ export default Ember.ObjectController.extend({
 	    	chartLabels.push(temperature.get('cycle_day_number'));
 	       	chartDatasets[0].data.push(parseFloat(temperature.get('temperature')));
 	       	chartDatasets[1].data.push(myTempCorrected);
-	       	chartDatasets[2].data.push(cacheTemperature);    	
+	       	if(cacheTemperature > 0){
+	       		chartDatasets[2].data.push(cacheTemperature); 
+	       	}   	
 		});
 		   
 	    return {
@@ -64,13 +119,7 @@ export default Ember.ObjectController.extend({
 		    datasets: chartDatasets
 		};    
  	}.property('model.temperatures.@each.temperature_corrected'),
-  	actions: {
-	    remove: function(temperature) {
-	       temperature.destroyRecord(temperature); 
-	    },
-  		
-  	},
   	observesSelectedCycle: function() {
-  	  this.transitionToRoute('temperatures', this.get('controllers.application.selectedCycle.id'));
-  	}.observes("controllers.application.selectedCycle"),
+  	  this.transitionToRoute('synthese', this.get('controllers.application.selectedCycle.id'));
+  	}.observes("controllers.application.selectedCycle")
 });

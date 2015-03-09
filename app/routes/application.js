@@ -12,8 +12,15 @@ export default Ember.Route.extend({
     	}
     });
   },
-  afterModel: function() {
-    return this.get('store').find('cycle');
-    return this.get('store').find('temperature');
+  setupController: function(controller, model){
+    controller.set('model',model);
+    controller.set('selectedCycle', model.get('activeCycle'));
+  },
+  afterModel: function(model) {
+    this.get('store').find('cycle', {profile: model.get('id')});
+    this.get('store').find('temperature', {cycle: model.get('activeCycle.id')});
+    this.get('store').find('mucus-sample', {cycle: model.get('activeCycle.id')});
+    this.get('store').find('cervix-feeling', {cycle: model.get('activeCycle.id')});
+    this.get('store').find('period', {cycle: model.get('activeCycle.id')});
   }
 });
