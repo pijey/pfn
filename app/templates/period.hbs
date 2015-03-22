@@ -1,24 +1,30 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h2 class="text-center">Col {{model.id}}</h2>
+    <h2 class="text-center">Règle {{model.id}}</h2>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
+        {{#if inline}}
+        {{else}}
         <label for="inputCycleDayNumber" class="col-sm-3 control-label">Jour du cycle</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number}}
+          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
         <label for="inputDate" class="col-sm-3 control-label">Date</label>
         <div class="input-group col-sm-6">
-          {{bs-datetimepicker date=model.date format='DD/MM/YYYY HH:mm'}}
+          {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
           {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
         </div>
+        {{/if}}
         <label for="inputPresent" class="col-sm-3 control-label">Présence</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputPresent" value=model.present}}
+          <div class="radio">
+            <label>{{radio-button value=true checked=model.present}} Oui</label>
+            <label>{{radio-button value=false checked=model.present}} Non</label>
+          </div>
         </div>
-        <label for="inputComment" class="col-sm-3 control-label">Commentaire</label>
+        <label for="inputPeriodComment" class="col-sm-3 control-label">Commentaire</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputComment" value=model.comment}}
+          {{input type="text" class="form-control" id="inputPeriodComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
@@ -35,10 +41,13 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
+          {{#if inline}}
+          {{else}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
             &nbsp;Annuler
           </button>
+          {{/if}}
         </div>
       </div>
     </form>

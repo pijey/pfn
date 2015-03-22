@@ -7,6 +7,7 @@ export default Ember.Route.extend({
       return this.store.find('cycle', params.cycle_id).then(function(cycle){
         return that.store.createRecord('temperature', {
           date:moment(),
+          ignore:false,
           cycle:cycle
         });
       });

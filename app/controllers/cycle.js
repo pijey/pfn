@@ -2,6 +2,16 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 	needs: ['application'],
+	cycles: function(){
+		var cycles = [];
+		this.get('model.profile.cycles').sortBy('start_date:desc').without(this.get('model')).forEach(function(cycle){
+			cycles.push({
+				id: cycle,
+				label: moment(cycle.get('start_date')).format("DD/MM/YYYY") + " au " + moment(cycle.get('end_date')).format("DD/MM/YYYY")
+			});
+		});
+		return cycles;
+	}.property('model.profile.cycles'),
   	actions: {
 	    save: function(cycle) {
 	    	if(cycle.get('end_date')){
@@ -9,8 +19,6 @@ export default Ember.ObjectController.extend({
 	    	} else {
 	    		cycle.set('ongoing', true);
 	    	}
-	    	
-	    	cycle.set('profile', this.get('controllers.application.model'));
 	    	var that = this;
 	      	cycle.save().then(function(){
 	      		that.get('controllers.application.model.cycles').then(function(){

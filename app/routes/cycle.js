@@ -1,11 +1,11 @@
 import Ember from "ember";
 
 export default Ember.Route.extend({
-
   model: function(params) {
   	if(params.cycle_id === 'new'){
   		return this.store.createRecord('cycle', {
-  			start_date:moment()
+  			start_date:moment(),
+        profile:this.controllerFor('application').get('model')
   		});
   	}
   	else {

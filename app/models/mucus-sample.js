@@ -1,7 +1,7 @@
 import DS from "ember-data";
 
 export default DS.Model.extend({
-	sensation: DS.attr('string'),//WET/HUMID/DRY
+	sensation: DS.attr('string'),
 	apparency_at_vulva: DS.attr('string'),
 	at_cervix: DS.attr('boolean'),
 	cycle_day_number: function(){

@@ -12,9 +12,12 @@
           <td><span class="glyphicon glyphicon-certificate temperatureCorrected" aria-hidden="true"></span> Températures corrigées</td>
           <td><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {{model.profile.temperature_taking_mode}}</td>
         </tr>
+        {{#if model.cacheTemperature}}
         <tr class="text-center">
           <td><span class="glyphicon glyphicon-certificate temperatureCache" aria-hidden="true"></span> Ligne de cache ({{model.cacheTemperature}} °)</td>
         </tr>
+        {{/if}}
+        
       </table>
     </div>
     <table class="table table-hover">
@@ -30,6 +33,8 @@
       </thead>
       <tbody>
       {{#each temperature in model.temperatures}}
+        {{#if temperature.isNew}}
+        {{else}}
         <tr class="text-center">
           <td>{{temperature.cycle_day_number}}</td>
           <td>{{date-format temperature.date "DD/MM/YY HH:mm"}}</td>
@@ -45,6 +50,7 @@
             </button>
           </td>
         </tr>
+        {{/if}}
       {{/each}}
       </tbody>
     </table>

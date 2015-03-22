@@ -5,7 +5,6 @@
       <thead>
         <tr>
           <th>Jour du cycle</th>
-          <th>Date</th>
           <th>Sensation</th>
           <th>Apparence à la vulve</th>
           <th>Présence au col</th>
@@ -15,12 +14,18 @@
       </thead>
       <tbody>
       {{#each mucus in model.mucusSamples}}
-        <tr class="text-center">
-          <td>{{mucus.cycle_day_number}}</td>
-          <td>{{date-format mucus.date "DD/MM/YY HH:mm"}}</td>
-          <td>{{mucus.sensation}} </td>
+        {{#if mucus.isNew}}
+        {{else}}
+        <tr class="mucus-sample text-center">
+          <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
+          <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
           <td>{{mucus.apparency_at_vulva}}</td>
-          <td>{{mucus.at_cervix}}</td>
+          <td>
+            {{#if mucus.at_cervix}}
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            {{else}}
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            {{/if}}</td>
           <td>{{mucus.comment}}</td>
           <td>
             {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
@@ -31,6 +36,7 @@
             </button>
           </td>
         </tr>
+        {{/if}}
       {{/each}}
       </tbody>
     </table>

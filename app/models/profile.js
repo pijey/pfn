@@ -7,7 +7,7 @@ export default DS.Model.extend({
   shortest_cycle: function() {
       var shortestCycle = 999;
       this.get("cycles").forEach(function(cycle){
-          if(cycle.get('cycle_length') < shortestCycle){
+          if(cycle.get('end_date') && cycle.get('cycle_length') < shortestCycle){
             shortestCycle = cycle.get('cycle_length');
           }
       });

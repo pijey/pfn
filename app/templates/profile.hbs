@@ -17,7 +17,12 @@
       <div class="form-group">
         <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Mode de prise de température</label>
         <div class="input-group col-sm-6 col-sm-offset-3">
-          {{input type="text" class="form-control" value=model.temperature_taking_mode id="inputTemperatureTakingMode" placeholder="Vaginal, anal ou oral"}}
+          {{view "select"
+            class="form-control"
+            content=temperatureTakingModes
+            optionValuePath="content.value"
+            optionLabelPath="content.label"
+            value=model.temperature_taking_mode}}
         </div>
       </div>
       {{#if model.cycles}}
@@ -38,6 +43,7 @@
         </div>
       </div>
       {{/if}}
+      {{profileData}}
       <div class="form-group">
         <div class="col-sm-offset-3">
           <button {{action "save" model}} class="btn btn-default">

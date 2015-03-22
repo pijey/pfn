@@ -3,39 +3,74 @@
     <h2 class="text-center">Col {{model.id}}</h2>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
+        {{#if inline}}
+        {{else}}
         <label for="inputCycleDayNumber" class="col-sm-3 control-label">Jour du cycle</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number}}
+          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
-        <label for="inputDate" class="col-sm-3 control-label">Date</label>
-        <div class="input-group col-sm-6">
-          {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
-          {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+        <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
+          <label for="inputDate" class="col-sm-3 control-label">Date</label>
+          <div class="input-group col-sm-6">
+            {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
+            {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+          </div>
         </div>
-        <label for="inputSensation" class="col-sm-3 control-label">Sensation</label>
-        <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputSensation" value=model.sensation}}
+        {{/if}}
+        <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
+          <label for="inputSensation" class="col-sm-3 control-label">Sensation</label>
+          <div class="input-group col-sm-6">
+            {{view "select"
+              class="form-control"
+              content=sensations
+              optionValuePath="content.value"
+              optionLabelPath="content.label"
+              prompt="Choisir une sensation"
+              value=model.sensation}}
+          </div>
         </div>
-        <label for="inputOpening" class="col-sm-3 control-label">Ouverture</label>
-        <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputOpening" value=model.opening}}
-        </div>
-        <label for="inputPosition" class="col-sm-3 control-label">Position</label>
-        <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputPosition" value=model.position}}
-        </div>
+         <div {{bindAttr class="errors.opening.length:has-error:has-success"}}>
+          <label for="inputOpening" class="col-sm-3 control-label">Ouverture</label>
+            <div class="input-group col-sm-6">
+              {{view "select"
+                class="form-control"
+                content=openings
+                optionValuePath="content.value"
+                optionLabelPath="content.label"
+                prompt="Choisir une ouverture"
+                value=model.opening}}
+            </div>
+          </div>
+         <div {{bindAttr class="errors.position.length:has-error:has-success"}}>
+          <label for="inputPosition" class="col-sm-3 control-label">Position</label>
+            <div class="input-group col-sm-6">
+              {{view "select"
+                class="form-control"
+                content=positions
+                optionValuePath="content.value"
+                optionLabelPath="content.label"
+                prompt="Choisir une position"
+                value=model.position}}
+            </div>
+          </div>
         <label for="inputInclining" class="col-sm-3 control-label">Inclinaison</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputInclining" value=model.inclining}}
+          {{view "select"
+            class="form-control"
+            content=inclinings
+            optionValuePath="content.value"
+            optionLabelPath="content.label"
+            prompt="Choisir une inclinaison"
+            value=model.inclining}}
         </div>
-        <label for="inputComment" class="col-sm-3 control-label">Commentaire</label>
+        <label for="inputCervixComment" class="col-sm-3 control-label">Commentaire</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputComment" value=model.comment}}
+          {{input type="text" class="form-control" id="inputCervixComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default">
+          <button {{action "save" model}} class="btn btn-default" {{bindAttr disabled=isInvalid }}>
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
@@ -47,12 +82,33 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
+          {{#if inline}}
+          {{else}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
             &nbsp;Annuler
           </button>
+          {{/if}}
         </div>
       </div>
     </form>
+    <div>
+      {{#if errors}}
+        <ul class="list-group">
+        {{#each error in errors.date}}
+          <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
+        {{/each}}
+        {{#each error in errors.sensation}}
+          <li class="list-group-item list-group-item-danger">Sensation : {{error}}</li>
+        {{/each}}
+        {{#each error in errors.opening}}
+          <li class="list-group-item list-group-item-danger">Ouverture : {{error}}</li>
+        {{/each}}
+        {{#each error in errors.position}}
+          <li class="list-group-item list-group-item-danger">Position : {{error}}</li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>

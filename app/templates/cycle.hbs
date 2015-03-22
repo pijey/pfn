@@ -13,15 +13,27 @@
           {{/if}}
         </div>
         <div class="form-group">
+          <label for="inputStartDate" class="col-sm-3 control-label">Cycle précédent</label>
+          <div class="input-group col-sm-6">
+            {{view "select"
+              class="form-control"
+              content=cycles
+              optionValuePath="content.id"
+              optionLabelPath="content.label"
+              prompt="Choisir un cycle"
+              value=model.previousCycle}}
+          </div>
+        </div>
+        <div class="form-group">
           <label for="inputStartDate" class="col-sm-3 control-label">Date de début</label>
           <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=model.start_date format='dddd Do MMMM YYYY'}}
+            {{bs-datetimepicker date=model.start_date format='DD/MM/YYYY HH:mm'}}
           </div>
         </div>
          <div class="form-group">
           <label for="inputEndDate" class="col-sm-3 control-label">Date de fin</label>
           <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=model.end_date format='dddd Do MMMM YYYY'}}
+            {{bs-datetimepicker date=model.end_date format='DD/MM/YYYY'}}
           </div>
         </div>
         <div class="form-group">
@@ -38,6 +50,20 @@
               <div class="input-group-addon">jours</div>
             </div>
           {{/if}}
+        </div>
+        {{#if model.isNew}}
+        {{else}}
+        <div class="form-group">
+          <label for="" class="col-sm-3 control-label">Ovulation</label>
+          <div class="input-group col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              {{#if model.ovulation}}
+              <li class="list-group-item">&nbsp;<span class="badge">Oui</span></li>
+              {{else}}
+              <li class="list-group-item">&nbsp;<span class="badge">Non</span></li>
+              {{/if}}
+            </ul>
+          </div>
         </div>
         <div class="form-group">
           <label for="" class="col-sm-3 control-label">Phases</label>
@@ -63,8 +89,6 @@
             </ul>
           </div>
         </div>
-        {{#if model.isNew}}
-        {{else}}
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Glaires</label>
             <div class="input-group col-sm-6 col-sm-offset-3">

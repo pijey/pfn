@@ -3,35 +3,52 @@
     <h2 class="text-center">Glaire {{model.id}}</h2>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
+        {{#if inline}}
+        {{else}}
         <label for="inputCycleDayNumber" class="col-sm-3 control-label">Jour du cycle</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number}}
+          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
-        <label for="inputDate" class="col-sm-3 control-label">Date</label>
-        <div class="input-group col-sm-6">
-          {{bs-datetimepicker date=model.date format='DD/MM/YYYY HH:mm'}}
-          {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+        <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
+          <label for="inputDate" class="col-sm-3 control-label">Date</label>
+          <div class="input-group col-sm-6">
+            {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
+            {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+          </div>
         </div>
-        <label for="inputSensation" class="col-sm-3 control-label">Sensation</label>
-        <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputSensation" value=model.sensation}}
+        {{/if}}
+        <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
+          <label for="inputSensation" class="col-sm-3 control-label">Sensation</label>
+          <div class="input-group col-sm-6">
+          {{view "select"
+              class="form-control"
+              content=sensations
+              optionValuePath="content.value"
+              optionLabelPath="content.label"
+              prompt="Choisir parmi les valeurs suivantes"
+              value=model.sensation}}
+          </div>
         </div>
         <label for="inputApparencyAtVulva" class="col-sm-3 control-label">Apparence à la vulve</label>
         <div class="input-group col-sm-6">
           {{input type="text" class="form-control" id="inputApparencyAtVulva" value=model.apparency_at_vulva}}
         </div>
-        <label for="inputAtCervix" class="col-sm-3 control-label">Glaire au col</label>
+        <label for="optionsAtCervix" class="col-sm-3 control-label">Glaire au col</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputAtCervix" value=model.at_cervix}}
+          <div class="radio">
+            <label>{{radio-button value=true checked=model.at_cervix}} Oui</label>
+            <label>{{radio-button value=false checked=model.at_cervix}} Non</label>
+          </div>
+          {{!-- {{input type="text" class="form-control" id="inputAtCervix" value=model.at_cervix}} --}}
         </div>
-        <label for="inputComment" class="col-sm-3 control-label">Commentaire</label>
+        <label for="inputMucusComment" class="col-sm-3 control-label">Commentaire</label>
         <div class="input-group col-sm-6">
-          {{input type="text" class="form-control" id="inputComment" value=model.comment}}
+          {{input type="text" class="form-control" id="inputMucusComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default">
+          <button {{action "save" model}} class="btn btn-default" {{bindAttr disabled=isInvalid }}>
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
@@ -43,12 +60,27 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
+          {{#if inline}}
+          {{else}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
             &nbsp;Annuler
           </button>
+          {{/if}}
         </div>
       </div>
     </form>
+    <div>
+      {{#if errors}}
+        <ul class="list-group">
+        {{#each error in errors.date}}
+          <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
+        {{/each}}
+        {{#each error in errors.sensation}}
+          <li class="list-group-item list-group-item-danger">Sensation : {{error}}</li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>

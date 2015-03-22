@@ -19,8 +19,8 @@ span.temperatureCorrected {
 }
 
 table.synthese {
-	margin-left: 50px;
-	width: 91%;;
+	margin-left: 6.5%;
+	width: 93%;
 }
 
 table.synthese > tbody > tr > td {
@@ -45,6 +45,17 @@ div.rotate_text{
  	vertical-align:bottom !important;
  	line-height: 0.8 !important;
  	padding: 0px !important;
+}
+
+tr.hide-borders{
+	line-height: 0 !important;
+	padding: 0px !important;
+}
+
+tr.hide-borders > td{
+	border: none !important;
+	line-height: 0 !important;
+	padding: 0px !important;
 }
 
 /* Icons */

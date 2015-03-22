@@ -13,6 +13,8 @@
       </thead>
       <tbody>
       {{#each period in model.periods}}
+        {{#if period.isNew}}
+        {{else}}
         <tr class="text-center">
           <td>{{period.cycle_day_number}}</td>
           <td>{{date-format period.date "DD/MM/YY HH:mm"}}</td>
@@ -33,6 +35,7 @@
             </button>
           </td>
         </tr>
+        {{/if}}
       {{/each}}
       
       </tbody>

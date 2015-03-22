@@ -5,6 +5,43 @@ export default DS.Model.extend({
   ongoing: DS.attr('boolean'),
   start_date: DS.attr('mydatetime'),
   end_date: DS.attr('mydatetime'),
+  ovulation:function(){
+    var that = this;
+    if(this.get('third_day_hot_temperature') > 0){
+      this.get('temperatures').sortBy('cycle_day_number').forEach(function(temp){
+        if(temp.get('cycle_day_number') >= that.get('third_day_hot_temperature') - 3 && temp.get('cycle_day_number') <= that.get('third_day_hot_temperature') + 7){
+          if(temp.get('temperature_corrected') < that.get('cacheTemperature')){
+            return false;
+          }
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }.property('third_day_hot_temperature', 'cacheTemperature', 'temperatures.@each.temperature_corrected'),
+  calendarCalculation: function(){
+    if(this.get('previousCycle.ovulation') === false || this.get('profile.cycles').length < 6) {
+      return 1;
+    }
+    else if(this.get('profile.cycles').length < 12){
+      return this.get('profile.shortest_cycle') - 21;
+    }
+    else {
+      return this.get('profile.shortest_cycle') - 20;
+    }
+  }.property('profile.shortest_cycle'),
+  // ovulationPreviousCycle:function(){
+  //   var that = this;
+  //   return this.get('profile.cycles').sortBy('start_date:desc').filter(function(item){
+  //     if(item.get('id') === that.get('id')){
+  //       return false;
+  //     } else if(moment(item.get('start_date')).after(that.get('start_date'))){
+  //       return false;
+  //     }
+  //     return true;
+  //   }).objectAt(0).get('ovulation');
+  // }.property('cycles.@each'),
   first_day_of_mucus_or_wet: function(){
     var previousMucusSample = null;
     var firstDayWet = null;
@@ -79,19 +116,42 @@ export default DS.Model.extend({
   cycle_length: function(){
     if(this.get('start_date') && this.get("end_date")){
       return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days');
+    } else {
+      return moment().diff(moment(this.get('start_date')), 'days') + 1;
     }
   }.property('start_date', 'end_date'),
   endOfPhaseI: function(){
-    return this.get('beginningOfPhaseII') - 1;
+    if(this.get('beginningOfPhaseII') > 1){
+      return this.get('beginningOfPhaseII') - 1;
+    }
   }.property('beginningOfPhaseII'),
   endOfPhaseII: function(){
-    return [this.get('third_day_hot_temperature'), this.get('cervix_peak_plus_3_days'), this.get('mucus_peak_plus_3_days')].reduce(function (curr, prev) { return curr > prev ? curr : prev; });
-  }.property('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days'),
+    var days = [];
+    if(this.get('third_day_hot_temperature')){
+      days.push(this.get('third_day_hot_temperature'));
+    }
+    if(this.get('cervix_peak_plus_3_days')){
+      days.push(this.get('cervix_peak_plus_3_days'));
+    } 
+    if(this.get('mucus_peak_plus_3_days')){
+      days.push(this.get('mucus_peak_plus_3_days'));
+    }
+    return days.length > 0 ? days.reduce(function (curr, prev) { return curr > prev ? curr : prev; }) : null;
+  }.property('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days', 'temperatures.@each'),
   beginningOfPhaseII: function(){
-    return [this.get('first_day_of_cervix_change.cycle_day_number'), this.get('first_day_of_mucus_or_wet.cycle_day_number')].reduce(function (curr, prev) { return curr < prev ? curr : prev; });
-  }.property('first_day_of_cervix_change', 'first_day_of_mucus_or_wet'),
+    var days = [this.get('calendarCalculation')];
+    if(this.get('first_day_of_cervix_change')){
+      days.push(this.get('first_day_of_cervix_change.cycle_day_number'));
+    }
+    if(this.get('first_day_of_mucus_or_wet')){
+      days.push(this.get('first_day_of_cervix_change.cycle_day_number'));
+    } 
+    return days.length > 1 ? days.reduce(function (curr, prev) { return curr < prev ? curr : prev; }) : days[0];
+  }.property('first_day_of_cervix_change', 'first_day_of_mucus_or_wet', 'calendarCalculation'),
   beginningOfPhaseIII: function(){
-    return this.get('endOfPhaseII') + 1;
+    if(this.get('endOfPhaseII')){
+      return this.get('endOfPhaseII') + 1;
+    }
   }.property('endOfPhaseII'),
   cacheTemperature: function(){
     var cacheTemperature = null;
@@ -101,26 +161,44 @@ export default DS.Model.extend({
     var hotTemperatureDayMinus2 = null;
     var hotTemperatureDay = null;
     var notFound = true;
+    var checkNextHighValue = false;
     var that = this;
     Ember.$.each(this.get('temperatures').sortBy('cycle_day_number'), function(index, temperature){
       var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
-      if(temperature.get('cycle_day_number') > 4 && notFound) {
+      //First four days don't count
+      if(temperature.get('cycle_day_number') > 4 && notFound && temperature.get('ignore') !== true) {
+        //We need at least six temperatures to define the cache temperature
         if(temperatures.length < 6){
           temperatures.push(myTempCorrected);
           maxTemperature = temperatures.reduce(function (curr, prev) { return curr > prev ? curr : prev; });
         }
         else {
+          //We set the three days before the hot temperature day
           if(hotTemperatureDayMinus3 === null){
             hotTemperatureDayMinus3 = temperature;
           } else if (hotTemperatureDayMinus2 === null){
             hotTemperatureDayMinus2 = temperature;
           } else {
             var maxTmpPlusMargin = Math.round((maxTemperature + 0.2)*10)/10;
-            if(hotTemperatureDayMinus3.get('temperature_corrected') > maxTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > maxTemperature && myTempCorrected >= maxTmpPlusMargin){
-              cacheTemperature = maxTemperature;
+
+            if(checkNextHighValue && myTempCorrected > maxTemperature){
               hotTemperatureDay = temperature;
               that.set('third_day_hot_temperature', temperature.get('cycle_day_number'));
               notFound = false;
+            }
+            else if(hotTemperatureDayMinus3.get('temperature_corrected') > maxTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > maxTemperature && myTempCorrected > maxTemperature){
+              //The third hot day of temperature needs to be 0.10 higher than the cache temperature
+              if(myTempCorrected >= maxTmpPlusMargin){
+                cacheTemperature = maxTemperature;
+                hotTemperatureDay = temperature;
+                that.set('third_day_hot_temperature', temperature.get('cycle_day_number'));
+                notFound = false;
+              }
+              //If not, check if the next value is above the cache temperature
+              else {
+                cacheTemperature = maxTemperature;
+                checkNextHighValue = true;
+              }
             } else {
               temperatures.push(hotTemperatureDayMinus3.get('temperature_corrected'));
               hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
@@ -134,6 +212,7 @@ export default DS.Model.extend({
     });
     return cacheTemperature;
   }.property('temperatures.@each.temperature_corrected'),
+  previousCycle: DS.belongsTo('cycle', {inverse: null}),
   profile: DS.belongsTo('profile'),
   periods: DS.hasMany('period'),
   temperatures: DS.hasMany('temperature'),
