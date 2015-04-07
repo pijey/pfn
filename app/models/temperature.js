@@ -20,6 +20,9 @@ export default DS.Model.extend({
 			
 		}
 	}.property('cycle.start_date', 'date'),
+	is_third_day_hot_temperature: function(){
+	  return this.get('cycle.third_day_hot_temperature') === this.get('cycle_day_number');
+	}.property('cycle.third_day_hot_temperature', 'cycle_day_number'),
 	date: DS.attr('mydatetime'),
 	temperature_corrected: function(){
 		if(this.get('cycle.profile.temperature_taking_hour') && this.get('date') && !isNaN(parseFloat(this.get('temperature')))){

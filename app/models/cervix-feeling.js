@@ -5,6 +5,12 @@ export default DS.Model.extend({
   	opening: DS.attr('string'),//CLOSED/SLIGHTLY_OPENNED/OPENNED
   	position: DS.attr('string'),//LOW/MEDIUM/HIGH
   	inclining: DS.attr('string'),//HORIZONTAL/NEARLY_HORIZONTAL/NEARLY_VERTICAL/VERTICAL
+  	is_first_day_of_cervix_change: function(){
+  		return this.get('cycle.first_day_of_cervix_change.cycle_day_number') === this.get('cycle_day_number');
+  	}.property('cycle.first_day_of_cervix_change', 'cycle_day_number'),
+  	is_cervix_peak_plus_3_days: function(){
+  		return this.get('cycle.cervix_peak_plus_3_days') === this.get('cycle_day_number');
+  	}.property('cycle.cervix_peak_plus_3_days', 'cycle_day_number'),
   	cycle_day_number: function(){
 		if(this.get('date')){
 			var startCycleDate = moment(this.get('cycle.start_date'));

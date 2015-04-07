@@ -11,7 +11,7 @@ export default Ember.ObjectController.extend({
 		scaleShowGridLines:true,
 		multiTooltipTemplate: "<%= value %> °",
 		scaleLabel: "<%= value %> °",
-		datasetFill: false,
+		datasetFill: true,
 		animation:false,
 		scaleStepWidth: 0.05
 
@@ -41,7 +41,7 @@ export default Ember.ObjectController.extend({
 	        },
 	        {
 	            label: "Ligne de cache",
-	            fillColor: "rgba(0,0,0,1)",
+	            fillColor: "rgba(0,0,0,0)",
 	            strokeColor: "rgba(0,0,0,1)",
 	            pointColor: "rgba(0,0,0,0)",
 	            pointStrokeColor: "#fff",
