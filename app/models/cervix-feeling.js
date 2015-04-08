@@ -17,11 +17,13 @@ export default DS.Model.extend({
 			startCycleDate.hour(0);
 			startCycleDate.minute(0);
 			startCycleDate.second(0);
+			startCycleDate.millisecond(0);
 
 			var cervixFeelingDate = moment(this.get('date'));
 			cervixFeelingDate.hour(0);
 			cervixFeelingDate.minute(0);
 			cervixFeelingDate.second(0);
+			cervixFeelingDate.millisecond(0);
 
 			return cervixFeelingDate.diff(startCycleDate, 'days') + 1; 
 		}

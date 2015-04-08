@@ -1,13 +1,12 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <h2 class="text-center">Règles du cycle {{model.id}}</h2>
     <table class="table table-hover">
       <thead>
         <tr>
           <th>Jour du cycle</th>
-          <th>Date</th>
           <th>Présence de règles</th>
-          <th>Commentaire</th>
+          <th class="hidden-xs">Commentaire</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -16,8 +15,7 @@
         {{#if period.isNew}}
         {{else}}
         <tr class="text-center">
-          <td>{{period.cycle_day_number}}</td>
-          <td>{{date-format period.date "DD/MM/YY HH:mm"}}</td>
+          <td>{{period.cycle_day_number}} ({{date-format period.date "DD/MM/YY"}})</td>
           <td>
           {{#if period.present}}
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -25,7 +23,7 @@
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           {{/if}}
           </td>
-          <td>{{period.comment}}</td>
+          <td class="hidden-xs">{{period.comment}}</td>
           <td>
             {{#link-to 'period' model.id period.id classNames="btn btn-default btn-sm"}}
               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

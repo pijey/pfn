@@ -8,11 +8,13 @@ export default DS.Model.extend({
 			startCycleDate.hour(0);
 			startCycleDate.minute(0);
 			startCycleDate.second(0);
+			startCycleDate.millisecond(0);
 
 			var temperatureTakingDate = moment(this.get('date'));
 			temperatureTakingDate.hour(0);
 			temperatureTakingDate.minute(0);
 			temperatureTakingDate.second(0);
+			temperatureTakingDate.millisecond(0);
 
 			if(!startCycleDate.isAfter(temperatureTakingDate)){
 				return temperatureTakingDate.diff(startCycleDate, 'days') + 1; 
@@ -32,6 +34,7 @@ export default DS.Model.extend({
 				temperatureTakingDate.hour(temperatureTakingDateFixed.hour());
 				temperatureTakingDate.minute(temperatureTakingDateFixed.minute());
 				temperatureTakingDate.second(0);
+				temperatureTakingDate.millisecond(0);
 
 				var diff = moment(this.get('date')).diff(temperatureTakingDate, 'hours', true); 
 				return Math.round((parseFloat(this.get('temperature'))-diff/10)*100)/100;

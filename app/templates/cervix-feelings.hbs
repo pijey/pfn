@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <h2 class="text-center">Sensations au col du cycle {{model.id}}</h2>
     <table class="table table-hover">
       <thead>
@@ -9,7 +9,7 @@
           <th>Ouverture</th>
           <th>Position</th>
           <th>Inclinaison</th>
-          <th>Commentaire</th>
+          <th class="hidden-xs">Commentaire</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -18,13 +18,13 @@
         {{#if cervixFeeling.isNew}}
         {{else}}
           {{#if cervixFeeling.is_cervix_peak_plus_3_days}}
-            <tr data-toggle="tooltip" data-placement="left" title="Pic du col + 3 jours, début de la phase III" class="cervix-feeling text-center info">
+            <tr data-toggle="tooltip" data-placement="bottom" title="Pic du col + 3 jours, début de la phase III" class="cervix-feeling text-center info">
               <td>{{cervixFeeling.cycle_day_number}} ({{date-format cervixFeeling.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
               <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
               <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
               <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
-              <td>{{cervixFeeling.comment}}</td>
+              <td class="hidden-xs">{{cervixFeeling.comment}}</td>
               <td>
                 {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -36,13 +36,13 @@
             </tr>
           {{else}}
             {{#if cervixFeeling.is_first_day_of_cervix_change}}
-              <tr data-toggle="tooltip" data-placement="left" title="Premier jour de changement du col, début de la phase II" class="cervix-feeling text-center info">
+              <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour de changement du col, début de la phase II" class="cervix-feeling text-center info">
                 <td>{{cervixFeeling.cycle_day_number}} ({{date-format cervixFeeling.date "DD/MM/YY"}})</td>
                 <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
                 <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
                 <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
                 <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
-                <td>{{cervixFeeling.comment}}</td>
+                <td class="hidden-xs">{{cervixFeeling.comment}}</td>
                 <td>
                   {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
                 <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
                 <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
                 <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
-                <td>{{cervixFeeling.comment}}</td>
+                <td class="hidden-xs">{{cervixFeeling.comment}}</td>
                 <td>
                   {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

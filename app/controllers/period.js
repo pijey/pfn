@@ -2,7 +2,6 @@ import Ember from "ember";
 
 export default Ember.ObjectController.extend({
   needs: ['application'],
-  inline:false,
   actions: {
     save: function(period) {
         var that = this;

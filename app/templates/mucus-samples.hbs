@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <h2 class="text-center">Glaires du cycle {{model.id}}</h2>
     <table class="table table-hover">
       <thead>
@@ -8,7 +8,7 @@
           <th>Sensation</th>
           <th>Apparence à la vulve</th>
           <th>Présence au col</th>
-          <th>Commentaire</th>
+          <th class="hidden-xs">Commentaire</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -17,7 +17,7 @@
         {{#if mucus.isNew}}
         {{else}}
           {{#if mucus.is_first_day_of_mucus_or_wet}}
-            <tr data-toggle="tooltip" data-placement="left" title="Premier jour d'humidité ou de présence de glaire cervicale, début de la phase II" class="mucus-sample text-center info">
+            <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour d'humidité ou de présence de glaire cervicale, début de la phase II" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
               <td>{{mucus.apparency_at_vulva}}</td>
@@ -27,7 +27,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
-              <td>{{mucus.comment}}</td>
+              <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -39,7 +39,7 @@
             </tr>
           {{else}}
             {{#if mucus.is_mucus_peak_plus_3_days}}
-            <tr data-toggle="tooltip" data-placement="left" title="Pic de glaire cervicale + 3 jours, début de la phase III" class="mucus-sample text-center info">
+            <tr data-toggle="tooltip" data-placement="bottom" title="Pic de glaire cervicale + 3 jours, début de la phase III" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
               <td>{{mucus.apparency_at_vulva}}</td>
@@ -49,7 +49,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
-              <td>{{mucus.comment}}</td>
+              <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -70,7 +70,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
-              <td>{{mucus.comment}}</td>
+              <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

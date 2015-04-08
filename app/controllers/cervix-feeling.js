@@ -3,7 +3,6 @@ import EmberValidations from 'ember-validations';
 
 export default Ember.ObjectController.extend(EmberValidations.Mixin, {
   needs: ['application'],
-  inline:false,
   sensations: [{label: 'Dur', value: "HARD"},{label: 'Mou', value: "SOFT"}],
   openings: [{label: 'Fermé', value: "CLOSED"},{label: 'Légèrement ouvert', value: "SLIGHTLY_OPENNED"},{label: 'Ouvert', value: "OPENNED"}],
   positions: [{label: 'Bas', value: "LOW"},{label: 'Moyen', value: "MEDIUM"},{label: 'Haut', value: "HIGH"}],

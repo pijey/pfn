@@ -3,7 +3,6 @@ import EmberValidations from 'ember-validations';
 
 export default Ember.ObjectController.extend(EmberValidations.Mixin, {
   needs: ['application'],
-  inline:false,
   validations: {
     date: {
       inline: EmberValidations.validator(function() {

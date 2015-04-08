@@ -8,11 +8,13 @@ export default DS.Model.extend({
 			startCycleDate.hour(0);
 			startCycleDate.minute(0);
 			startCycleDate.second(0);
+			startCycleDate.millisecond(0);
 
 			var periodDate = moment(this.get('date'));
 			periodDate.hour(0);
 			periodDate.minute(0);
 			periodDate.second(0);
+			periodDate.millisecond(0);
 
 			return periodDate.diff(startCycleDate, 'days') + 1; 
 		}

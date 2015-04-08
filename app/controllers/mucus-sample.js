@@ -2,7 +2,6 @@ import Ember from "ember";
 import EmberValidations from 'ember-validations';
 
 export default Ember.ObjectController.extend(EmberValidations.Mixin, {
-  inline:false,
   sensations:[{label: 'Sec', value: 'DRY'},{label: 'Humide', value: 'HUMID'},{label: 'Mouillé', value: 'WET'}],
   validations: {
     date: {

@@ -16,11 +16,13 @@ export default DS.Model.extend({
 			startCycleDate.hour(0);
 			startCycleDate.minute(0);
 			startCycleDate.second(0);
+			startCycleDate.millisecond(0);
 
 			var mucusSampleDate = moment(this.get('date'));
 			mucusSampleDate.hour(0);
 			mucusSampleDate.minute(0);
 			mucusSampleDate.second(0);
+			mucusSampleDate.millisecond(0);
 
 			return mucusSampleDate.diff(startCycleDate, 'days') + 1; 
 		}

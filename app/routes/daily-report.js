@@ -13,7 +13,7 @@ export default Ember.Route.extend({
 		this.renderPeriod();
 	},
 	renderTemperature: function(){
-		var controllerTemperature = this.controllerFor('temperature').set('inline', true);
+		var controllerTemperature = this.controllerFor('temperature');
 		var that = this;
 	    var temperature = null;
 	    this.currentModel.get('temperatures').forEach(function(temp){
@@ -26,12 +26,15 @@ export default Ember.Route.extend({
 
 
 	    if(temperature === null){
+	    	var takingHour = moment(this.currentModel.get('profile.temperature_taking_hour')).hour();
+	    	var takingMinute = moment(this.currentModel.get('profile.temperature_taking_hour')).minute();
+	    	var takingDate = moment().hour(takingHour).minute(takingMinute).second(0).millisecond(0);
 	    	temperature = this.store.createRecord('temperature', {
-	          date:moment(),
+	          date:takingDate,
 	          cycle:this.currentModel
 	        });
 	    }
-
+	    temperature.set('inline', true);
 	    // Render the `favoritePost` template into
 	    // the outlet `posts`, and use the `favoritePost`
 	    // controller.
@@ -43,7 +46,7 @@ export default Ember.Route.extend({
 	    });
 	},
 	renderMucus: function(){
-		var controllerMucusSample = this.controllerFor('mucusSample').set('inline', true);
+		var controllerMucusSample = this.controllerFor('mucusSample');
 	    var that = this;
 	    var mucusSample = null;
 	    this.currentModel.get('mucusSamples').forEach(function(temp){
@@ -62,6 +65,8 @@ export default Ember.Route.extend({
 	        });
 	    }
 
+	    mucusSample.set('inline', true);
+
 	    // Render the `favoritePost` template into
 	    // the outlet `posts`, and use the `favoritePost`
 	    // controller.
@@ -73,7 +78,7 @@ export default Ember.Route.extend({
 	    });
 	},
 	renderCervix: function(){
-		var controllerCervixFeeling = this.controllerFor('cervixFeeling').set('inline', true);
+		var controllerCervixFeeling = this.controllerFor('cervixFeeling');
 	    var that = this;
 	    var cervixFeeling = null;
 	    this.currentModel.get('cervixFeelings').forEach(function(temp){
@@ -92,6 +97,8 @@ export default Ember.Route.extend({
 	        });
 	    }
 
+	    cervixFeeling.set('inline', true);
+
 	    // Render the `favoritePost` template into
 	    // the outlet `posts`, and use the `favoritePost`
 	    // controller.
@@ -103,7 +110,7 @@ export default Ember.Route.extend({
 	    });
 	},
 	renderPeriod: function(){
-		var controllerPeriod = this.controllerFor('period').set('inline', true);
+		var controllerPeriod = this.controllerFor('period');
 	    var that = this;
 	    var period = null;
 	    this.currentModel.get('periods').forEach(function(temp){
@@ -121,6 +128,8 @@ export default Ember.Route.extend({
 	          cycle:this.currentModel
 	        });
 	    }
+
+		cervixFeeling.set('inline', true);
 
 	    // Render the `favoritePost` template into
 	    // the outlet `posts`, and use the `favoritePost`

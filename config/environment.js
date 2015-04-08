@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'pfn',
+    minifyJs: false,
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -39,7 +40,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.minifyJs = true;
+    ENV.baseURL = '/pfn/';
   }
 
   return ENV;

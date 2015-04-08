@@ -1,25 +1,25 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <h2 class="text-center">Col {{model.id}}</h2>
+  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+    <h2 class="text-center">Col</h2>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
-        {{#if inline}}
+        {{#if model.inline}}
         {{else}}
-        <label for="inputCycleDayNumber" class="col-sm-3 control-label">Jour du cycle</label>
-        <div class="input-group col-sm-6">
+        <label for="inputCycleDayNumber" class="col-xs-4 col-sm-3 control-label">Jour du cycle</label>
+        <div class="input-group col-xs-7 col-md-6">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
         <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
-          <label for="inputDate" class="col-sm-3 control-label">Date</label>
-          <div class="input-group col-sm-6">
+          <label for="inputDate" class="col-xs-4 col-sm-3 col-md-3 control-label">Date</label>
+          <div class="input-group col-xs-7">
             {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
             {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
           </div>
         </div>
         {{/if}}
         <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
-          <label for="inputSensation" class="col-sm-3 control-label">Sensation</label>
-          <div class="input-group col-sm-6">
+          <label for="inputSensation" class="col-xs-4 col-sm-3 control-label">Sensation</label>
+          <div class="input-group col-xs-7 col-md-6">
             {{view "select"
               class="form-control"
               content=sensations
@@ -30,8 +30,8 @@
           </div>
         </div>
          <div {{bindAttr class="errors.opening.length:has-error:has-success"}}>
-          <label for="inputOpening" class="col-sm-3 control-label">Ouverture</label>
-            <div class="input-group col-sm-6">
+          <label for="inputOpening" class="col-xs-4 col-sm-3 control-label">Ouverture</label>
+            <div class="input-group col-xs-7 col-md-6">
               {{view "select"
                 class="form-control"
                 content=openings
@@ -42,8 +42,8 @@
             </div>
           </div>
          <div {{bindAttr class="errors.position.length:has-error:has-success"}}>
-          <label for="inputPosition" class="col-sm-3 control-label">Position</label>
-            <div class="input-group col-sm-6">
+          <label for="inputPosition" class="col-xs-4 col-sm-3 control-label">Position</label>
+            <div class="input-group col-xs-7 col-md-6">
               {{view "select"
                 class="form-control"
                 content=positions
@@ -53,8 +53,8 @@
                 value=model.position}}
             </div>
           </div>
-        <label for="inputInclining" class="col-sm-3 control-label">Inclinaison</label>
-        <div class="input-group col-sm-6">
+        <label for="inputInclining" class="col-xs-4 col-sm-3 control-label">Inclinaison</label>
+        <div class="input-group col-xs-7 col-md-6">
           {{view "select"
             class="form-control"
             content=inclinings
@@ -63,13 +63,13 @@
             prompt="Choisir une inclinaison"
             value=model.inclining}}
         </div>
-        <label for="inputCervixComment" class="col-sm-3 control-label">Commentaire</label>
-        <div class="input-group col-sm-6">
+        <label for="inputCervixComment" class="col-xs-4 col-sm-3 control-label">Commentaire</label>
+        <div class="input-group col-xs-7 col-md-6">
           {{input type="text" class="form-control" id="inputCervixComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-3">
+        <div class="col-xs-offset-4 col-sm-offset-3">
           <button {{action "save" model}} class="btn btn-default" {{bindAttr disabled=isInvalid }}>
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
@@ -82,7 +82,7 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
-          {{#if inline}}
+          {{#if model.inline}}
           {{else}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
