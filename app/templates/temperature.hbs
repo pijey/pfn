@@ -26,7 +26,7 @@
         </div>
         {{/if}}
         <div {{bind-attr class="errors.temperature.length:has-error:has-success"}}>
-          <label for="inputTemperature" class="col-xs-4 col-sm-3 control-label">Température</label>
+          <label for="inputTemperature" class="col-xs-4 col-sm-3 control-label">T°</label>
           <div class="input-group col-xs-7 col-md-6">
             {{!-- {{#if errors.temperature}}
               <div class="alert error">
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div {{bind-attr class="errors.temperature.length:has-error:has-success"}}>
-          <label for="inputTemperatureCorrected" class="col-xs-4 col-sm-3 control-label">Température corrigée</label>
+          <label for="inputTemperatureCorrected" class="col-xs-4 col-sm-3 control-label">T° corrigée</label>
           <div class="input-group col-xs-7 col-md-6">
             {{input type="text" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
             {{#if errors.temperature_corrected.length}}

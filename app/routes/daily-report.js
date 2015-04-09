@@ -129,7 +129,7 @@ export default Ember.Route.extend({
 	        });
 	    }
 
-		cervixFeeling.set('inline', true);
+		period.set('inline', true);
 
 	    // Render the `favoritePost` template into
 	    // the outlet `posts`, and use the `favoritePost`

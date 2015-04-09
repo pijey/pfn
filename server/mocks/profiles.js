@@ -3,7 +3,7 @@ module.exports = function(app) {
   var profilesRouter = express.Router();
   var dataToSend = [
     { 
-      id: 1, surname: 'Miloune', temperature_taking_hour: '07:00', temperature_taking_mode: 'Vaginal', cycles : [10,11,12]
+      id: 1, surname: 'JaneDoe', temperature_taking_hour: '07:00', temperature_taking_mode: 'RECTAL', cycles : [10,11,12]
     }
   ];
   profilesRouter.get('/', function(req, res) {
