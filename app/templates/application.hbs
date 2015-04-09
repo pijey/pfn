@@ -15,9 +15,10 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
             {{#if selectedCycle.id}}
+              <li>{{#link-to 'synthese' selectedCycle.id}}{{t "application.synthesis"}}{{/link-to}}</li>
               {{#if selectedCycle.end_date}}
               {{else}}
-              <li>{{#link-to 'synthese' selectedCycle.id}}{{t "application.synthesis"}}{{/link-to}}</li>
+              
               <li>{{#link-to 'daily-report' selectedCycle.id}}{{t "application.daily_report"}}{{/link-to}}</li>
               {{/if}}
               <li class="dropdown">
