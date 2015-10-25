@@ -1,12 +1,12 @@
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-xs-12 col-md-10 col-md-offset-1">
     <h2 class="text-center">Glaires du cycle</h2>
     <table class="table table-hover">
       <thead>
         <tr>
           <th>Jour du cycle</th>
           <th>Sensation</th>
-          <th>Apparence à la vulve</th>
+          <th class="hidden-xs">Apparence à la vulve</th>
           <th>Présence au col</th>
           <th class="hidden-xs">Commentaire</th>
           <th>Actions</th>
@@ -20,7 +20,7 @@
             <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour d'humidité ou de présence de glaire cervicale, début de la phase II" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
-              <td>{{mucus.apparency_at_vulva}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
                   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -42,7 +42,7 @@
             <tr data-toggle="tooltip" data-placement="bottom" title="Pic de glaire cervicale + 3 jours, début de la phase III" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
-              <td>{{mucus.apparency_at_vulva}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
                   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -63,7 +63,7 @@
             <tr class="mucus-sample text-center">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
               <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
-              <td>{{mucus.apparency_at_vulva}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
                   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
