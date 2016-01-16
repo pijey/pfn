@@ -3,10 +3,12 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'pfn',
-    minifyJs: false,
     environment: environment,
     baseURL: '/',
-    locationType: 'hash',
+    locationType: 'auto',
+    i18n: {
+      defaultLocale: 'fr'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -15,7 +17,8 @@ module.exports = function(environment) {
     },
 
     APP: {
-      defaultLocale: 'fr'
+      // Here you can pass flags/options to your application instance
+      // when it is created
     }
   };
 
@@ -40,8 +43,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.minifyJs = true;
-    ENV.baseURL = '/pfn/';
+
   }
 
   return ENV;

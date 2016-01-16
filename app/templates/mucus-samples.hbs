@@ -1,15 +1,21 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
     <h2 class="text-center">Glaires du cycle</h2>
-    <table class="table table-hover">
-      <thead>
+    {{#if model.mucusSamples}}
+      <table class="table table-hover">
+      <thead class="text-center">
         <tr>
-          <th>Jour du cycle</th>
+          <th rowspan="2">Jour du cycle</th>
+          <th colspan="2" >Observations externes</th>
+          <th colspan="2">Observations internes</th>
+          <th rowspan="2" class="hidden-xs">Commentaire</th>
+          <th rowspan="2">Actions</th>
+        </tr>
+        <tr>
           <th>Sensation</th>
-          <th class="hidden-xs">Apparence à la vulve</th>
+          <th class="hidden-xs">Consistance</th>
           <th>Présence au col</th>
-          <th class="hidden-xs">Commentaire</th>
-          <th>Actions</th>
+          <th class="hidden-xs">Consistance</th>
         </tr>
       </thead>
       <tbody>
@@ -27,6 +33,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
@@ -86,7 +93,8 @@
       {{/each}}
       </tbody>
     </table>
-    <div>
+    {{/if}}
+    <div class="text-center">
       {{#link-to 'mucus-sample' model.id 'new' classNames="btn btn-default btn-sm"}}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
       {{/link-to}}

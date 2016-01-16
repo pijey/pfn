@@ -1,49 +1,83 @@
 <div class="row">
   <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-    <h2 class="text-center">Glaire cervicale</h2>
+
+    <h4 class="text-center">Glaire cervicale</h4>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
-        {{#if model.inline}}
-        {{else}}
-        <label for="inputCycleDayNumber" class="col-xs-4 col-sm-3 control-label">Jour du cycle</label>
-        <div class="input-group col-xs-7 col-md-6">
-          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
-        </div>
-        <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
-          <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Date</label>
-          <div class="input-group col-xs-7 col-md-6">
-            {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
-            {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+        {{#if extended}}
+        <div class="panel panel-default">
+          <div class="panel-heading">Général</div>
+          <div class="panel-body">
+            <label for="inputCycleDayNumber" class="col-xs-4 col-sm-3 control-label">Jour du cycle</label>
+            <div class="input-group col-xs-7 col-md-6">
+              {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
+            </div>
+            <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
+              <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Date</label>
+              <div class="input-group col-xs-7 col-md-6">
+                {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
+                {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+              </div>
+            </div>
           </div>
         </div>
         {{/if}}
-        <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
-          <label for="inputSensation" class="col-xs-4 col-sm-3 control-label">Sensation</label>
-          <div class="input-group col-xs-7 col-md-6">
-          {{view "select"
-              class="form-control"
-              content=sensations
-              optionValuePath="content.value"
-              optionLabelPath="content.label"
-              prompt="Choisir parmi les valeurs suivantes"
-              value=model.sensation}}
+        <div class="panel panel-default">
+          <div class="panel-heading">Observations externes</div>
+          <div class="panel-body">
+            <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
+                      <label for="inputSensation" class="hidden-xs col-sm-3 control-label">Sensation</label>
+                      <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">  
+                      {{view "select"
+                          class="form-control"
+                          content=sensations
+                          optionValuePath="content.value"
+                          optionLabelPath="content.label"
+                          prompt="Sensation"
+                          value=model.sensation}}
+                      </div>
+                    </div>
+                    <label for="inputApparencyAtVulva" class="hidden-xs col-sm-3 control-label">Consistance</label>
+                    <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+                      {{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtVulva" value=model.apparency_at_vulva}}
+                    </div>
           </div>
         </div>
-        <label for="inputApparencyAtVulva" class="col-xs-4 col-sm-3 control-label">Apparence</label>
-        <div class="input-group col-xs-7 col-md-6">
-          {{input type="text" class="form-control" id="inputApparencyAtVulva" value=model.apparency_at_vulva}}
-        </div>
-        <label for="optionsAtCervix" class="col-xs-4 col-sm-3 control-label">Glaire au col</label>
-        <div class="input-group col-xs-7 col-md-6">
-          <div class="radio">
-            <label>{{radio-button value=true checked=model.at_cervix}} Oui</label>
-            <label>{{radio-button value=false checked=model.at_cervix}} Non</label>
+        <div class="panel panel-default">
+          <div class="panel-heading">Observations internes</div>
+          <div class="panel-body">
+            <ul class="list-group">
+              {{#if model.cycle.first_day_of_mucus_or_wet}}
+               <li class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : {{model.cycle.first_day_of_mucus_or_wet.cycle_day_number}}</li>
+              {{else}}
+                <li class="list-group-item list-group-item-danger"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : Non survenu</li>
+              {{/if}}
+            </ul>
+            <label for="optionsAtCervix" class="hidden-xs col-sm-3 control-label">Présence au col</label>
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+              <input type="text" class="form-control" readonly="true" placeholder="Présence au col" aria-describedby="basic-addon2">
+              <span class="input-group-addon" id="basic-addon2">{{input type="checkbox" id="inputAtCervix" checked=model.at_cervix}}</span>
+              {{!-- <div class="radio">
+                <label>{{radio-button value=true checked=model.at_cervix}} Oui</label>
+                <label>{{radio-button value=false checked=model.at_cervix}} Non</label>
+              </div> --}}
+              {{!-- {{input type="text" class="form-control" id="inputAtCervix" value=model.at_cervix}} --}}
+            </div>
+            <label for="inputApparencyAtCervix" class="hidden-xs col-sm-3 control-label">Consistance</label>
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+              {{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtCervix" value=model.apparency_at_cervix}}
+            </div>
           </div>
-          {{!-- {{input type="text" class="form-control" id="inputAtCervix" value=model.at_cervix}} --}}
         </div>
-        <label for="inputMucusComment" class="col-xs-4 col-sm-3 control-label">Commentaire</label>
-        <div class="input-group col-xs-7 col-md-6">
-          {{input type="text" class="form-control" id="inputMucusComment" value=model.comment}}
+        <div class="panel panel-default">
+          <div class="panel-heading">Autres</div>
+          <div class="panel-body">
+            
+            <label for="inputMucusComment" class="hidden-xs col-sm-3 control-label">Commentaire</label>
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+              {{input type="text" placeholder="Commentaire" class="form-control" id="inputMucusComment" value=model.comment}}
+            </div>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -60,8 +94,7 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
-          {{#if model.inline}}
-          {{else}}
+          {{#if extended}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
             &nbsp;Annuler

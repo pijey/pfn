@@ -4,18 +4,22 @@ export default Ember.ObjectController.extend({
 	needs: ["application"],
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
-	chartOptions: {
-		responsive:true,
-		offsetGridLines:true,
-		scaleIntegersOnly:false,
-		scaleShowGridLines:true,
-		multiTooltipTemplate: "<%= value %> °",
-		scaleLabel: "<%= value %> °",
-		datasetFill: true,
-		animation:false,
-		scaleStepWidth: 0.05
-
-	},
+	chartOptions: Ember.computed("model.highest_temperature", "model.lowest_temperature",function(){
+		return {
+			responsive:true,
+			offsetGridLines:true,
+			scaleIntegersOnly:false,
+			scaleShowGridLines:true,
+			multiTooltipTemplate: "<%= value %> °",
+			scaleLabel: "<%= value %> °",
+			datasetFill: true,
+			animation:false,
+			scaleOverride: true,
+	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 2,
+	    	scaleStepWidth: 0.05,
+	    	scaleStartValue: Math.floor(this.get('model.lowest_temperature')*10)/10,
+		};
+	}),
  	dataChart: function(){
  		var chartLabels = [];
  		var chartDatasets = [

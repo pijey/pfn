@@ -8,7 +8,9 @@ export default Ember.Route.extend({
     		return profiles.get('firstObject');
     	}
     	else {
-    		return that.store.createRecord('profile').save();
+    		return that.store.createRecord('profile', {
+          cycles:[]
+        }).save();
     	}
     });
   },

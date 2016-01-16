@@ -20,6 +20,7 @@ export default DS.Model.extend({
 		}
 	}.property('cycle.start_date', 'date'),
 	date: DS.attr('mydatetime'),
+	volume: DS.attr('string'),
 	comment: DS.attr('string'),
 	cycle: DS.belongsTo('cycle')
 });

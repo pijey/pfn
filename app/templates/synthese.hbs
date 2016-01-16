@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <h2 class="text-center">{{t "synthese.cycle_synthese"}}</h2>
+    <h3 class="text-center">{{t "synthese.cycle_synthese"}}</h3>
     <div>
-      {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender onClick="selectRow"}}
+      {{line-chart data=dataChart width=900 height=400 options=chartOptions onClick="selectRow"}}
     </div>
     <div class="table-responsive">
       <table class="table table-bordered synthese">
@@ -51,7 +51,7 @@
             <td class="row_label rotated_cell"><div class="rotate_text">Apparence</div></td>
             {{#each mucus in mucusSamples}}
             {{#if mucus.apparency_at_vulva}}
-              <td {{bind-attr class=":rotated_cell mucus.cycle_day_number"}}class=""><div class='rotate_text'>{{mucus.apparency_at_vulva}}</div></td>
+              <td {{bind-attr class=":rotated_cell mucus.cycle_day_number"}}><div class='rotate_text'>{{mucus.apparency_at_vulva}}</div></td>
             {{else}}
             <td {{bind-attr class="mucus.cycle_day_number"}}>&nbsp;</td>
             {{/if}}

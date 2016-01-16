@@ -154,6 +154,7 @@ export default DS.Model.extend({
     }
   }.property('endOfPhaseII'),
   cacheTemperature: function(){
+    this.set('third_day_hot_temperature', null);
     var cacheTemperature = null;
     var temperatures = [];
     var maxTemperature = 0.0;
@@ -180,7 +181,7 @@ export default DS.Model.extend({
             hotTemperatureDayMinus2 = temperature;
           } else {
             var maxTmpPlusMargin = Math.round((maxTemperature + 0.2)*10)/10;
-
+            console.log(maxTmpPlusMargin);
             if(checkNextHighValue && myTempCorrected > maxTemperature){
               hotTemperatureDay = temperature;
               that.set('third_day_hot_temperature', temperature.get('cycle_day_number'));
@@ -212,6 +213,9 @@ export default DS.Model.extend({
     });
     return cacheTemperature;
   }.property('temperatures.@each.temperature_corrected'),
+  temperatures_corrected: Ember.computed.mapProperty('temperatures', 'temperature_corrected'),
+  lowest_temperature: Ember.computed.min('temperatures_corrected'),
+  highest_temperature: Ember.computed.max('temperatures_corrected'),
   previousCycle: DS.belongsTo('cycle', {inverse: null}),
   profile: DS.belongsTo('profile'),
   periods: DS.hasMany('period'),

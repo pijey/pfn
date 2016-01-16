@@ -3,6 +3,7 @@
     "document",
     "window",
     "moment",
+    "Chart",
     "-Promise"
   ],
   "browser": true,

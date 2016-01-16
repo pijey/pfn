@@ -5,16 +5,22 @@ export default Ember.ObjectController.extend({
 	reRender:false,
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
-	chartOptions: {
-		responsive:true,
-		offsetGridLines:true,
-		scaleIntegersOnly:false,
-		scaleShowGridLines:true,
-		multiTooltipTemplate: "<%= value %> °",
-		scaleLabel: "<%= value %> °",
-		datasetFill: false,
-		animation: false,
-	},
+	chartOptions: function(){
+		return {
+			responsive:true,
+			offsetGridLines:true,
+			scaleIntegersOnly:false,
+			scaleShowGridLines:true,
+			scaleOverride: true,
+	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 2,
+	    	scaleStepWidth: 0.05,
+	    	scaleStartValue: Math.floor(this.get('model.lowest_temperature')*10)/10,
+			multiTooltipTemplate: "<%= value %> °",
+			scaleLabel: "<%= value %> °",
+			datasetFill: false,
+			animation: false,
+		};
+	}.property('model.lowest_temperature', 'model.highest_temperature'),
 	noPhases: function(){
 		return !this.get('phaseIDuration') && !this.get('phaseIIDuration') && !this.get('phaseIIIDuration');
 	}.property('phaseIDuration', 'phaseIIDuration', 'phaseIIIDuration'),

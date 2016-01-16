@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-var MyModal =  Ember.Component.extend({
+export default Ember.Component.extend({
   actions: {
     ok: function() {
       Ember.$('.modal').modal('hide');
@@ -13,6 +13,4 @@ var MyModal =  Ember.Component.extend({
     }.bind(this));
   }.on('didInsertElement')
 });
-
-export default MyModal;
 

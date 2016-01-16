@@ -1,10 +1,47 @@
-  <div class="row">
-    <div class="col-xs-12 col-md-10 col-md-offset-1">
-      <h2 class="text-center">Relevé journalier: Jour {{model.cycle_length}}</h2>
-    </div>
-  </div>
-  {{outlet "temperature"}}
-  {{outlet "mucusSample"}}
-  {{outlet "cervixFeeling"}}
-  {{outlet "period"}}
-    
+<div class="row">
+	<div class="col-xs-1">
+	{{#if previousNumber}}
+	  <h3 class="text-center" {{action "changeDay" previousNumber}}><i class="text-primary icon ion-chevron-left"></i></h3>
+	{{/if}}
+		
+	</div>
+	<div class="col-xs-10">
+		<h3 class="text-center">Jour {{dayNumber}}</h3>
+	</div>
+	<div class="col-xs-1">
+		{{#if nextNumber}}
+		  <h3 class="text-center"{{action "changeDay" nextNumber}}><i class="text-primary icon ion-chevron-right"></i></h3>
+		{{/if}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-md-10 col-md-offset-1">
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#temperature" aria-controls="temperature" role="tab" data-toggle="tab"><h3><i class="icon ion-thermometer"></i></h3><span class="hidden-xs">Température</span></a></li>
+			<li role="presentation"><a href="#mucus" aria-controls="mucus" role="tab" data-toggle="tab"><h3><i class="icon ion-paintbucket"></i></h3><span class="hidden-xs">Glaire</span></a></li>
+			<li role="presentation"><a href="#cervix" aria-controls="cervix" role="tab" data-toggle="tab"><h3><i class="icon ion-disc"></i></h3><span class="hidden-xs">Col</span></a></li>
+			<li role="presentation"><a href="#period" aria-controls="period" role="tab" data-toggle="tab"><h3><i class="icon ion-waterdrop"></i></h3><span class="hidden-xs">Règles</span></a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="temperature">
+			  	{{render "temperature" temperature}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="mucus">
+				{{render "mucus-sample" mucus}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="cervix">
+				{{render "cervix-feeling" cervix}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="period">
+				{{render "period" period}}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

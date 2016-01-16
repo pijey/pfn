@@ -1,19 +1,20 @@
 import Ember from "ember";
-import EmberValidations from 'ember-validations';
+import EmberValidations, { validator } from 'ember-validations';
 
-export default Ember.ObjectController.extend(EmberValidations.Mixin, {
+export default Ember.ObjectController.extend(EmberValidations, {
   needs: ['application'],
+  queryParams: ["extended"],
   validations: {
-    date: {
-      inline: EmberValidations.validator(function() {
-        if (!this.model.get('date')){
-          return "La date doit être renseignée";
+    "model.date": {
+      inline: validator(function() {
+        if (!this.get('model.date')){
+          return "doit être renseignée";
         }
         else if(moment(this.model.get('cycle.start_date')).isAfter(this.model.get('date'), 'day')) {
-          return "La date du relevé doit être postérieure à la date de début du cycle";
+          return "doit être postérieure à la date de début du cycle";
         }
         else if(this.model.get('cycle.end_date') && moment(this.model.get('cycle.end_date')).isBefore(this.model.get('date'), 'day')) {
-          return "La date du relevé doit être antérieure à la date de fin du cycle";
+          return "doit être antérieure à la date de fin du cycle";
         }
         else if(moment(this.model.get('date')).hour() < 4 || moment(this.model.get('date')).hour() > 11) {
           return "L'heure du relevé doit être effectuée entre 4h et 11h du matin";
@@ -21,18 +22,19 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, {
         //TODO Tester que le relevé doit etre unique par jour
       }) 
     },
-    temperature: {
-      presence: {message: null},
+    "model.temperature": {
+      presence: {message: "doit être renseignée"},
       numericality: {
-        message:null,
+        messages: { numericality: "doit être numérique" },
         onlyInteger:false,
         greaterThan:35,
         lessThan: 38
       }
     },
-    temperature_corrected: {
-      presence: {message: null},
+    "model.temperature_corrected": {
+      presence: {message: "doit être renseignée"},
       numericality: {
+        messages: { numericality: "doit être numérique" },
         onlyInteger:false,
         greaterThan:35,
         lessThan: 38
@@ -41,18 +43,18 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, {
     cycle:true
   },
   setValidation: function() {
-    this.set('validations.temperature.presence.message', this.t("errors.blank"));
-    this.set('validations.temperature_corrected.presence.message', this.t("errors.blank"));
-    // this.set('validations.temperature_corrected.numericality.message', this.t("errors.notANumber"));
+    // this.set('validations.model.temperature.presence.message', this.get('i18n').t("errors.blank"));
+    // this.set('validations.model.temperature_corrected.presence.message', this.get('i18n').t("errors.blank"));
+    // this.set('validations.temperature_corrected.numericality.message', this.get('i18n').t("errors.notANumber"));
   }.on('init'),
   actions: {
-    save: function(temperature) {
+    save: function() {
       var that = this;
 
-      temperature.save().then(function(){
+      this.get("model").save().then(function(temperature){
           that.get("controllers.application.model.activeCycle.temperatures").pushObject(temperature);
           that.get('controllers.application.model.activeCycle').save().then(function(){
-            if(!that.get('inline')){
+            if(that.get('extended')){
               that.transitionToRoute('temperatures', that.get('controllers.application.model.activeCycle.id'));
             }
           });

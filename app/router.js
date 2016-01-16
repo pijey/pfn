@@ -18,7 +18,7 @@ Router.map(function() {
   this.route("profile", {path:"/profile/:profile_id"});
   this.route("cycle", {path: "/cycle/:cycle_id"});
   this.route("cycles", {path: "/cycles/:profile_id"});
-  this.route('daily-report', {path: "/daily-report/:cycle_id"});
+  this.route('daily-report', {path: "/daily-report/:cycle_id/:day_number"});
 });
 
 export default Router;

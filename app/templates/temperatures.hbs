@@ -2,7 +2,9 @@
   <div class="col-xs-12 col-md-10 col-md-offset-1">
     <h2 class="text-center">Températures du cycle</h2>
     <div>
-      {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender}}
+    {{#if model.temperatures}}
+      {{!-- {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender}} --}}
+      {{line-chart idChart="chart-temperatures" data=dataChart width=900 height=400 options=chartOptions}}
       <table class="table">
         <tr class="text-center">
           <td><span class="glyphicon glyphicon-certificate temperature" aria-hidden="true"></span> Températures relevées</td>
@@ -10,18 +12,22 @@
         </tr>
         <tr class="text-center">
           <td><span class="glyphicon glyphicon-certificate temperatureCorrected" aria-hidden="true"></span> Températures corrigées</td>
+          {{#if model.cacheTemperature}}
           <td><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {{model.profile.temperature_taking_mode}}</td>
+          {{/if}}
         </tr>
         {{#if model.cacheTemperature}}
         <tr class="text-center">
           <td><span class="glyphicon glyphicon-certificate temperatureCache" aria-hidden="true"></span> Ligne de cache ({{model.cacheTemperature}} °)</td>
         </tr>
         {{/if}}
-        
       </table>
+    {{/if}}
+      
     </div>
+    {{#if model.temperatures}}
     <table class="table table-hover">
-      <thead>
+      <thead class="text-center">
         <tr>
           <th>Jour du cycle</th>
           <th class="hidden-xs">Heure</th>
@@ -59,7 +65,7 @@
               <td>{{temperature.temperature_corrected}} °</td>
               <td class="hidden-xs">{{temperature.comment}}</td>
               <td>
-                {{#link-to 'temperature' model.id temperature.id classNames="btn btn-default btn-sm"}}
+                {{#link-to 'temperature' model.id temperature.id (query-params extended="true")classNames="btn btn-default btn-sm"}}
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 {{/link-to}}
                 <button {{action 'remove' temperature}} type="button" class="btn btn-default btn-sm">
@@ -72,7 +78,8 @@
       {{/each}}
       </tbody>
     </table>
-    <div>
+    {{/if}}
+    <div class="text-center">
       {{#link-to 'temperature' model.id 'new' classNames="btn btn-default btn-sm"}}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Ajouter
       {{/link-to}}

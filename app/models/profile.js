@@ -11,16 +11,16 @@ export default DS.Model.extend({
             shortestCycle = cycle.get('cycle_length');
           }
       });
-      return shortestCycle;
+      return shortestCycle !== 999 ? shortestCycle : null;
   }.property('cycles.@each.cycle_length'),
   longest_cycle: function() {
-      var shortestCycle = 0;
+      var longest_cycle = 0;
       this.get("cycles").forEach(function(cycle){
-          if(cycle.get('cycle_length') > shortestCycle){
-            shortestCycle = cycle.get('cycle_length');
+          if(cycle.get("ongoing") === false && cycle.get('cycle_length') > longest_cycle){
+            longest_cycle = cycle.get('cycle_length');
           }
       });
-      return shortestCycle;
+      return longest_cycle !== 0 ? longest_cycle : null;
   }.property('cycles.@each.cycle_length'),
   activeCycle: function() {
       var activeCycle = null;

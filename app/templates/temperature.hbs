@@ -1,73 +1,64 @@
-{{cyclesDayNumber}}<div class="row">
+<div class="row">
   <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-    <h2 class="text-center">Température</h2>
+    <h4 class="text-center">Température</h4>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
-        {{#if model.inline}}
-        {{else}}
+        {{#if extended}}
         <label for="inputCycleDayNumber" class="col-xs-4 col-sm-3 control-label">Jour du cycle</label>
         <div class="input-group col-xs-7 col-md-6">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
         {{/if}}
-        {{#if model.inline}}
-        <div {{bind-attr class="errors.date.length:has-error:has-success"}}>
-          <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Heure</label>
+        {{#if extended}}
+        <div {{bind-attr class="errors.model.date.length:has-error:has-success"}}>
+          <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Date</label>
           <div class="input-group col-xs-7 col-md-6">
-            {{bs-datetimepicker date=model.date format='HH:mm'}}
+            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY HH:mm'}}
           </div>
         </div>
         {{else}}
-        <div {{bind-attr class="errors.date.length:has-error:has-success"}}>
-          <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Date</label>
-          <div class="input-group col-xs-7 col-md-6">
-            {{bs-datetimepicker date=model.date format='DD/MM/YYYY HH:mm'}}
+        <div {{bind-attr class="errors.model.date.length:has-error:has-success"}}>
+          <label for="inputDate" class="hidden-xs col-sm-3 control-label">Heure</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            {{bs-datetimepicker date=model.date format='HH:mm'}}
           </div>
         </div>
         {{/if}}
-        <div {{bind-attr class="errors.temperature.length:has-error:has-success"}}>
-          <label for="inputTemperature" class="col-xs-4 col-sm-3 control-label">T°</label>
-          <div class="input-group col-xs-7 col-md-6">
-            {{!-- {{#if errors.temperature}}
-              <div class="alert error">
-                <ul class="list-group">
-                {{#each error in errors.temperature}}
-                  <li class="list-group-item list-group-item-danger">Température : {{error}}</li>
-                {{/each}}
-                </ul>
-              </div>
-            {{/if}} --}}
-            {{input type="text" class="form-control" id="inputTemperature" value=model.temperature}}
-            {{#if errors.temperature.length}}
+        <div {{bind-attr class="errors.model.temperature.length:has-error:has-success"}}>
+          <label for="inputTemperature" class="hidden-xs col-sm-3 control-label">T°</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            {{input type="text" placeholder="Température" class="form-control" id="inputTemperature" value=model.temperature}}
+            {{#if errors.model.temperature.length}}
               <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             {{else}}
               <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
             {{/if}}
           </div>
         </div>
-        <div {{bind-attr class="errors.temperature.length:has-error:has-success"}}>
-          <label for="inputTemperatureCorrected" class="col-xs-4 col-sm-3 control-label">T° corrigée</label>
-          <div class="input-group col-xs-7 col-md-6">
-            {{input type="text" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
-            {{#if errors.temperature_corrected.length}}
+        <div {{bind-attr class="errors.model.temperature.length:has-error:has-success"}}>
+          <label for="inputTemperatureCorrected" class="hidden-xs col-sm-3 control-label">T° corrigée</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            {{input type="text" placeholder="Température corrigée" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
+            {{#if errors.model.temperature_corrected.length}}
               <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             {{else}}
               <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
             {{/if}}
           </div>
         </div>
-        <label for="inputTemperatureIgnore" class="col-xs-4 col-sm-3 control-label">Ignorer</label>
-        <div class="input-group col-xs-7 col-md-6">
-          {{input type="checkbox" class="form-control" id="inputTemperatureIgnore" checked=model.ignore}}
+        <label for="inputTemperatureIgnore" class="hidden-xs col-sm-3 control-label">Ignorer</label>
+        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+          <input type="text" class="form-control" readonly="true" placeholder="Ignorer le relevé" aria-describedby="basic-addon2">
+          <span class="input-group-addon" id="basic-addon2">{{input type="checkbox" id="inputTemperatureIgnore" checked=model.ignore}}</span>
         </div>
-        <label for="inputTemperatureComment" class="col-xs-4 col-sm-3 control-label">Commentaires</label>
-        <div class="input-group col-xs-7 col-md-6">
-          {{input type="text" class="form-control" id="inputTemperatureComment" value=model.comment}}
+        <label for="inputTemperatureComment" class="hidden-xs col-sm-3 control-label">Commentaires</label>
+        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+          {{input type="text" placeholder="Commentaire" class="form-control" id="inputTemperatureComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-xs-offset-4 col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default" {{bind-attr disabled=isInvalid }}>
+          <button {{action "save"}} class="btn btn-default" {{bind-attr disabled=isInvalid }}>
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
@@ -79,8 +70,7 @@
             {{/if}}
             &nbsp;Enregistrer
           </button>
-          {{#if model.inline}}
-          {{else}}
+          {{#if extended}}
           <button {{action "cancel" model}} class="btn btn-default">
             <span class="glyphicon glyphicon-remove"></span>
             &nbsp;Annuler
@@ -92,13 +82,13 @@
     <div>
       {{#if errors}}
         <ul class="list-group">
-        {{#each error in errors.date}}
+        {{#each error in errors.model.date}}
           <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
         {{/each}}
-        {{#each error in errors.temperature}}
+        {{#each error in errors.model.temperature}}
           <li class="list-group-item list-group-item-danger">Température : {{error}}</li>
         {{/each}}
-        {{#each error in errors.temperature_corrected}}
+        {{#each error in errors.model.temperature_corrected}}
           <li class="list-group-item list-group-item-danger">Température corrigée : {{error}}</li>
         {{/each}}
         </ul>

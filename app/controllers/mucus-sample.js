@@ -1,11 +1,12 @@
 import Ember from "ember";
-import EmberValidations from 'ember-validations';
+import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.ObjectController.extend(EmberValidations.Mixin, {
+export default Ember.ObjectController.extend(EmberValidations, {
   sensations:[{label: 'Sec', value: 'DRY'},{label: 'Humide', value: 'HUMID'},{label: 'Mouillé', value: 'WET'}],
+  queryParams: ["extended"],
   validations: {
-    date: {
-      inline: EmberValidations.validator(function() {
+    "model.date": {
+      inline: validator(function() {
         if (!this.model.get('date')){
           return "La date doit être renseignée";
         }
@@ -18,14 +19,14 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, {
         //TODO Tester que le relevé doit etre unique par jour
       }) 
     },
-    sensation: {
+    "model.sensation": {
       presence: {message: null}
     },
     cycle:true
   },
   needs: ['application'],
   setValidation: function() {
-    this.set('validations.sensation.presence.message', this.t("errors.blank"));
+    // this.set('validations.model.sensation.presence.message', this.t("errors.blank"));
   }.on('init'),
   actions: {
     save: function(mucusSample) {
@@ -33,7 +34,7 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, {
         mucusSample.save().then(function(){
             that.get("controllers.application.model.activeCycle.mucusSamples").pushObject(mucusSample);
             that.get('controllers.application.model.activeCycle').save().then(function(){
-              if(!that.get('inline')){
+              if(that.get('extended')){
                 that.transitionToRoute('mucus-samples', that.get('controllers.application.model.activeCycle.id'));
               }
             });
