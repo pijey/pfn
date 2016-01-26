@@ -1,86 +1,84 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<header>
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
         {{#link-to 'synthese' selectedCycle.id classNames="navbar-brand"}}PFN{{/link-to}}
-        {{!-- <p class="navbar-text">{{t "application.my_natural_family_planning"}}</p> --}}
+        {{!-- <p class="navbar-text hidden-xs hidden-sm">{{t "application.my_natural_family_planning"}}</p> --}}
       </div>
-    
-    <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            {{#if selectedCycle.id}}
-              <li>{{#link-to 'synthese' selectedCycle.id}}{{t "application.synthesis"}}{{/link-to}}</li>
-              {{#if selectedCycle.end_date}}
-              {{else}}
-              
-              <li>{{#link-to 'daily-report' selectedCycle.id selectedCycle.cycle_length}}{{t "application.daily_report"}}{{/link-to}}</li>
-              {{/if}}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                  Détails
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li>{{#link-to 'temperatures' selectedCycle.id}}{{t "application.temperatures"}}{{/link-to}}</li>
-                  <li>{{#link-to 'mucus-samples' selectedCycle.id}}{{t "application.mucus"}}{{/link-to}}</li>
-                  <li>{{#link-to 'cervix-feelings' selectedCycle.id}}{{t "application.cervix"}}{{/link-to}}</li>
-                  <li>{{#link-to 'periods' selectedCycle.id}}{{t "application.periods"}}{{/link-to}}</li>
-                </ul>
-              </li>
-            {{/if}}
+      <ul class="nav navbar-nav navbar-right">
+      {{#if selectedCycle.id}}
+        <li>{{#link-to 'synthese' selectedCycle.id}}
+          <i class="icon ion-arrow-graph-up-right"></i>
+          <span class="hidden-xs">&nbsp;{{t "application.synthesis"}}</span>{{/link-to}}
+        </li>
+        {{#if selectedCycle.end_date}}
+        {{else}}
+        <li>
+        {{#link-to 'daily-report' selectedCycle.id selectedCycle.cycle_length}}
+          <i class="icon ion-calendar"></i>
+          <span class="hidden-xs">&nbsp;{{t "application.daily_report"}}</span>
+        {{/link-to}}
+        </li>
+        {{/if}}
+        {{!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            Détails
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li></li>
+            <li>{{#link-to 'mucus-samples' selectedCycle.id}}{{t "application.mucus"}}{{/link-to}}</li>
+            <li>{{#link-to 'cervix-feelings' selectedCycle.id}}{{t "application.cervix"}}{{/link-to}}</li>
+            <li>{{#link-to 'periods' selectedCycle.id}}{{t "application.periods"}}{{/link-to}}</li>
           </ul>
-          
-          <ul class="nav navbar-nav navbar-right">
-            {{#if model.cycles}}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              {{#if selectedCycle.end_date}}
-                Cycle du {{date-format selectedCycle.start_date "DD/MM/YY"}} au {{date-format selectedCycle.end_date "DD/MM/YY"}}
-              {{else}}
-                Cycle à partir du {{date-format selectedCycle.start_date "DD/MM/YY"}}
-              {{/if}}
-              <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                {{#if selectedCycle.id}}
-                  <li>{{#link-to 'cycle' selectedCycle.id}}Détails du cycle sélectionné{{/link-to}}</li>
-                {{/if}}
-                {{#if model.activeCycle.id}}
-                  <li>{{#link-to 'cycle' model.activeCycle.id}}Détails du cycle actif{{/link-to}}</li>
-                {{/if}}
-                <li class="divider"></li>
-                {{#each cycle in model.cycles}}
-                  <li>
-                    <a href="#" {{action "selectCycle" cycle}}>
-                      {{#if cycle.end_date}}
-                        Cycle du {{date-format cycle.start_date "DD/MM/YY"}} au {{date-format cycle.end_date "DD/MM/YY"}}
-                      {{else}}
-                        Cycle à partir du {{date-format cycle.start_date "DD/MM/YY"}}
-                      {{/if}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </li>
+        </li> --}}
+      {{/if}}
+      {{#if model.cycles}}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="icon ion-refresh"></i>&nbsp;
+            {{!-- <span class="hidden-xs">
+            {{#if selectedCycle.end_date}}
+              Cycle du {{date-format selectedCycle.start_date "DD/MM/YY"}} au {{date-format selectedCycle.end_date "DD/MM/YY"}}
+            {{else}}
+              Cycle à partir du {{date-format selectedCycle.start_date "DD/MM/YY"}}
             {{/if}}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden='true'></span>&nbsp;{{model.surname}}<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li>{{#link-to 'cycles' model.id}}Tous les cycles{{/link-to}}</li>
-                <li>{{#link-to 'cycle' "new"}}Nouveau cycle{{/link-to}}</li>
-                <li class="divider"></li>
-                <li>{{#link-to 'profile' model.id}}Profil{{/link-to}}</li>
-              </ul>
+            </span> --}}
+          </a>
+          <ul class="dropdown-menu">
+          {{#if selectedCycle.id}}
+            <li>{{#link-to 'cycle' selectedCycle.id}}Détails du cycle sélectionné{{/link-to}}</li>
+          {{/if}}
+          {{#if model.activeCycle.id}}
+            <li>{{#link-to 'cycle' model.activeCycle.id}}Détails du cycle actif{{/link-to}}</li>
+          {{/if}}
+            <li class="divider"></li>
+          {{#each model.cycles as |cycle|}}
+            <li>
+              <a href="#" {{action "selectCycle" cycle}}>
+                {{#if cycle.end_date}}
+                  Cycle du {{date-format cycle.start_date "DD/MM/YY"}} au {{date-format cycle.end_date "DD/MM/YY"}}
+                {{else}}
+                  Cycle à partir du {{date-format cycle.start_date "DD/MM/YY"}}
+                {{/if}}
+              </a>
             </li>
+            {{/each}}
           </ul>
-      </div><!-- /.navbar-collapse -->
+        </li>
+        {{/if}}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden='true'></span>&nbsp;{{!-- <span class="hidden-xs">{{model.surname}}</span> --}}</a>
+          <ul class="dropdown-menu">
+            <li>{{#link-to 'cycles' model.id}}Tous les cycles{{/link-to}}</li>
+            <li>{{#link-to 'cycle' "new"}}Nouveau cycle{{/link-to}}</li>
+            <li class="divider"></li>
+            <li>{{#link-to 'profile' model.id}}Profil{{/link-to}}</li>
+          </ul>
+        </li>
+      </ul>
     </div>
-</nav>
-
+  </nav>
+</header>
 <div class="container-fluid">
   {{outlet}}
   {{outlet "modal"}}

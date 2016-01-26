@@ -1,0 +1,95 @@
+<div class="table-responsive">
+	<table class="table table-bordered synthese">
+		<tbody>
+			<tr class="phases">
+				<td colspan="2" class="row_label2"></td>
+				{{!-- {{#each fertility in daysOfPhases}} --}}
+            {{!-- {{#if noPhases}}
+              <td class="FERTILE text-center" {{bindAttr colspan=model.cycle_length }}>Pas assez d'information</td>
+              {{/if}} --}}
+              {{#if phaseIDuration}}
+              <td class="INFERTILE text-center" colspan="{{phaseIDuration}}" data-container="body" data-toggle="popover" data-placement="top" title="Phase I" data-content="Période pré-ovulatoire, infertile">Phase I</td>
+              {{/if}}
+              {{#if phaseIIDuration}}
+              <td class="FERTILE text-center" colspan="{{phaseIIDuration}}" data-container="body" data-toggle="popover" data-placement="top" title="Phase II" data-content="Période ovulatoire, fertile">Phase II</td>
+              {{/if}}
+              {{#if phaseIIIDuration}}
+              <td class="INFERTILE text-center" colspan="{{phaseIIIDuration}}" data-container="body" data-toggle="popover" data-placement="top" title="Phase III" data-content="Période post-ovulatoire, infertile">Phase III</td>
+              {{/if}}
+              {{!-- {{/each}} --}}
+          </tr>
+          <tr class="period text-center">
+          	<td colspan="2" class="row_label2" data-container="body" data-toggle="popover" title="Règles" data-content="Présence ou absence de règles au cours du cycle"><i class="icon ion-waterdrop" ></i></td>
+          	{{#each periods as |period|}}
+          	{{#if period.present}}
+          	<td class="PERIOD {{period.cycle_day_number}}" data-container="body" data-toggle="popover" title="Règles" data-content="Présence de règles {{period.volume}} {{period.comment}}"><i class="icon ion-waterdrop"></i></td>
+          	{{else}}
+          	<td class="{{period.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+          <tr class="mucus-sample text-center">
+          	<td colspan="2" class="row_label2" data-container="body" data-toggle="popover" title="Glaires cervicales" data-content="Sensation d'humidité au niveau de la vulve"><i class="icon ion-paintbucket"></i></td>
+          	{{#each mucusSamples as |mucus|}}
+          	{{#if mucus.sensation}}
+          	<td class="{{mucus.sensation}} {{mucus.cycle_day_number}}" data-container="body" data-toggle="popover" title="Glaires cervicales" data-content="Sensation : {{mucus.sensation}}">&nbsp;</td>
+          	{{else}}
+          	<td class="{{mucus.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+          <tr class="cervix-feeling text-center">
+          	<td rowspan="5" class="row_label" data-container="body" data-toggle="popover" title="Col" data-content="Observations au niveau du col de l'utérus"><i class="icon ion-disc"></i></td>
+          	<td class="row_label" data-container="body" data-toggle="popover" title="Glaires au col" data-content="Observation de glaires au niveau du col de l'utérus"><i class="icon ion-paintbucket"></i></td>
+          	{{#each mucusSamples as |mucus|}}
+          	{{#if mucus.at_cervix}}
+          	<td class="{{mucus.cycle_day_number}}" data-container="body" data-toggle="popover" title="Glaires au col" data-content="Présence de glaires au niveau du col de l'utérus"><i class="ion-ios-checkmark-empty"></i></td>
+          	{{else}}
+          	<td class="{{mucus.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+
+          	{{/each}}
+          </tr>
+          <tr class="cervix-feeling text-center">
+          	<td class="row_label" data-container="body" data-toggle="popover" title="Sensation du col" data-content="Sensation au toucher du col (dur ou mou)">S</td>
+          	{{#each cervixFeelings as |cervixFeeling|}}
+          	{{#if cervixFeeling.sensation}}
+          	<td class="{{cervixFeeling.cycle_day_number}} {{cervixFeeling.sensation}}" data-container="body" data-toggle="popover" title="Sensation du col" data-content="Sensation au toucher du col : {{cervixFeeling.sensation}}">&nbsp;</td>
+          	{{else}}
+          	<td class="{{cervixFeeling.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+          <tr class="cervix-feeling text-center">
+          	<td class="row_label" data-container="body" data-toggle="popover" title="Ouverture du col" data-content="Sensation d'ouverture au toucher du col">O</td>
+          	{{#each cervixFeelings as |cervixFeeling|}}
+          	{{#if cervixFeeling.opening}}
+          	<td class="{{cervixFeeling.cycle_day_number}} {{cervixFeeling.opening}}" data-container="body" data-toggle="popover" title="Ouverture du col" data-content="Ouverture : {{cervixFeeling.opening}}">&nbsp;</td>
+          	{{else}}
+          	<td class="{{cervixFeeling.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+          <tr class="cervix-feeling text-center">
+          	<td class="row_label" data-container="body" data-toggle="popover" title="Inclinaison du col" data-content="Sensation d'inclinaison au toucher du col">I</td>
+          	{{#each cervixFeelings as |cervixFeeling|}}
+          	{{#if cervixFeeling.inclining}}
+          	<td class="{{cervixFeeling.cycle_day_number}} {{cervixFeeling.inclining}}" data-container="body" data-toggle="popover" title="Inclinaison du col" data-content="Inclinaison : {{cervixFeeling.inclining}}">&nbsp;</td>
+          	{{else}}
+          	<td class="{{cervixFeeling.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+          <tr class="cervix-feeling text-center">
+          	<td class="row_label" data-container="body" data-toggle="popover" title="Position du col" data-content="Position du col au toucher">P</td>
+          	{{#each cervixFeelings as |cervixFeeling|}}
+          	{{#if cervixFeeling.position}}
+          	<td class="{{cervixFeeling.cycle_day_number}} {{cervixFeeling.position}}" data-container="body" data-toggle="popover" title="Position du col" data-content="Position : {{cervixFeeling.position}}">&nbsp;</td>
+          	{{else}}
+          	<td class="{{cervixFeeling.cycle_day_number}}">&nbsp;</td>
+          	{{/if}}
+          	{{/each}}
+          </tr>
+      </tbody>
+  </table>
+</div>

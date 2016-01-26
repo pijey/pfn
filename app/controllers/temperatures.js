@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 	needs: ["application"],
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
@@ -79,7 +79,7 @@ export default Ember.ObjectController.extend({
 	    	labels: chartLabels,
 		    datasets: chartDatasets
 		};    
- 	}.property('model.temperatures.@each.temperature_corrected'),
+ 	}.property('model.temperatures.[].temperature_corrected'),
   	actions: {
 	    remove: function(temperature) {
 	       temperature.destroyRecord(temperature); 

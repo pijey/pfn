@@ -4,27 +4,27 @@
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
         {{#if extended}}
-        <label for="inputCycleDayNumber" class="col-xs-4 col-sm-3 control-label">Jour du cycle</label>
-        <div class="input-group col-xs-7 col-md-6">
+        <label for="inputCycleDayNumber" class="hidden-xs col-sm-3 control-label">Jour du cycle</label>
+        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
         {{/if}}
         {{#if extended}}
-        <div {{bind-attr class="errors.model.date.length:has-error:has-success"}}>
-          <label for="inputDate" class="col-xs-4 col-sm-3 control-label">Date</label>
-          <div class="input-group col-xs-7 col-md-6">
-            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY HH:mm'}}
+        <div class="{{if errors.model.date.length "has-error" "has-success"}}">
+          <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY HH:mm' updateDate=(action (mut model.date))}}
           </div>
         </div>
         {{else}}
-        <div {{bind-attr class="errors.model.date.length:has-error:has-success"}}>
+        <div class="{{if errors.model.date.length "has-error" "has-success"}}">
           <label for="inputDate" class="hidden-xs col-sm-3 control-label">Heure</label>
           <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{bs-datetimepicker date=model.date format='HH:mm'}}
+            {{bs-datetimepicker date=model.date format='HH:mm' updateDate=(action (mut model.date))}}
           </div>
         </div>
         {{/if}}
-        <div {{bind-attr class="errors.model.temperature.length:has-error:has-success"}}>
+        <div class="{{if errors.model.temperature.length "has-error" "has-success"}}">
           <label for="inputTemperature" class="hidden-xs col-sm-3 control-label">T°</label>
           <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
             {{input type="text" placeholder="Température" class="form-control" id="inputTemperature" value=model.temperature}}
@@ -35,7 +35,7 @@
             {{/if}}
           </div>
         </div>
-        <div {{bind-attr class="errors.model.temperature.length:has-error:has-success"}}>
+        <div class="{{if errors.model.temperature.length "has-error" "has-success"}}">
           <label for="inputTemperatureCorrected" class="hidden-xs col-sm-3 control-label">T° corrigée</label>
           <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
             {{input type="text" placeholder="Température corrigée" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
@@ -47,9 +47,11 @@
           </div>
         </div>
         <label for="inputTemperatureIgnore" class="hidden-xs col-sm-3 control-label">Ignorer</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6" {{action "toggleIgnoreTemp"}}>
           <input type="text" class="form-control" readonly="true" placeholder="Ignorer le relevé" aria-describedby="basic-addon2">
-          <span class="input-group-addon" id="basic-addon2">{{input type="checkbox" id="inputTemperatureIgnore" checked=model.ignore}}</span>
+          <span class="input-group-addon" id="basic-addon2">
+            {{check-box checked=model.ignore}}
+          </span>
         </div>
         <label for="inputTemperatureComment" class="hidden-xs col-sm-3 control-label">Commentaires</label>
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
@@ -57,18 +59,18 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-xs-offset-4 col-sm-offset-3">
-          <button {{action "save"}} class="btn btn-default" {{bind-attr disabled=isInvalid }}>
+        <div class="col-sm-offset-3 text-center">
+          <button {{action "save"}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
-              {{#if model.isDirty}}
-                <span class="glyphicon glyphicon-floppy-save"></span>
+              {{#if model.hasDirtyAttributes}}
+                <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
               {{else}}
-                <span class="glyphicon glyphicon-floppy-saved"></span>
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
               {{/if}}
             {{/if}}
-            &nbsp;Enregistrer
+            
           </button>
           {{#if extended}}
           <button {{action "cancel" model}} class="btn btn-default">
@@ -82,13 +84,13 @@
     <div>
       {{#if errors}}
         <ul class="list-group">
-        {{#each error in errors.model.date}}
+        {{#each errors.model.date as |error|}}
           <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
         {{/each}}
-        {{#each error in errors.model.temperature}}
+        {{#each errors.model.temperature as |error|}}
           <li class="list-group-item list-group-item-danger">Température : {{error}}</li>
         {{/each}}
-        {{#each error in errors.model.temperature_corrected}}
+        {{#each errors.model.temperature_corrected as |error|}}
           <li class="list-group-item list-group-item-danger">Température corrigée : {{error}}</li>
         {{/each}}
         </ul>

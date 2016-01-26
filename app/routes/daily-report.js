@@ -4,10 +4,10 @@ export default Ember.Route.extend({
 	dayNumber:null,
 	model: function(params) {
 
-		this.get('store').find('temperature', {cycle: params.cycle_id});
-		this.get('store').find('mucus-sample', {cycle: params.cycle_id});
-		this.get('store').find('cervix-feeling', {cycle: params.cycle_id});
-		this.get('store').find('period', {cycle: params.cycle_id});
+		this.get('store').query('temperature', {cycle: params.cycle_id});
+		this.get('store').query('mucus-sample', {cycle: params.cycle_id});
+		this.get('store').query('cervix-feeling', {cycle: params.cycle_id});
+		this.get('store').query('period', {cycle: params.cycle_id});
 
 		this.set("dayNumber", parseInt(params.day_number));
 		

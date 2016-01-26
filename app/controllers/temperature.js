@@ -1,22 +1,22 @@
 import Ember from "ember";
 import EmberValidations, { validator } from 'ember-validations';
 
-export default Ember.ObjectController.extend(EmberValidations, {
+export default Ember.Controller.extend(EmberValidations, {
   needs: ['application'],
   queryParams: ["extended"],
   validations: {
     "model.date": {
       inline: validator(function() {
-        if (!this.get('model.date')){
+        if (!this.model.get('model.date')){
           return "doit être renseignée";
         }
-        else if(moment(this.model.get('cycle.start_date')).isAfter(this.model.get('date'), 'day')) {
+        else if(moment(this.model.get('model.cycle.start_date')).isAfter(this.model.get('model.date'), 'day')) {
           return "doit être postérieure à la date de début du cycle";
         }
-        else if(this.model.get('cycle.end_date') && moment(this.model.get('cycle.end_date')).isBefore(this.model.get('date'), 'day')) {
+        else if(this.model.get('model.cycle.end_date') && moment(this.model.get('model.cycle.end_date')).isBefore(this.model.get('model.date'), 'day')) {
           return "doit être antérieure à la date de fin du cycle";
         }
-        else if(moment(this.model.get('date')).hour() < 4 || moment(this.model.get('date')).hour() > 11) {
+        else if(moment(this.model.get('model.date')).hour() < 4 || moment(this.model.get('model.date')).hour() > 11) {
           return "L'heure du relevé doit être effectuée entre 4h et 11h du matin";
         }
         //TODO Tester que le relevé doit etre unique par jour
@@ -52,7 +52,7 @@ export default Ember.ObjectController.extend(EmberValidations, {
       var that = this;
 
       this.get("model").save().then(function(temperature){
-          that.get("controllers.application.model.activeCycle.temperatures").pushObject(temperature);
+          // that.get("controllers.application.model.activeCycle.temperatures").pushObject(temperature);
           that.get('controllers.application.model.activeCycle').save().then(function(){
             if(that.get('extended')){
               that.transitionToRoute('temperatures', that.get('controllers.application.model.activeCycle.id'));
@@ -68,6 +68,9 @@ export default Ember.ObjectController.extend(EmberValidations, {
         temperature.rollback();
       } 
       this.transitionToRoute('temperatures', this.get('controllers.application.model.activeCycle.id'));
+    },
+    toggleIgnoreTemp(){
+      this.set("model.ignore", !this.get("model.ignore"));
     }
   }
 });

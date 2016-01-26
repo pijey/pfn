@@ -3,98 +3,10 @@
     <h3 class="text-center">{{t "synthese.cycle_synthese"}}</h3>
     <div>
       {{line-chart data=dataChart width=900 height=400 options=chartOptions onClick="selectRow"}}
-    </div>
-    <div class="table-responsive">
-      <table class="table table-bordered synthese">
-        <tbody>
-          <tr class="hide-borders">
-            <td>&nbsp;</td>
-            {{#each tmp in temperatures}}
-            <td>&nbsp;</td>
-            {{/each}}
-          </tr>
-          <tr class="phases">
-            <td colspan="2" class="row_label rotated_cell"><div class="rotate_text">Phases</div></td>
-            {{!-- {{#each fertility in daysOfPhases}} --}}
-            {{!-- {{#if noPhases}}
-              <td class="FERTILE text-center" {{bindAttr colspan=model.cycle_length }}>Pas assez d'information</td>
-            {{/if}} --}}
-            {{#if phaseIDuration}}
-              <td class="INFERTILE text-center" {{bindAttr colspan=phaseIDuration }}>Phase I</td>
-            {{/if}}
-            {{#if phaseIIDuration}}
-              <td class="FERTILE text-center" {{bindAttr colspan=phaseIIDuration }}>Phase II</td>
-            {{/if}}
-            {{#if phaseIIIDuration}}
-              <td class="INFERTILE text-center" {{bindAttr colspan=phaseIIIDuration }}>Phase III</td>
-            {{/if}}
-            {{!-- {{/each}} --}}
-          </tr>
-          <tr class="period text-center">
-            <td colspan="2" class="row_label rotated_cell"><div class="rotate_text">Règles</div></td>
-            {{#each period in periods}}
-              {{#if period.present}}
-              <td {{bind-attr class=":PERIOD period.cycle_day_number"}}><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></td>
-              {{else}}
-              <td {{bind-attr class="period.cycle_day_number"}}>&nbsp;</td>
-              {{/if}}
-            {{/each}}
-          </tr>
-          <tr class="mucus-sample text-center">
-            <td rowspan="3" class="row_label rotated_cell"><div class="rotate_text">Glaires</div></td>
-            <td class="row_label rotated_cell"><div class="rotate_text">Sensation</div></td>
-            {{#each mucus in mucusSamples}}
-            <td {{bind-attr class="mucus.sensation mucus.cycle_day_number"}}>&nbsp;</td>
-            {{/each}}
-          </tr>
-          <tr class="text-center">
-            <td class="row_label rotated_cell"><div class="rotate_text">Apparence</div></td>
-            {{#each mucus in mucusSamples}}
-            {{#if mucus.apparency_at_vulva}}
-              <td {{bind-attr class=":rotated_cell mucus.cycle_day_number"}}><div class='rotate_text'>{{mucus.apparency_at_vulva}}</div></td>
-            {{else}}
-            <td {{bind-attr class="mucus.cycle_day_number"}}>&nbsp;</td>
-            {{/if}}
-            {{/each}}
-          </tr>
-          <tr class="at-cervix text-center">
-            <td class="row_label rotated_cell"><div class="row_label rotate_text">Col</div></td>
-            {{#each mucus in mucusSamples}}
-            {{#if mucus.at_cervix}}
-              <td {{bind-attr class="mucus.cycle_day_number"}}><span class="glyphicon glyphicon-ok"></span></td>
-              {{else}}
-              <td {{bind-attr class="mucus.cycle_day_number"}}>&nbsp;</td>
-            {{/if}}
-            
-            {{/each}}
-          </tr>
-          <tr class="cervix-feeling text-center">
-            <td rowspan="4" class="row_label rotated_cell"><div class="rotate_text">Col</div></td>
-            <td class="row_label rotated_cell"><div class="rotate_text">Sensation</div></td>
-            {{#each cervixFeeling in cervixFeelings}}
-              <td {{bind-attr class="cervixFeeling.cycle_day_number cervixFeeling.sensation"}}>&nbsp;</td>
-            {{/each}}
-          </tr>
-          <tr class="cervix-feeling text-center">
-            <td class="row_label rotated_cell"><div class="rotate_text">Ouverture</div></td>
-            {{#each cervixFeeling in cervixFeelings}}
-              <td {{bind-attr class="cervixFeeling.cycle_day_number cervixFeeling.opening"}}>&nbsp;</td>
-            {{/each}}
-          </tr>
-          <tr class="cervix-feeling text-center">
-            <td class="row_label rotated_cell"><div class="rotate_text">Inclinaison</div></td>
-            {{#each cervixFeeling in cervixFeelings}}
-              <td {{bind-attr class="cervixFeeling.cycle_day_number cervixFeeling.inclining"}}>&nbsp;</td>
-            {{/each}}
-          </tr>
-          <tr class="cervix-feeling text-center">
-            <td class="row_label rotated_cell"><div class="rotate_text">Sensation</div></td>
-            {{#each cervixFeeling in cervixFeelings}}
-              <td {{bind-attr class="cervixFeeling.cycle_day_number cervixFeeling.position"}}>&nbsp;</td>
-            {{/each}}
-          </tr>
-        </tbody>
-      </table>
+      {{synthesis-table 
+        phaseIDuration=phaseIDuration phaseIIDuration=phaseIIDuration phaseIIIDuration=phaseIIIDuration
+        periods=periods mucusSamples=mucusSamples cervixFeelings=cervixFeelings
+      }}
     </div>
   </div>
 </div>

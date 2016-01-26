@@ -2,7 +2,7 @@ import DS from "ember-data";
 
 export default DS.Model.extend({
   surname: DS.attr('string'),
-  temperature_taking_hour: DS.attr('string'),
+  temperature_taking_hour: DS.attr('mydatetime'),
   temperature_taking_mode: DS.attr('string'),
   shortest_cycle: function() {
       var shortestCycle = 999;
@@ -12,7 +12,7 @@ export default DS.Model.extend({
           }
       });
       return shortestCycle !== 999 ? shortestCycle : null;
-  }.property('cycles.@each.cycle_length'),
+  }.property('cycles.[].cycle_length'),
   longest_cycle: function() {
       var longest_cycle = 0;
       this.get("cycles").forEach(function(cycle){
@@ -21,7 +21,7 @@ export default DS.Model.extend({
           }
       });
       return longest_cycle !== 0 ? longest_cycle : null;
-  }.property('cycles.@each.cycle_length'),
+  }.property('cycles.[].cycle_length'),
   activeCycle: function() {
       var activeCycle = null;
       this.get("cycles").forEach(function(cycle){
@@ -30,6 +30,6 @@ export default DS.Model.extend({
           }
       });
       return activeCycle;
-  }.property('cycles.@each.ongoing'),
+  }.property('cycles.[].ongoing'),
   cycles: DS.hasMany('cycle')
 });

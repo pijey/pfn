@@ -19,9 +19,9 @@ export default DS.Model.extend({
     } else {
       return false;
     }
-  }.property('third_day_hot_temperature', 'cacheTemperature', 'temperatures.@each.temperature_corrected'),
+  }.property('third_day_hot_temperature', 'cacheTemperature', 'temperatures.[].temperature_corrected'),
   calendarCalculation: function(){
-    if(this.get('previousCycle.ovulation') === false || this.get('profile.cycles').length < 6) {
+    if(this.get('profile.cycles').length < 6 || this.get('previousCycle.ovulation') === false) {
       return 1;
     }
     else if(this.get('profile.cycles').length < 12){
@@ -41,7 +41,7 @@ export default DS.Model.extend({
   //     }
   //     return true;
   //   }).objectAt(0).get('ovulation');
-  // }.property('cycles.@each'),
+  // }.property('cycles.[]'),
   first_day_of_mucus_or_wet: function(){
     var previousMucusSample = null;
     var firstDayWet = null;
@@ -59,7 +59,7 @@ export default DS.Model.extend({
       previousMucusSample = mucusSample;
     });
     return firstDayWet;
-  }.property('mucusSamples.@each.sensation', 'mucusSamples.@each.at_cervix'),
+  }.property('mucusSamples.[].sensation', 'mucusSamples.[].at_cervix'),
   mucus_peak: function(){
     var previousMucusSample = null;
     var mucusPeak = null;
@@ -70,7 +70,7 @@ export default DS.Model.extend({
       previousMucusSample = mucusSample;
     });
     return mucusPeak;
-  }.property('mucusSamples.@each.sensation'),
+  }.property('mucusSamples.[].sensation'),
   mucus_peak_plus_3_days: function() {
     if(this.get('mucus_peak.cycle_day_number')){
       return this.get('mucus_peak.cycle_day_number') + 3;
@@ -94,7 +94,7 @@ export default DS.Model.extend({
       previousCervixFeeling = cervixFeeling;
     });
     return cervixChangeFeeling;
-  }.property('cervixFeelings.@each.position', 'cervixFeelings.@each.sensation', 'cervixFeelings.@each.opening'),
+  }.property('cervixFeelings.[].position', 'cervixFeelings.[].sensation', 'cervixFeelings.[].opening'),
   cervix_peak: function(){
     var previousCervixFeeling = null;
     var cervixPeakFeeling = null;
@@ -106,7 +106,7 @@ export default DS.Model.extend({
       previousCervixFeeling = cervixFeeling;
     });
     return cervixPeakFeeling;
-  }.property('cervixFeelings.@each.position'),
+  }.property('cervixFeelings.[].position'),
   cervix_peak_plus_3_days: function() {
     if(this.get('cervix_peak.cycle_day_number')){
       return this.get('cervix_peak.cycle_day_number') + 3;
@@ -124,6 +124,7 @@ export default DS.Model.extend({
     if(this.get('beginningOfPhaseII') > 1){
       return this.get('beginningOfPhaseII') - 1;
     }
+    return null;
   }.property('beginningOfPhaseII'),
   endOfPhaseII: function(){
     var days = [];
@@ -137,14 +138,14 @@ export default DS.Model.extend({
       days.push(this.get('mucus_peak_plus_3_days'));
     }
     return days.length > 0 ? days.reduce(function (curr, prev) { return curr > prev ? curr : prev; }) : null;
-  }.property('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days', 'temperatures.@each'),
+  }.property('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days', 'temperatures.[]'),
   beginningOfPhaseII: function(){
     var days = [this.get('calendarCalculation')];
     if(this.get('first_day_of_cervix_change')){
       days.push(this.get('first_day_of_cervix_change.cycle_day_number'));
     }
     if(this.get('first_day_of_mucus_or_wet')){
-      days.push(this.get('first_day_of_cervix_change.cycle_day_number'));
+      days.push(this.get('first_day_of_mucus_or_wet.cycle_day_number'));
     } 
     return days.length > 1 ? days.reduce(function (curr, prev) { return curr < prev ? curr : prev; }) : days[0];
   }.property('first_day_of_cervix_change', 'first_day_of_mucus_or_wet', 'calendarCalculation'),
@@ -152,6 +153,7 @@ export default DS.Model.extend({
     if(this.get('endOfPhaseII')){
       return this.get('endOfPhaseII') + 1;
     }
+    return null;
   }.property('endOfPhaseII'),
   cacheTemperature: function(){
     this.set('third_day_hot_temperature', null);
@@ -212,8 +214,9 @@ export default DS.Model.extend({
       }
     });
     return cacheTemperature;
-  }.property('temperatures.@each.temperature_corrected'),
-  temperatures_corrected: Ember.computed.mapProperty('temperatures', 'temperature_corrected'),
+  }.property('temperatures.[].temperature_corrected'),
+  periodsPresent: Ember.computed.filterBy('periods', 'present', true),
+  temperatures_corrected: Ember.computed.mapBy('temperatures', 'temperature_corrected'),
   lowest_temperature: Ember.computed.min('temperatures_corrected'),
   highest_temperature: Ember.computed.max('temperatures_corrected'),
   previousCycle: DS.belongsTo('cycle', {inverse: null}),

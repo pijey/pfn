@@ -10,14 +10,16 @@
         </div>
         <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-          {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY'}}
+          {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY' updateDate=(action (mut model.date))}}
           {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
         </div>
         {{/if}}
         <label for="inputPresent" class="hidden-xs col-sm-3 control-label">Présence</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6" {{action "togglePresent"}}>
           <input type="text" class="form-control" readonly="true" placeholder="Présence" aria-describedby="basic-addon2">
-          <span class="input-group-addon" id="basic-addon2">{{input type="checkbox" id="inputPresent" checked=model.present}}</span>
+          <span class="input-group-addon" id="basic-addon2">
+            {{check-box checked=model.present}}
+          </span>
         </div>
         <label for="inputPeriodVolume" class="hidden-xs col-sm-3 control-label">Volume</label>
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
@@ -30,17 +32,16 @@
       </div>
       <div class="form-group">
         <div class="col-xs-offset-4 col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default">
+          <button {{action "save" model}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
-              {{#if model.isDirty}}
-                <span class="glyphicon glyphicon-floppy-save"></span>
+              {{#if model.hasDirtyAttributes}}
+                <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
               {{else}}
-                <span class="glyphicon glyphicon-floppy-saved"></span>
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
               {{/if}}
             {{/if}}
-            &nbsp;Enregistrer
           </button>
           {{#if extended}}
           <button {{action "cancel" model}} class="btn btn-default">

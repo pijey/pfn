@@ -1,14 +1,25 @@
 import Ember from 'ember';
+import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend(EmberValidations, {
 	applicationController: Ember.inject.controller('application'),
+	validations: {
+	    "model.start_date": {
+	      inline: validator(function() {
+	        
+	        // else if(moment(this.model.get('model.cycle.start_date')).isAfter(this.model.get('model.date'), 'day')) {
+	        //   return "doit être postérieure à la date de début du cycle";
+	        // }
+	      }) 
+	    },
+	},
 	cycles: Ember.computed("model.profile.cycles.[]", function(){
 		var cycles = [];
 		if(this.get('model.profile.cycles.length') > 0){
 			var that = this;
 			this.get('model.profile.cycles').sortBy('start_date:desc').without(this.get('model')).forEach(function(cycle){
 				cycles.push({
-					id: cycle,
+					value: cycle,
 					label: moment(cycle.get('start_date')).format("DD/MM/YYYY") + " au " + moment(cycle.get('end_date')).format("DD/MM/YYYY")
 				});
 				that.set("model.previousCycle", cycle);
@@ -55,7 +66,10 @@ export default Ember.ObjectController.extend({
 	    },
 	    remove: function(cycle){
 	    	cycle.destroyRecord();
-	    }
+	    },
+	    selectPreviousCycle: function(cycle) {
+        	this.set('model.previousCycle', cycle);
+      	}
   	},
   	observesSelectedCycle: function() {
   	  this.transitionToRoute('cycle', this.get('controllers.application.selectedCycle.id'));

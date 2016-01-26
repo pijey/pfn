@@ -1,18 +1,18 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <h2 class="text-center">Cycles</h2>
+    <h3 class="text-center">Cycles</h3>
     <table class="table table-hover">
       <thead class="text-center">
         <tr>
           <th class="hidden-xs">Numéro</th>
-          <th>Date de début</th>
-          <th>Date de fin</th>
+          <th><span class="hidden-xs">Date de début</span><span class="visible-xs">Début</span></th>
+          <th><span class="hidden-xs">Date de fin</span><span class="visible-xs">Fin</span></th>
           <th>Durée</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-      {{#each cycle in model.cycles}}
+      {{#each model.cycles as |cycle|}}
         <tr class="text-center">
           <td class="hidden-xs">{{cycle.id}}</td>
           <td>{{date-format cycle.start_date "DD/MM/YY"}}</td>
@@ -30,7 +30,7 @@
       {{/each}}
       </tbody>
     </table>
-    <div>
+    <div class="text-center">
       {{#link-to 'cycle' 'new' classNames="btn btn-default btn-sm"}}<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter{{/link-to}}
     </div>
   </div>

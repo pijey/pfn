@@ -5,10 +5,10 @@ export default Ember.Route.extend({
     return this.store.find('profile', params.profile_id);
   },
   afterModel: function(){
-    this.get('store').find('cycle');
-    this.get('store').find('temperature');
-    this.get('store').find('mucus-sample');
-    this.get('store').find('cervix-feeling');
-    this.get('store').find('period');
+    this.get('store').findAll('cycle');
+    this.get('store').findAll('temperature');
+    this.get('store').findAll('mucus-sample');
+    this.get('store').findAll('cervix-feeling');
+    this.get('store').findAll('period');
   }
 });

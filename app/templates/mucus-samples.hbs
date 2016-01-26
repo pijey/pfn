@@ -1,31 +1,34 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <h2 class="text-center">Glaires du cycle</h2>
+    <h3 class="text-center">Glaires</h3>
     {{#if model.mucusSamples}}
       <table class="table table-hover">
       <thead class="text-center">
-        <tr>
-          <th rowspan="2">Jour du cycle</th>
+        <tr class="hidden-xs">
+          <th></th>
           <th colspan="2" >Observations externes</th>
           <th colspan="2">Observations internes</th>
-          <th rowspan="2" class="hidden-xs">Commentaire</th>
-          <th rowspan="2">Actions</th>
+          <th></th>
+          <th></th>
         </tr>
         <tr>
+          <th>Jour</th>
           <th>Sensation</th>
           <th class="hidden-xs">Consistance</th>
           <th>Présence au col</th>
           <th class="hidden-xs">Consistance</th>
+          <th class="hidden-xs">Commentaire</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-      {{#each mucus in model.mucusSamples}}
+      {{#each model.mucusSamples as |mucus|}}
         {{#if mucus.isNew}}
         {{else}}
           {{#if mucus.is_first_day_of_mucus_or_wet}}
             <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour d'humidité ou de présence de glaire cervicale, début de la phase II" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
+              <td class={{mucus.sensation}}>&nbsp;</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
@@ -48,7 +51,7 @@
             {{#if mucus.is_mucus_peak_plus_3_days}}
             <tr data-toggle="tooltip" data-placement="bottom" title="Pic de glaire cervicale + 3 jours, début de la phase III" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
+              <td class={{mucus.sensation}}>&nbsp;</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
@@ -56,6 +59,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
@@ -69,7 +73,7 @@
             {{else}}
             <tr class="mucus-sample text-center">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td {{bindAttr class=mucus.sensation}}>&nbsp;</td>
+              <td class={{mucus.sensation}}>&nbsp;</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
               <td>
                 {{#if mucus.at_cervix}}
@@ -77,6 +81,7 @@
                 {{else}}
                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 {{/if}}</td>
+              <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
                 {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
@@ -95,7 +100,7 @@
     </table>
     {{/if}}
     <div class="text-center">
-      {{#link-to 'mucus-sample' model.id 'new' classNames="btn btn-default btn-sm"}}
+      {{#link-to 'mucus-sample' model.id 'new' (query-params extended=true) classNames="btn btn-default btn-sm"}}
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
       {{/link-to}}
     </div>

@@ -1,90 +1,109 @@
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
-      <h2 class="text-center">Cycle</h2>
-      <h4>{{previousCycle.id}}</h4>
+      <h3 class="text-center">
+        Cycle
+        {{#if model.isNew}}
+        {{else}}
+            {{#if model.ongoing}}
+            <span class="text-info"> (En cours)</span>
+            {{else}}
+            <span class="text-success"> (Terminé)</span>
+            {{/if}}
+        {{/if}}
+      </h3>
       <form class="form-horizontal">
         <div class="form-group">
-          {{#if model.isNew}}
-          {{else}}
-              {{#if model.ongoing}}
-              <div class="alert alert-info col-sm-6 col-sm-offset-3" role="alert">En cours</div>
-              {{else}}
-              <div class="alert alert-success col-sm-6 col-sm-offset-3" role="alert">Terminé</div>
-              {{/if}}
-          {{/if}}
-        </div>
-        <div class="form-group">
-          <label for="inputStartDate" class="col-sm-3 control-label">Cycle précédent</label>
-          <div class="input-group col-sm-6">
-            {{view "select"
-              class="form-control"
-              content=cycles
-              optionValuePath="content.id"
-              optionLabelPath="content.label"
-              prompt="Choisir un cycle"
-              value=model.previousCycle}}
+          <label for="inputStartDate" class="hidden-xs col-sm-3 control-label">Cycle précédent</label>
+          <div class="input-group col-xs-12 col-sm-6">
+            <select class="form-control" placeholder="test" onchange={{action "selectPreviousCycle" value="target"}}>
+              <option disabled="true">Choisir le cycle précédent</option>
+              {{#each cycles as |cycle|}}
+                <option value={{cycle.value.id}} selected={{eq model.previousCycle.id cycle.value.id}}>Précédent : du {{cycle.label}}</option>
+              {{/each}}
+            </select>
           </div>
         </div>
-        <div class="form-group">
-          <label for="inputStartDate" class="col-sm-3 control-label">Date de début</label>
-          <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=model.start_date format='DD/MM/YYYY'}}
+        <div class="form-group {{if errors.model.start_date.length "has-error" "has-success"}}">
+          <label for="inputStartDate" class="hidden-xs col-sm-3 control-label">Date de début</label>
+          <div class="input-group col-xs-12 col-sm-6">
+            {{bs-datetimepicker date=model.start_date format='[Du] DD/MM/YYYY' updateDate=(action (mut model.start_date))}}
           </div>
         </div>
          <div class="form-group">
-          <label for="inputEndDate" class="col-sm-3 control-label">Date de fin</label>
-          <div class="input-group col-sm-6">
-            {{bs-datetimepicker date=model.end_date format='DD/MM/YYYY'}}
+          <label for="inputEndDate" class="hidden-xs col-sm-3 control-label">Date de fin</label>
+          <div class="input-group col-xs-12 col-sm-6">
+            {{bs-datetimepicker date=model.end_date showClear=true format='[au] DD/MM/YYYY' updateDate=(action (mut model.end_date))}}
           </div>
         </div>
         <div class="form-group">
           {{#if model.cycle_length}}
-            <label for="inputStartDate" class="col-sm-3 control-label">Durée</label>
-            <div class="input-group col-sm-6 col-sm-offset-3">
-              {{input type="text" class="form-control" value=cycle_length id="inputCycleLength" placeholder="Nombre de jours du cycle" readonly="true"}}
+            <label for="inputStartDate" class="hidden-xs col-sm-3 control-label">Durée</label>
+            <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
+              {{input type="text" class="form-control" value=model.cycle_length id="inputCycleLength" placeholder="Nombre de jours du cycle" readonly="true"}}
               <div class="input-group-addon">jours</div>
             </div>
             {{else}}
               <label for="inputStartDate" class="col-sm-3 control-label">Durée (provisoire)</label>
-              <div class="input-group col-sm-6 col-sm-offset-3">
-                {{input type="text" class="form-control" value=model.temperatures.length id="inputCycleLengthProv" placeholder="Nombre de jours du cycle (provisoires)" readonly="true"}}
+              <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
+                {{input type="text" class="form-control" value=model.cycle_length id="inputCycleLengthProv" placeholder="Nombre de jours du cycle (provisoires)" readonly="true"}}
               <div class="input-group-addon">jours</div>
             </div>
           {{/if}}
         </div>
-        {{#if model.isNew}}
-        {{else}}
-        <div class="form-group">
-          <label for="" class="col-sm-3 control-label">Ovulation</label>
-          <div class="input-group col-sm-6 col-sm-offset-3">
+        <div>
+          {{#if errors}}
             <ul class="list-group">
-              {{#if model.ovulation}}
-              <li class="list-group-item">&nbsp;<span class="badge">Oui</span></li>
+            {{#each errors.model.start_date as |error|}}
+              <li class="list-group-item list-group-item-danger">Date de début : {{error}}</li>
+            {{/each}}
+            </ul>
+          {{/if}}
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 text-center">
+            <button {{action "save" model}} class="btn btn-default" disabled="{{and model.isValid model.hasDirtyAttributes null "disabled"}}">
+              {{#if model.isSaving}}
+                <img src="assets/images/loader.gif" alt="">
               {{else}}
-              <li class="list-group-item">&nbsp;<span class="badge">Non</span></li>
+                {{#if model.hasDirtyAttributes}}
+                  <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
+                {{else}}
+                  <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
+                {{/if}}
               {{/if}}
+            </button>
+          </div>
+        </div>
+        {{#if (not model.isNew)}}
+        <div class="form-group">
+          <label for="" class="hidden-xs col-sm-3 control-label">Ovulation</label>
+          <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
+            <ul class="list-group">
+              <li class="list-group-item"><i class="icon ion-egg"></i>&nbsp;Ovulation
+                <span class="badge">
+                {{#if model.ovulation}}Oui{{else}}Non{{/if}}
+                </span>
+              </li>
             </ul>
           </div>
         </div>
         <div class="form-group">
           <label for="" class="col-sm-3 control-label">Phases</label>
-          <div class="input-group col-sm-6 col-sm-offset-3">
+          <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
             <ul class="list-group">
               {{#if model.endOfPhaseI}}
               <li class="list-group-item">
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase I <span class="badge">1 à {{model.endOfPhaseI}}</span>
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase I <span class="badge">Jour 1 à {{model.endOfPhaseI}}</span>
               </li>
               {{/if}}
              {{#if model.beginningOfPhaseII}}
-             {{#if model.endOfPhaseII}}
-              <li class="list-group-item">
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase II <span class="badge">{{model.beginningOfPhaseII}} à {{endOfPhaseII}}</span>
-              </li>
-              {{/if}}
+                <li class="list-group-item">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase II <span class="badge">Jour {{model.beginningOfPhaseII}} à {{model.endOfPhaseII}}</span>
+                </li>
               {{/if}}
               {{#if model.beginningOfPhaseIII}}
               <li class="list-group-item">
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase III <span class="badge">{{beginningOfPhaseIII}} à {{model.cycle_length}}</span>
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase III <span class="badge">Jour {{model.beginningOfPhaseIII}} à {{model.cycle_length}}</span>
               </li>
               {{/if}}
             </ul>
@@ -92,82 +111,80 @@
         </div>
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Glaires</label>
-            <div class="input-group col-sm-6 col-sm-offset-3">
+            <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.first_day_of_mucus_or_wet}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">{{model.first_day_of_mucus_or_wet.cycle_day_number}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">Jour {{model.first_day_of_mucus_or_wet.cycle_day_number}}</span>
                 </li>
                 {{/if}}
                 {{#if model.mucus_peak}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic de glaire <span class="badge">{{model.mucus_peak.cycle_day_number}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic de glaire <span class="badge">Jour {{model.mucus_peak.cycle_day_number}}</span>
                 </li>
                 {{/if}}
                 {{#if model.mucus_peak_plus_3_days}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">{{model.mucus_peak_plus_3_days}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">Jour {{model.mucus_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
+                <li class="list-group-item">{{link-to "Détails" "mucus-samples" model.id}}</li>
               </ul>
             </div>
           </div>
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Col</label>
-            <div class="input-group col-sm-6 col-sm-offset-3">
+            <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.first_day_of_cervix_change}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de changement du col <span class="badge">{{model.first_day_of_cervix_change.cycle_day_number}}</span>
+                  <i class="icon ion-android-calendar"></i> 1er jour de changement du col <span class="badge">{{model.first_day_of_cervix_change.cycle_day_number}}</span>
                 </li>
                 {{/if}}
                 {{#if model.cervix_peak}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Jour de pic du col <span class="badge">{{model.cervix_peak.cycle_day_number}}</span>
+                  <i class="icon ion-android-calendar"></i> Jour de pic du col <span class="badge">{{model.cervix_peak.cycle_day_number}}</span>
                 </li>
                 {{/if}}
                 {{#if model.cervix_peak_plus_3_days}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic du col + 3j <span class="badge">{{model.cervix_peak_plus_3_days}}</span>
+                  <i class="icon ion-android-calendar"></i> Pic du col + 3j <span class="badge">{{model.cervix_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
+                <li class="list-group-item">{{link-to "Détails" "cervix-feelings" model.id}}</li>
               </ul>
             </div>
           </div>
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Température</label>
-            <div class="input-group col-sm-6 col-sm-offset-3">
+            <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.cacheTemperature}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Seuil de température haute <span class="badge">{{model.cacheTemperature}} °</span>
+                  <i class="icon ion-fireball"></i>Seuil de température haute <span class="badge">{{model.cacheTemperature}} °</span>
                 </li>
                 {{/if}}
                 {{#if model.third_day_hot_temperature}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 3e jour de température haute <span class="badge">{{model.third_day_hot_temperature}}</span>
+                  <i class="icon ion-android-calendar"></i> 3e jour de température haute <span class="badge">{{model.third_day_hot_temperature}}</span>
                 </li>
                 {{/if}}
+                <li class="list-group-item">{{link-to "Détails" "temperatures" model.id}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label">Règles</label>
+            <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <i class="icon ion-waterdrop"></i> Durée des règles <span class="badge">{{model.periodsPresent.length}} jours</span>
+                </li>
+                <li class="list-group-item">{{link-to "Détails" "periods" model.id}}</li>
               </ul>
             </div>
           </div>
         {{/if}}
-        <div class="form-group">
-          <div class="col-sm-offset-3">
-            <button {{action "save" model}} class="btn btn-default">
-              {{#if model.isSaving}}
-                <img src="assets/images/loader.gif" alt="">
-              {{else}}
-                {{#if model.isDirty}}
-                  <span class="glyphicon glyphicon-floppy-save"></span>
-                {{else}}
-                  <span class="glyphicon glyphicon-floppy-saved"></span>
-                {{/if}}
-              {{/if}}
-              &nbsp;Enregistrer
-            </button>
-          </div>
-        </div>
       </form>
     </div>
   </div>

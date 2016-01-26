@@ -3,10 +3,9 @@ import Ember from "ember";
 export default Ember.Route.extend({  
 	cycle: null,
 	model: function(params) {
-		this.cycle = this.store.find('cycle', params.cycle_id);
-		return this.cycle;
+		return this.store.find('cycle', params.cycle_id);
 	},
 	afterModel: function(model) {
-	    this.get('store').find('temperature', {cycle:model.get('id')});
+	    this.get('store').query('temperature', {cycle:model.get('id')});
 	}
 });

@@ -1,4 +1,8 @@
-@import "bower_components/bootstrap/less/variables.less";
+@import "bootstrap";
+@import "readable/variables";
+@import "readable/bootswatch";
+
+@grid-float-breakpoint: 150px;
 
 /* Charts */
 .line-legend span {
@@ -28,8 +32,8 @@ span.temperatureCorrected {
 	margin-top: 35px;
 }
 
-table.synthese > tbody > tr > td {
-	max-width: 25px;
+.my-table {
+	width: 100%;
 }
 
 div.rotate_text{
@@ -71,9 +75,13 @@ tr.hide-borders > td{
 /* Icons */
 
 tr.period > td.PERIOD {
-	color: #AA0000;
 	vertical-align: middle;
 }
+
+tr.period > td.PERIOD > a{
+	color: #AA0000 !important;
+}
+
 
 
 tr.mucus-sample > td.DRY {
@@ -260,3 +268,67 @@ thead.text-center > tr > th {
 }
 
 body { padding-top: 60px; }
+
+// .navbar-right {
+//     float: right !important;
+//     margin-right: -15px;
+// }
+// .navbar-nav {
+//     float: left;
+//     margin: 0;
+// }
+
+// .navbar-nav>li {
+//     float: left;
+// }
+
+.navbar .navbar-nav > li > a {
+    margin: 12.5px 6px !important;
+}
+
+.dropdown-menu {
+	border: 1px solid #e5e5e5 !important; 
+	background-color: #fff !important; 
+}
+.navbar {
+	height: 65px;
+}
+
+
+i.check {
+	font-size: 1.3em;
+}
+
+.navbar-nav .open .dropdown-menu {
+    position: absolute !important;
+}
+
+td.row_label {
+	vertical-align: middle !important;
+	padding:0px !important;
+}
+
+@media(max-width:@screen-xs-max){
+	table.synthese {
+		table-layout: fixed;
+	}
+    table.synthese td.row_label2 {
+    	width: 44px !important;
+    }
+
+    table.synthese td.row_label {
+    	width: 22px !important;
+    	padding: 0px !important;
+    }
+    table.synthese td:not(.row_label), td:not(.row_label2) { 
+    	width: auto;
+    }
+}
+
+@media(min-width:@screen-sm-min){
+
+}
+
+.phases a {
+	color: #FFF;
+}

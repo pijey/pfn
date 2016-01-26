@@ -1,13 +1,12 @@
 import Ember from "ember";
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   needs: ['application'],
   queryParams: ["extended"],
   actions: {
-    save: function(period) {
+    save: function() {
         var that = this;
-        period.save().then(function(){
-            that.get("controllers.application.model.activeCycle.periods").pushObject(period);
+        this.get("model").save().then(function(){
             that.get('controllers.application.model.activeCycle').save().then(function(){
               if(!that.get('inline')){
                 that.transitionToRoute('periods', that.get('controllers.application.model.activeCycle.id'));
@@ -23,6 +22,9 @@ export default Ember.ObjectController.extend({
         period.rollback();
       } 
       this.transitionToRoute('periods', this.get('controllers.application.model.activeCycle.id'));
+    },
+    togglePresent(){
+      this.set("model.present", !this.get("model.present"));
     }
   }
 });

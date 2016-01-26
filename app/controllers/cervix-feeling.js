@@ -1,7 +1,7 @@
 import Ember from "ember";
 import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.ObjectController.extend(EmberValidations, {
+export default Ember.Controller.extend(EmberValidations, {
   needs: ['application'],
   queryParams: ["extended"],
   sensations: [{label: 'Dur', value: "HARD"},{label: 'Mou', value: "SOFT"}],
@@ -11,26 +11,26 @@ export default Ember.ObjectController.extend(EmberValidations, {
   validations: {
     "model.date": {
       inline: validator(function() {
-        if (!this.model.get('date')){
-          return "La date doit être renseignée";
+        if (!this.model.get('model.date')){
+          return "doit être renseignée";
         }
-        else if(moment(this.model.get('cycle.start_date')).isAfter(this.model.get('date'), 'day')) {
-          return "La date du relevé doit être postérieure à la date de début du cycle";
+        else if(moment(this.model.get('model.cycle.start_date')).isAfter(this.model.get('model.date'), 'day')) {
+          return "doit être postérieure à la date de début du cycle";
         }
-        else if(this.model.get('cycle.end_date') && moment(this.model.get('cycle.end_date')).isBefore(this.model.get('date'), 'day')) {
-          return "La date du relevé doit être antérieure à la date de fin du cycle";
+        else if(this.model.get('model.cycle.end_date') && moment(this.model.get('model.cycle.end_date')).isBefore(this.model.get('date'), 'day')) {
+          return "doit être antérieure à la date de fin du cycle";
         }
         //TODO Tester que le relevé doit etre unique par jour
       }) 
     },
     "model.sensation": {
-      presence: {message: null}
+      presence: {message: "doit être renseignée"}
     },
     "model.position": {
-      presence: {message: null}
+      presence: {message: "doit être renseignée"}
     },
     "model.opening": {
-      presence: {message: null}
+      presence: {message: "doit être renseignée"}
     },
     cycle:true
   },
@@ -40,10 +40,9 @@ export default Ember.ObjectController.extend(EmberValidations, {
     // this.set('validations.position.presence.message', this.t("errors.blank"));
   }.on('init'),
   actions: {
-    save: function(cervixFeeling) {
+    save: function() {
         var that = this;
-        cervixFeeling.save().then(function(){
-            that.get("controllers.application.model.activeCycle.cervixFeelings").pushObject(cervixFeeling);
+        this.get("model").save().then(function(){
             that.get('controllers.application.model.activeCycle').save().then(function(){
               if(that.get('extended')){
                 that.transitionToRoute('cervix-feelings', that.get('controllers.application.model.activeCycle.id'));
@@ -59,6 +58,18 @@ export default Ember.ObjectController.extend(EmberValidations, {
         cervixFeeling.rollback();
       } 
       this.transitionToRoute('cervix-feelings', this.get('controllers.application.model.activeCycle.id'));
-    }
+    },
+    selectSensation(sensation){
+      this.set('model.sensation', sensation);
+    },
+    selectOpening(opening){
+      this.set('model.opening', opening);
+    },
+    selectInclining(inclining){
+      this.set('model.inclining', inclining);
+    },
+    selectPosition(position){
+      this.set('model.position', position);
+    },
   }
 });

@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
   	newMucus:[],
   	newCervix:[],
   	newPeriods:[],
-	temperature: Ember.computed("model.temperatures.@each", "dayNumber", function(){
+	temperature: Ember.computed("model.temperatures.[]", "dayNumber", function(){
 		var tmp = null;
 		var dayNumber = this.get("dayNumber");
 		if(dayNumber && this.get("model.temperatures")){
@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 		
 	    return tmp;
 	}),
-	mucus: Ember.computed("model.mucusSamples.@each", "dayNumber", function(){
+	mucus: Ember.computed("model.mucusSamples.[]", "dayNumber", function(){
 		var tmp = null;
 		var dayNumber = this.get("dayNumber");
 		if(dayNumber && this.get("model.mucusSamples")){
@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
 		
 	    return tmp;
 	}),
-	cervix: Ember.computed("model.cervixFeelings.@each", "dayNumber", function(){
+	cervix: Ember.computed("model.cervixFeelings.[]", "dayNumber", function(){
 		var tmp = null;
 		var dayNumber = this.get("dayNumber");
 		if(dayNumber && this.get("model.cervixFeelings")){
@@ -51,7 +51,7 @@ export default Ember.Controller.extend({
 		
 	    return tmp;
 	}),
-	period: Ember.computed("model.periods.@each", "dayNumber", function(){
+	period: Ember.computed("model.periods.[]", "dayNumber", function(){
 		var tmp = null;
 		var dayNumber = this.get("dayNumber");
 		if(dayNumber && this.get("model.periods")){

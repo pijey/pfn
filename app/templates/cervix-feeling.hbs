@@ -8,60 +8,56 @@
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
-        <div {{bindAttr class="errors.date.length:has-error:has-success"}}>
+        <div class="{{if errors.model.date.length "has-error" "has-success"}}">
           <label for="inputDate" class="hidden-xs col-sm-3 col-md-3 control-label">Date</label>
           <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{bs-datetimepicker date=model.date format='DD/MM/YYYY'}}
+            {{bs-datetimepicker date=model.date format='DD/MM/YYYY' updateDate=(action (mut model.date))}}
             {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
           </div>
         </div>
         {{/if}}
-        <div {{bindAttr class="errors.sensation.length:has-error:has-success"}}>
+        <div class="{{if errors.model.sensation.length "has-error" "has-success"}}">
           <label for="inputSensation" class="hidden-xs col-sm-3 control-label">Sensation</label>
           <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{view "select"
-              class="form-control"
-              content=sensations
-              optionValuePath="content.value"
-              optionLabelPath="content.label"
-              prompt="Sensation"
-              value=model.sensation}}
+            <select class="form-control" onchange={{action "selectSensation" value="target.value"}}>
+              <option value="" disabled="">Sensation</option>
+              {{#each sensations as |sensation|}}
+                <option value={{sensation.value}} selected={{eq model.sensation sensation.value}}>{{sensation.label}}</option>
+              {{/each}}
+            </select>
           </div>
         </div>
-         <div {{bindAttr class="errors.opening.length:has-error:has-success"}}>
+        <div class="{{if errors.model.opening.length "has-error" "has-success"}}">
           <label for="inputOpening" class="hidden-xs col-sm-3 control-label">Ouverture</label>
             <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{view "select"
-                class="form-control"
-                content=openings
-                optionValuePath="content.value"
-                optionLabelPath="content.label"
-                prompt="Ouverture"
-                value=model.opening}}
+              <select class="form-control" onchange={{action "selectOpening" value="target.value"}}>
+                <option value="" disabled="">Ouverture</option>
+                {{#each openings as |opening|}}
+                  <option value={{opening.value}} selected={{eq model.opening opening.value}}>{{opening.label}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
-         <div {{bindAttr class="errors.position.length:has-error:has-success"}}>
+        <div class="{{if errors.model.position.length "has-error" "has-success"}}">
           <label for="inputPosition" class="hidden-xs col-sm-3 control-label">Position</label>
             <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{view "select"
-                class="form-control"
-                content=positions
-                optionValuePath="content.value"
-                optionLabelPath="content.label"
-                prompt="Position"
-                value=model.position}}
+              <select class="form-control" onchange={{action "selectPosition" value="target.value"}}>
+                <option value="" disabled="">Position</option>
+                {{#each positions as |position|}}
+                  <option value={{position.value}} selected={{eq model.position position.value}}>{{position.label}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
-        <label for="inputInclining" class="hidden-xs col-sm-3 control-label">Inclinaison</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-          {{view "select"
-            class="form-control"
-            content=inclinings
-            optionValuePath="content.value"
-            optionLabelPath="content.label"
-            prompt="Inclinaison"
-            value=model.inclining}}
-        </div>
+          <label for="inputInclining" class="hidden-xs col-sm-3 control-label">Inclinaison</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            <select class="form-control" onchange={{action "selectInclining" value="target.value"}}>
+              <option value="" disabled="">Inclinaison</option>
+              {{#each inclinings as |inclining|}}
+                <option value={{inclining.value}} selected={{eq model.inclining inclining.value}}>{{inclining.label}}</option>
+              {{/each}}
+            </select>
+          </div>
         <label for="inputCervixComment" class="hidden-xs col-sm-3 control-label">Commentaire</label>
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
           {{input type="text" placeholder="Commentaire" class="form-control" id="inputCervixComment" value=model.comment}}
@@ -69,17 +65,16 @@
       </div>
       <div class="form-group">
         <div class="col-xs-offset-4 col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default" {{bindAttr disabled=isInvalid }}>
+          <button {{action "save" model}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
-              {{#if model.isDirty}}
-                <span class="glyphicon glyphicon-floppy-save"></span>
+              {{#if model.hasDirtyAttributes}}
+                <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
               {{else}}
-                <span class="glyphicon glyphicon-floppy-saved"></span>
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
               {{/if}}
             {{/if}}
-            &nbsp;Enregistrer
           </button>
           {{#if extended}}
           <button {{action "cancel" model}} class="btn btn-default">
@@ -93,16 +88,16 @@
     <div>
       {{#if errors}}
         <ul class="list-group">
-        {{#each error in errors.date}}
+        {{#each errors.model.date as |error|}}
           <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
         {{/each}}
-        {{#each error in errors.sensation}}
+        {{#each errors.model.sensation as |error|}}
           <li class="list-group-item list-group-item-danger">Sensation : {{error}}</li>
         {{/each}}
-        {{#each error in errors.opening}}
+        {{#each errors.model.opening as |error|}}
           <li class="list-group-item list-group-item-danger">Ouverture : {{error}}</li>
         {{/each}}
-        {{#each error in errors.position}}
+        {{#each errors.model.position as |error|}}
           <li class="list-group-item list-group-item-danger">Position : {{error}}</li>
         {{/each}}
         </ul>

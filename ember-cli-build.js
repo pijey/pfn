@@ -6,8 +6,15 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
     'ember-cli-bootswatch': {
-      'theme': 'readable', 
-      'excludeJS': false   
+      'theme': 'readable',
+      'excludeCSS': true
+      // 'excludeJS': true
+    },
+    lessOptions: {
+      paths: [
+        "bower_components/bootstrap/less",
+        "bower_components/bootswatch"
+      ]
     },
     minifyCSS: {
       enabled: true

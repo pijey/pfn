@@ -1,11 +1,28 @@
 import Ember from 'ember';
+import EmberValidations, { validator } from 'ember-validations';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend(EmberValidations, {
     temperatureTakingModes: [
       {label: "Rectal", value: "RECTAL"},
       {label: "Vaginal",    value: "VAGINAL"},
       {label: "Oral",    value: "ORAL"}
     ],
+    validations: {
+      "model.temperature_taking_hour": {
+        inline: validator(function() {
+          if (!this.model.get('model.temperature_taking_hour')){
+            return "doit être renseignée";
+          }
+          else if(moment(this.model.get('model.temperature_taking_hour')).hour() < 4 || moment(this.model.get('model.temperature_taking_hour')).hour() > 11) {
+            return "doit être effectuée entre 4h et 11h du matin";
+          }
+          //TODO Tester que le relevé doit etre unique par jour
+        }) 
+      },
+      "model.temperature_taking_mode": {
+        presence: {message: "doit être renseigné"}
+      },
+    },
   	profileData: function(){
   		var json = "##START_PROFILE##" + JSON.stringify(this.get('model')._data) + "##END_PROFILE##START_CYCLES##";
   		this.get("model.cycles").forEach(function(cycle){
@@ -50,8 +67,11 @@ export default Ember.ObjectController.extend({
   		return json;
   	}.property('model'),
   	actions: {
-	    save: function(profile) {
-	    	profile.save();
-	    }
+	    save: function() {
+	    	this.get("model").save();
+	    },
+      selectTemperatureTakingMode(takingMode) {
+        this.set('model.temperature_taking_mode', takingMode);
+      }
   	}
 });

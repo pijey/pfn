@@ -16,10 +16,10 @@ export default Ember.Route.extend({
     this._super(controller, model);
   },
   afterModel: function(model) {
-    this.get('store').find('cycle', {profile: model.get('profile.id')});
-    this.get('store').find('temperature', {cycle: model.get('id')});
-    this.get('store').find('mucus-sample', {cycle: model.get('id')});
-    this.get('store').find('cervix-feeling', {cycle: model.get('id')});
-    this.get('store').find('period', {cycle: model.get('id')});
+    this.get('store').query('cycle', {profile: model.get('profile.id')});
+    this.get('store').query('temperature', {cycle: model.get('id')});
+    this.get('store').query('mucus-sample', {cycle: model.get('id')});
+    this.get('store').query('cervix-feeling', {cycle: model.get('id')});
+    this.get('store').query('period', {cycle: model.get('id')});
   }
 });

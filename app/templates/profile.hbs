@@ -1,34 +1,33 @@
 <div class="row">
   <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
-    <h2 class="text-center">Mon profil</h2>
+    <h3 class="text-center">Mon profil</h3>
     <form class="form-horizontal">
       <div class="form-group">
         <label for="inputSurname" class="col-sm-3 control-label">Surnom</label>
-        <div class="input-group col-sm-6">
+        <div class="input-group col-xs-12">
           {{input type="text" class="form-control" value=model.surname id="inputSurname" placeholder="Surnom"}}
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group {{if errors.model.temperature_taking_hour.length "has-error" "has-success"}}">
         <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Heure de prise de température</label>
-        <div class="input-group col-sm-6">
-          {{bs-datetimepicker date=model.temperature_taking_hour format='HH:mm'}}
+        <div class="input-group col-xs-12">
+          {{bs-datetimepicker date=model.temperature_taking_hour format='HH:mm' updateDate=(action (mut model.temperature_taking_hour))}}
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Mode de prise de température</label>
-        <div class="input-group col-sm-6 col-sm-offset-3">
-          {{view "select"
-            class="form-control"
-            content=temperatureTakingModes
-            optionValuePath="content.value"
-            optionLabelPath="content.label"
-            value=model.temperature_taking_mode}}
+      <div class="form-group {{if errors.model.temperature_taking_mode.length "has-error" "has-success"}}">
+        <label for="inputTemperatureTakingMode" class="col-sm-3 control-label">Mode de prise de température</label>
+        <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
+          <select class="form-control" onchange={{action "selectTemperatureTakingMode" value="target.value"}}>
+            {{#each temperatureTakingModes as |temperatureTakingMode|}}
+              <option value={{temperatureTakingMode.value}} selected={{eq model.temperature_taking_mode temperatureTakingMode.value}}>{{temperatureTakingMode.label}}</option>
+            {{/each}}
+          </select>
         </div>
       </div>
       {{#if model.cycles}}
       <div class="form-group">
         <label for="" class="col-sm-3 control-label">Cycles</label>
-        <div class="input-group col-sm-6 col-sm-offset-3">
+        <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
           <ul class="list-group">
             <li class="list-group-item">
               <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Nombre de cycles<span class="badge">{{model.cycles.length}}</span>
@@ -45,24 +44,33 @@
       {{/if}}
       {{!-- {{profileData}} --}}
       <div class="form-group">
-        <div class="col-sm-offset-3">
-          <button {{action "save" model}} class="btn btn-default">
+        <div class="col-sm-offset-3 text-center">
+          <button {{action "save"}} class="btn btn-default" disabled="{{and model.isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
             {{else}}
-              {{#if model.isDirty}}
-                <span class="glyphicon glyphicon-floppy-save"></span>
+              {{#if model.hasDirtyAttributes}}
+                <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
               {{else}}
-                <span class="glyphicon glyphicon-floppy-saved"></span>
+                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
               {{/if}}
             {{/if}}
-            &nbsp;Enregistrer
+            
           </button>
         </div>
       </div>  
     </form>
-  </div>
-  <div class="col-md-4 col-md-offset-4 no-padding-left">
-    
+    <div>
+      {{#if errors}}
+        <ul class="list-group">
+        {{#each errors.model.temperature_taking_hour as |error|}}
+          <li class="list-group-item list-group-item-danger">Heure de prise de température : {{error}}</li>
+        {{/each}}
+        {{#each errors.model.temperature_taking_mode as |error|}}
+          <li class="list-group-item list-group-item-danger">Mode de prise de température : {{error}}</li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 	needs: ["application"],
 	reRender:false,
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
@@ -64,7 +64,7 @@ export default Ember.ObjectController.extend({
 			ps[period.get('cycle_day_number')-1] = period;
 		});
 		return ps;
-	}.property('model.cycle_length', 'model.periods.@each.present'),
+	}.property('model.cycle_length', 'model.periods.[].present'),
 	mucusSamples: function(){
 		var ps = [];
 		for (var i = 0; i < this.get("model.cycle_length"); i++) {
@@ -75,7 +75,7 @@ export default Ember.ObjectController.extend({
 		});
 		
 		return ps;
-	}.property('model.cycle_length', 'model.mucusSamples.@each.sensation'),
+	}.property('model.cycle_length', 'model.mucusSamples.[].sensation'),
 	cervixFeelings: function(){
 		var ps = [];
 		for (var i = 0; i < this.get("model.cycle_length"); i++) {
@@ -86,7 +86,7 @@ export default Ember.ObjectController.extend({
 		});
 		
 		return ps;
-	}.property('model.cycle_length', 'model.cervixFeelings.@each.sensation'),
+	}.property('model.cycle_length', 'model.cervixFeelings.[].sensation'),
  	dataChart: function(){
  		var chartLabels = [];
  		var chartDatasets = [
@@ -145,7 +145,7 @@ export default Ember.ObjectController.extend({
 	    	labels: chartLabels,
 		    datasets: chartDatasets
 		};    
- 	}.property('model.temperatures.@each.temperature_corrected'),
+ 	}.property('model.temperatures.[].temperature_corrected'),
   	observesSelectedCycle: function() {
   	  this.transitionToRoute('synthese', this.get('controllers.application.selectedCycle.id'));
   	}.observes("controllers.application.selectedCycle"),
