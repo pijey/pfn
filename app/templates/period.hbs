@@ -8,10 +8,12 @@
         <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
-        <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-          {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY' updateDate=(action (mut model.date))}}
-          {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+        <div class="{{if errors.model.date.length "has-error" "has-success"}}">
+          <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.end_date format='DD/MM/YYYY' updateDate=(action (mut model.date))}}
+            {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+          </div>
         </div>
         {{/if}}
         <label for="inputPresent" class="hidden-xs col-sm-3 control-label">Présence</label>
@@ -30,8 +32,8 @@
           {{input type="text" placeholder="Commentaire" class="form-control" id="inputPeriodComment" value=model.comment}}
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-xs-offset-4 col-sm-offset-3">
+      <div class="text-center">
+        <div>
           <button {{action "save" model}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
@@ -52,5 +54,14 @@
         </div>
       </div>
     </form>
+    <div class="container">
+      {{#if errors}}
+        <ul class="list-group">
+        {{#each errors.model.date as |error|}}
+          <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   </div>
 </div>

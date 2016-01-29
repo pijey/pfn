@@ -30,21 +30,17 @@ export default Ember.Controller.extend(EmberValidations, {
   }.on('init'),
   actions: {
     save: function() {
-        var that = this;
-        this.get("model").save().then(function(){
-          if(that.get('extended')){
-            that.transitionToRoute('mucus-samples', that.get('model.cycle.id'));
-          }
-        });
+        this.get("model").save();
     },
     cancel: function(mucusSample){
+      var cycleId = this.get('model.cycle.id');
       if(mucusSample.get('isNew')){
         mucusSample.destroyRecord();
       }
       else {
-        mucusSample.rollback();
+        mucusSample.rollbackAttributes();
       } 
-      this.transitionToRoute('mucus-samples', this.get('controllers.application.model.activeCycle.id'));
+      this.transitionToRoute('mucus-samples', cycleId, {queryParams:{isPopup:false}});
     },
     selectSensation(sensation){
       this.set('model.sensation', sensation);

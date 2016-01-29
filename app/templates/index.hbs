@@ -1,0 +1,40 @@
+<div class="text-center">
+	<h3>Bienvenue sur votre assistant PFN !</h3>
+
+
+	{{#if (not model.temperature_taking_hour)}}
+		<h4>Pour commencer, merci de remplir votre {{link-to "profil" "profile" model.id}} pour commencer à utiliser l'application</h4>
+	{{else}}
+		{{#if model.selectedCycle}}
+		  	<div class="icon-btn">
+		  	{{#link-to "synthese" model.selectedCycle.id}}
+		  		<i class="icon ion-arrow-graph-up-right"></i>
+		  		<h3>Synthèse</h3>
+		  	{{/link-to}}
+		  	</div>
+		  	{{#if model.selectedCycle}}
+		  	{{else}}
+		  	<div class="icon-btn">
+		  		{{#link-to "daily-report" model.selectedCycle.id model.selectedCycle.cycle_length}}
+		  			<i class="icon ion-calendar"></i>
+		  			<h3>Relevé journalier</h3>
+		  		{{/link-to}}
+		  	</div>
+		  	{{/if}}
+		{{else}}
+			<h4>Pour commencer, merci de {{link-to "créer" "cycle" "new"}} un nouveau cycle ou d'en {{link-to "sélectionner" "cycles" model.id}} un.</h4>
+		{{/if}}
+		
+	{{/if}}
+	<div class="clearfix"></div>
+	<div>
+		<div class="alert alert-info alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Pour plus d'information sur la méthode des indices combinés, vous pouvez consulter le site de l'association <a href="http://pfn.be/">CAF</a> ou l'ouvrage de Milène Clichy <a href="http://livre.fnac.com/a7774831/Milene-Clichy-Vivre-sa-fertilite-naturellement-avec-les-indices-combines">Vivre sa fertilité naturellement</a>
+		</div>
+		<div class="alert alert-danger alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Cette application est destinée à des <strong>femmes connaissant et maîtrisant la méthode des indices combinés</strong> (ou planning familial naturel). <strong>L'application ou son auteur ne saurait être tenu responsable en cas de grossesse imprévue</strong>.
+		</div>
+	</div>
+</div> 

@@ -98,7 +98,13 @@
               {{/if}}
              {{#if model.beginningOfPhaseII}}
                 <li class="list-group-item">
-                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase II <span class="badge">Jour {{model.beginningOfPhaseII}} à {{model.endOfPhaseII}}</span>
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Phase II <span class="badge">Jour {{model.beginningOfPhaseII}} à 
+                  {{#if model.endOfPhaseII}}
+                    {{model.endOfPhaseII}}
+                  {{else}}
+                    ?
+                  {{/if}}
+                  </span>
                 </li>
               {{/if}}
               {{#if model.beginningOfPhaseIII}}
@@ -110,7 +116,7 @@
           </div>
         </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Glaires</label>
+            <label for="" class="col-sm-3 control-label">Glaires {{link-to "(Détails...)" "mucus-samples" model.id}}</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.first_day_of_mucus_or_wet}}
@@ -128,12 +134,11 @@
                   <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Pic de glaire + 3j <span class="badge">Jour {{model.mucus_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
-                <li class="list-group-item">{{link-to "Détails" "mucus-samples" model.id}}</li>
               </ul>
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Col</label>
+            <label for="" class="col-sm-3 control-label">Col {{link-to "(Détails...)" "cervix-feelings" model.id}}</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.first_day_of_cervix_change}}
@@ -151,12 +156,11 @@
                   <i class="icon ion-android-calendar"></i> Pic du col + 3j <span class="badge">{{model.cervix_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
-                <li class="list-group-item">{{link-to "Détails" "cervix-feelings" model.id}}</li>
               </ul>
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Température</label>
+            <label for="" class="col-sm-3 control-label">Température {{link-to "(Détails...)" "temperatures" model.id}}</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
                 {{#if model.cacheTemperature}}
@@ -169,18 +173,18 @@
                   <i class="icon ion-android-calendar"></i> 3e jour de température haute <span class="badge">{{model.third_day_hot_temperature}}</span>
                 </li>
                 {{/if}}
-                <li class="list-group-item">{{link-to "Détails" "temperatures" model.id}}</li>
               </ul>
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Règles</label>
+            <label for="" class="col-sm-3 control-label">Règles {{link-to "(Détails...)" "periods" model.id}}</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
+                {{#if (gt model.periods.length 0)}}
                 <li class="list-group-item">
-                  <i class="icon ion-waterdrop"></i> Durée des règles <span class="badge">{{model.periodsPresent.length}} jours</span>
-                </li>
-                <li class="list-group-item">{{link-to "Détails" "periods" model.id}}</li>
+                  <i class="icon ion-waterdrop"></i> Durée des règles <span class="badge">{{model.periods.length}} jours</span>
+                </li>  
+                {{/if}}
               </ul>
             </div>
           </div>

@@ -13,12 +13,12 @@
         </tr>
         <tr>
           <th>Jour</th>
-          <th>Sensation</th>
+          <th>S<span class="hidden-xs">Sensation</span></th>
           <th class="hidden-xs">Consistance</th>
-          <th>Présence au col</th>
+          <th>P<span class="hidden-xs">résence au col</span></th>
           <th class="hidden-xs">Consistance</th>
           <th class="hidden-xs">Commentaire</th>
-          <th>Actions</th>
+          <th><span class="hidden-xs">Actions</span></th>
         </tr>
       </thead>
       <tbody>
@@ -28,22 +28,17 @@
           {{#if mucus.is_first_day_of_mucus_or_wet}}
             <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour d'humidité ou de présence de glaire cervicale, début de la phase II" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td class={{mucus.sensation}}>&nbsp;</td>
+              <td>{{mucus-sample-sensation sensation=mucus.sensation}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
-              <td>
-                {{#if mucus.at_cervix}}
-                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                {{else}}
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {{/if}}</td>
+              <td>{{mucus-sample-at-cervix at_cervix=mucus.at_cervix}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
-                {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                {{#link-to 'mucus-sample' model.id mucus.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' mucus}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
@@ -51,44 +46,34 @@
             {{#if mucus.is_mucus_peak_plus_3_days}}
             <tr data-toggle="tooltip" data-placement="bottom" title="Pic de glaire cervicale + 3 jours, début de la phase III" class="mucus-sample text-center info">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td class={{mucus.sensation}}>&nbsp;</td>
+              <td>{{mucus-sample-sensation sensation=mucus.sensation}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
-              <td>
-                {{#if mucus.at_cervix}}
-                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                {{else}}
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {{/if}}</td>
+              <td>{{mucus-sample-at-cervix at_cervix=mucus.at_cervix}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
-                {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                {{#link-to 'mucus-sample' model.id mucus.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' mucus}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
             {{else}}
             <tr class="mucus-sample text-center">
               <td>{{mucus.cycle_day_number}} ({{date-format mucus.date "DD/MM/YY"}})</td>
-              <td class={{mucus.sensation}}>&nbsp;</td>
+              <td>{{mucus-sample-sensation sensation=mucus.sensation}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_vulva}}</td>
-              <td>
-                {{#if mucus.at_cervix}}
-                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                {{else}}
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {{/if}}</td>
+              <td>{{mucus-sample-at-cervix at_cervix=mucus.at_cervix}}</td>
               <td class="hidden-xs">{{mucus.apparency_at_cervix}}</td>
               <td class="hidden-xs">{{mucus.comment}}</td>
               <td>
-                {{#link-to 'mucus-sample' model.id mucus.id classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                {{#link-to 'mucus-sample' model.id mucus.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' mucus}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
@@ -100,8 +85,8 @@
     </table>
     {{/if}}
     <div class="text-center">
-      {{#link-to 'mucus-sample' model.id 'new' (query-params extended=true) classNames="btn btn-default btn-sm"}}
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
+      {{#link-to 'mucus-sample' model.id 'new' (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+        <i class="icon ion-plus-round"></i>&nbsp;Ajouter
       {{/link-to}}
     </div>
   </div>

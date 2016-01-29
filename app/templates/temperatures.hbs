@@ -50,10 +50,10 @@
               <td class="hidden-xs">{{temperature.comment}}</td>
               <td>
                 {{#link-to 'temperature' model.id temperature.id classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' temperature}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
@@ -66,10 +66,10 @@
               <td class="hidden-xs">{{temperature.comment}}</td>
               <td>
                 {{#link-to 'temperature' model.id temperature.id (query-params extended="true")classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' temperature}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
@@ -81,7 +81,7 @@
     {{/if}}
     <div class="text-center">
       {{#link-to 'temperature' model.id 'new' classNames="btn btn-default btn-sm"}}
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Ajouter
+        <i class="icon ion-plus-round"></i>Ajouter
       {{/link-to}}
       </div>
   </div>

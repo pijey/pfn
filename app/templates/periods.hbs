@@ -9,30 +9,24 @@
           <th>Présence de règles</th>
           <th class="hidden-xs">Volume</th>
           <th class="hidden-xs">Commentaire</th>
-          <th>Actions</th>
+          <th><span class="hidden-xs">Actions</span></th>
         </tr>
       </thead>
       <tbody>
-      {{#each period in model.periods}}
+      {{#each model.periods as |period|}}
         {{#if period.isNew}}
         {{else}}
         <tr class="text-center">
           <td>{{period.cycle_day_number}} ({{date-format period.date "DD/MM/YY"}})</td>
-          <td>
-          {{#if period.present}}
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          {{else}}
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          {{/if}}
-          </td>
+          <td>{{period-presence present=period.present}}</td>
           <td class="hidden-xs">{{period.volume}}</td>
           <td class="hidden-xs">{{period.comment}}</td>
           <td>
-            {{#link-to 'period' model.id period.id classNames="btn btn-default btn-sm"}}
-              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            {{#link-to 'period' model.id period.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+              <i class="icon ion-edit"></i>
             {{/link-to}}
             <button {{action 'remove' period}} type="button" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <i class="icon ion-android-close"></i>
             </button>
           </td>
         </tr>
@@ -44,8 +38,8 @@
     {{/if}}
     
     <div class="text-center">
-      {{#link-to 'period' model.id 'new' classNames="btn btn-default btn-sm"}}
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
+      {{#link-to 'period' model.id 'new' (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+        <i class="icon ion-plus-round"></i>&nbsp;Ajouter
       {{/link-to}}
     </div>
   </div>

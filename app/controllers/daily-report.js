@@ -105,9 +105,9 @@ export default Ember.Controller.extend({
 			          date:takingDate,
 			          cycle:m
 			        });
+			        that.set("newPeriod", per);
 			        that.get("newPeriods").push(day);
 				}
-				that.set("dayNumber", day);
 		        that.set('model', m);
 			});
 		}

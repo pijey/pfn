@@ -17,7 +17,7 @@ export default Ember.Controller.extend(EmberValidations, {
         else if(moment(this.model.get('model.cycle.start_date')).isAfter(this.model.get('model.date'), 'day')) {
           return "doit être postérieure à la date de début du cycle";
         }
-        else if(this.model.get('model.cycle.end_date') && moment(this.model.get('model.cycle.end_date')).isBefore(this.model.get('date'), 'day')) {
+        else if(this.model.get('model.cycle.end_date') && moment(this.model.get('model.cycle.end_date')).isBefore(this.model.get('model.date'), 'day')) {
           return "doit être antérieure à la date de fin du cycle";
         }
         //TODO Tester que le relevé doit etre unique par jour
@@ -41,23 +41,17 @@ export default Ember.Controller.extend(EmberValidations, {
   }.on('init'),
   actions: {
     save: function() {
-        var that = this;
-        this.get("model").save().then(function(){
-            that.get('controllers.application.model.activeCycle').save().then(function(){
-              if(that.get('extended')){
-                that.transitionToRoute('cervix-feelings', that.get('controllers.application.model.activeCycle.id'));
-              }
-            });
-        });
+        this.get("model").save();
     },
     cancel: function(cervixFeeling){
+      var cycleId = this.get("model.cycle.id");
       if(cervixFeeling.get('isNew')){
         cervixFeeling.destroyRecord();
       }
       else {
-        cervixFeeling.rollback();
+        cervixFeeling.rollbackAttributes();
       } 
-      this.transitionToRoute('cervix-feelings', this.get('controllers.application.model.activeCycle.id'));
+      this.transitionToRoute('cervix-feelings', cycleId, {queryParams:{isPopup:false}});
     },
     selectSensation(sensation){
       this.set('model.sensation', sensation);

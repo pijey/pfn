@@ -49,25 +49,17 @@ export default Ember.Controller.extend(EmberValidations, {
   }.on('init'),
   actions: {
     save: function() {
-      var that = this;
-
-      this.get("model").save().then(function(temperature){
-          // that.get("controllers.application.model.activeCycle.temperatures").pushObject(temperature);
-          that.get('controllers.application.model.activeCycle').save().then(function(){
-            if(that.get('extended')){
-              that.transitionToRoute('temperatures', that.get('controllers.application.model.activeCycle.id'));
-            }
-          });
-      });
+      this.get("model").save();
     },
     cancel: function(temperature){
+      var cycleId = this.get('model.cycle.id');
       if(temperature.get('isNew')){
         temperature.destroyRecord();
       }
       else {
-        temperature.rollback();
+        temperature.rollbackAttributes();
       } 
-      this.transitionToRoute('temperatures', this.get('controllers.application.model.activeCycle.id'));
+      this.transitionToRoute('temperatures', cycleId, {queryParams:{isPopup:false}});
     },
     toggleIgnoreTemp(){
       this.set("model.ignore", !this.get("model.ignore"));

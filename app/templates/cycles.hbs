@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
     <h3 class="text-center">Cycles</h3>
+    {{#if model.cycles}}
     <table class="table table-hover">
       <thead class="text-center">
         <tr>
@@ -13,7 +14,7 @@
       </thead>
       <tbody>
       {{#each model.cycles as |cycle|}}
-        <tr class="text-center">
+        <tr class="text-center {{if (eq model.selectedCycle.id cycle.id) "info"}}">
           <td class="hidden-xs">{{cycle.id}}</td>
           <td>{{date-format cycle.start_date "DD/MM/YY"}}</td>
           <td>
@@ -23,15 +24,17 @@
           </td>
           <td>{{cycle.cycle_length}}</td>
           <td>
-            {{#link-to 'cycle' cycle.id classNames="btn btn-default btn-sm"}}<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>{{/link-to}}
-            <button {{action "remove" cycle}} class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            {{#link-to 'cycle' cycle.id classNames="btn btn-default btn-sm"}}<i class="icon ion-edit"></i>{{/link-to}}
+            <button {{action "selectCycle" cycle}} class="btn btn-default btn-sm"><i class="icon ion-checkmark-round"></i></button>
+            <button {{action "remove" cycle}} class="btn btn-default btn-sm"><i class="icon ion-android-close"></i></button>
           </td>
         </tr>
       {{/each}}
       </tbody>
     </table>
+    {{/if}}
     <div class="text-center">
-      {{#link-to 'cycle' 'new' classNames="btn btn-default btn-sm"}}<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter{{/link-to}}
+      {{#link-to 'cycle' 'new' classNames="btn btn-default"}}<i class="icon ion-plus-round"></i>&nbsp;Ajouter{{/link-to}}
     </div>
   </div>
 </div>

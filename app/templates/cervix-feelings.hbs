@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <h2 class="text-center">Sensations au col du cycle</h2>
+    <h2 class="text-center">Sensations au col</h2>
     {{#if model.cervixFeelings}}
       <table class="table table-hover">
       <thead class="text-center">
         <tr>
           <th>Jour du cycle</th>
-          <th>Sensation</th>
-          <th>Ouverture</th>
-          <th>Position</th>
-          <th>Inclinaison</th>
+          <th>S<span class="hidden-xs">ensation</span></th>
+          <th>O<span class="hidden-xs">uverture</span></th>
+          <th>P<span class="hidden-xs">osition</span></th>
+          <th>I<span class="hidden-xs">nclinaison</span></th>
           <th class="hidden-xs">Commentaire</th>
-          <th>Actions</th>
+          <th><span class="hidden-xs">Actions</span></th>
         </tr>
       </thead>
       <tbody>
@@ -21,17 +21,17 @@
           {{#if cervixFeeling.is_cervix_peak_plus_3_days}}
             <tr data-toggle="tooltip" data-placement="bottom" title="Pic du col + 3 jours, début de la phase III" class="cervix-feeling text-center info">
               <td>{{cervixFeeling.cycle_day_number}} ({{date-format cervixFeeling.date "DD/MM/YY"}})</td>
-              <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
-              <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
-              <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
-              <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
+              <td>{{cervix-feeling-sensation sensation=cervixFeeling.sensation}}</td>
+              <td>{{cervix-feeling-opening opening=cervixFeeling.opening}}</td>
+              <td>{{cervix-feeling-position position=cervixFeeling.position}}</td>
+              <td>{{cervix-feeling-inclining inclining=cervixFeeling.inclining}}</td>
               <td class="hidden-xs">{{cervixFeeling.comment}}</td>
               <td>
                 {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' cervixFeeling}} type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <i class="icon ion-android-close"></i>
                 </button>
               </td>
             </tr>
@@ -39,34 +39,34 @@
             {{#if cervixFeeling.is_first_day_of_cervix_change}}
               <tr data-toggle="tooltip" data-placement="bottom" title="Premier jour de changement du col, début de la phase II" class="cervix-feeling text-center info">
                 <td>{{cervixFeeling.cycle_day_number}} ({{date-format cervixFeeling.date "DD/MM/YY"}})</td>
-                <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
+                <td>{{cervix-feeling-sensation sensation=cervixFeeling.sensation}}</td>
+                <td>{{cervix-feeling-opening opening=cervixFeeling.opening}}</td>
+                <td>{{cervix-feeling-position position=cervixFeeling.position}}</td>
+                <td>{{cervix-feeling-inclining inclining=cervixFeeling.inclining}}</td>
                 <td class="hidden-xs">{{cervixFeeling.comment}}</td>
                 <td>
-                  {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  {{#link-to 'cervix-feeling' model.id cervixFeeling.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+                    <i class="icon ion-edit"></i>
                   {{/link-to}}
                   <button {{action 'remove' cervixFeeling}} type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <i class="icon ion-android-close"></i>
                   </button>
                 </td>
               </tr>
             {{else}}
               <tr class="cervix-feeling text-center">
                 <td>{{cervixFeeling.cycle_day_number}} ({{date-format cervixFeeling.date "DD/MM/YY"}})</td>
-                <td {{bindAttr class=cervixFeeling.sensation}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.opening}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.position}}>&nbsp;</td>
-                <td {{bindAttr class=cervixFeeling.inclining}}>&nbsp;</td>
+                <td>{{cervix-feeling-sensation sensation=cervixFeeling.sensation}}</td>
+                <td>{{cervix-feeling-opening opening=cervixFeeling.opening}}</td>
+                <td>{{cervix-feeling-position position=cervixFeeling.position}}</td>
+                <td>{{cervix-feeling-inclining inclining=cervixFeeling.inclining}}</td>
                 <td class="hidden-xs">{{cervixFeeling.comment}}</td>
                 <td>
                   {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    <i class="icon ion-edit"></i>
                   {{/link-to}}
                   <button {{action 'remove' cervixFeeling}} type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <i class="icon ion-android-close"></i>
                   </button>
                 </td>
               </tr>
@@ -78,8 +78,8 @@
     </table>
     {{/if}}
     <div class="text-center">
-      {{#link-to 'cervix-feeling' model.id 'new' classNames="btn btn-default btn-sm"}}
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter
+      {{#link-to 'cervix-feeling' model.id 'new' (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
+        <i class="icon ion-plus-round"></i>&nbsp;Ajouter
       {{/link-to}}
     </div>
   </div>

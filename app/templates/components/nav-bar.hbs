@@ -1,0 +1,81 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header" >
+			{{!-- <div class="navbar-brand {{if isPopup "open"}}" {{action "back" isPopup}} id="nav-icon">
+			  <span></span>
+			  <span></span>
+			  <span></span>
+			</div> --}}
+			{{#if isPopup}}
+			<a class="navbar-brand" href="#" {{action "back"}}><i class="icon ion-ios-arrow-back"></i>&nbsp;&nbsp;{{pageName}}</a>
+			{{else}}
+			{{#link-to "index" classNames="navbar-brand"}}
+				&nbsp;&nbsp;PFN
+			{{/link-to}}
+			{{/if}}
+		</div>
+		{{#if isPopup}}
+		{{else}}
+		<ul class="nav navbar-nav navbar-right">
+		    {{#if model.selectedCycle.id}}
+		        <li>{{#link-to 'synthese' model.selectedCycle.id role="button"}}
+		          <i class="icon ion-arrow-graph-up-right"></i>
+		          <span class="hidden-xs">&nbsp;{{t "application.synthesis"}}</span>{{/link-to}}
+		        </li>
+		        {{#if model.selectedCycle.end_date}}
+		        {{else}}
+		        <li>
+		        {{#link-to 'daily-report' model.selectedCycle.id model.selectedCycle.cycle_length role="button"}}
+		          <i class="icon ion-calendar"></i>
+		          <span class="hidden-xs">&nbsp;{{t "application.daily_report"}}</span>
+		        {{/link-to}}
+		        </li>
+		        {{/if}}
+		      {{/if}}
+		      
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		            <i class="icon ion-refresh"></i><span class="hidden-xs">&nbsp;Cycles</span>
+		          </a>
+		          <ul class="dropdown-menu">
+		          {{#if model.selectedCycle.id}}
+		            <li>{{#link-to 'cycle' model.selectedCycle.id}}
+		            	Cycle sélectionné : 
+		            	{{#if model.selectedCycle.end_date}}
+		                  du {{date-format model.selectedCycle.start_date "DD/MM/YY"}} au {{date-format model.selectedCycle.end_date "DD/MM/YY"}}
+		                {{else}}
+		                  à partir du {{date-format model.selectedCycle.start_date "DD/MM/YY"}}
+		                {{/if}}
+		            {{/link-to}}</li>
+		            <li class="divider"></li>
+		          {{/if}}
+		          {{#each lastCycles as |cycle index|}}
+		          {{#if (lt index 3)}}
+		            <li class="{{if cycle.end_date "" "list-group-item-success"}}">
+		              <a href="#" {{action "selectCycle" cycle}}>
+		                {{#if cycle.end_date}}
+		                  Cycle du {{date-format cycle.start_date "DD/MM/YY"}} au {{date-format cycle.end_date "DD/MM/YY"}}
+		                {{else}}
+		                  Cycle à partir du {{date-format cycle.start_date "DD/MM/YY"}} (En cours)
+		                {{/if}}
+		              </a>
+		            </li>
+		          {{/if}}
+		          {{/each}}
+		            <li>{{#link-to 'cycles' model.id}}Tous les cycles{{/link-to}}</li>
+		            <li class="divider"></li>
+		            <li>{{#link-to 'cycle' "new"}}Nouveau cycle{{/link-to}}</li>
+		          </ul>
+		        </li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="icon ion-female"></i><span class="hidden-xs">&nbsp;{{model.surname}}</span></a>
+		          <ul class="dropdown-menu">
+		            <li>{{#link-to 'profile' model.id}}Profil{{/link-to}}</li>
+		          </ul>
+		        </li>
+		    </ul>
+		{{/if}}
+		
+	</div>
+</nav>

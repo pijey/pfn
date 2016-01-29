@@ -142,50 +142,31 @@ tr.cervix-feeling > td.CLOSED {
 	background-position: center center;
 }
 
-tr.cervix-feeling > td.HORIZONTAL {
-	background-image: url(images/horizontal.png);
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: center center;
-}
-
-tr.cervix-feeling > td.VERTICAL {
-	background-image: url(images/horizontal.png);
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: center center;
+i.VERTICAL {
+	display: inline-block;
 	-moz-transform:rotate(90deg); 
-   	-moz-transform-origin: center;
    	-webkit-transform: rotate(90deg);
-  	-webkit-transform-origin: center;
    	-o-transform: rotate(90deg);
-   	-o-transform-origin:  center;
+   	-ms-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
-tr.cervix-feeling > td.NEARLY_HORIZONTAL {
-	background-image: url(images/horizontal.png);
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: center center;
+i.NEARLY_HORIZONTAL {
+	display: inline-block;
 	-moz-transform:rotate(-30deg); 
-   	-moz-transform-origin: center;
    	-webkit-transform: rotate(-30deg);
-  	-webkit-transform-origin: center;
    	-o-transform: rotate(-30deg);
-   	-o-transform-origin:  center;
+   	-ms-transform: rotate(-30deg);
+    transform: rotate(-30deg);
 }
 
-tr.cervix-feeling > td.NEARLY_VERTICAL {
-	background-image: url(images/horizontal.png);
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: center center;
+i.NEARLY_VERTICAL {
+	display: inline-block;
 	-moz-transform:rotate(-60deg); 
-   	-moz-transform-origin: center;
    	-webkit-transform: rotate(-60deg);
-  	-webkit-transform-origin: center;
    	-o-transform: rotate(-60deg);
-   	-o-transform-origin:  center;
+   	-ms-transform: rotate(-60deg);
+    transform: rotate(-60deg);
 }
 
 tr.cervix-feeling > td.HIGH {
@@ -318,6 +299,8 @@ td.row_label {
 
     table.synthese td.row_label {
     	width: 22px !important;
+    }
+    table.synthese td {
     	padding: 0px !important;
     }
     table.synthese td:not(.row_label), td:not(.row_label2) { 
@@ -331,4 +314,29 @@ td.row_label {
 
 .phases a {
 	color: #FFF;
+}
+
+a[role=button]>i.icon {
+	font-size: 1.5em;
+}
+
+.synthese a[role=button]>i.icon {
+	font-size: 1em !important;
+}
+
+.fixed-bottom {
+	position: absolute;
+	bottom: 0;
+}
+
+.icon-btn {
+	float: left;
+}
+
+.icon-btn i {
+	font-size: 3.5em;
+}
+
+.icon-btn h3 {
+	margin-top:0px;
 }

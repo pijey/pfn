@@ -31,5 +31,6 @@ export default DS.Model.extend({
       });
       return activeCycle;
   }.property('cycles.[].ongoing'),
-  cycles: DS.hasMany('cycle')
+  cycles: DS.hasMany('cycle', { inverse: "profile" }),
+  selectedCycle: DS.belongsTo('cycle', { inverse: null })
 });

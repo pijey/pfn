@@ -54,15 +54,10 @@ export default Ember.Controller.extend(EmberValidations, {
 	    			cycle.get("previousCycle").save();
 	    		}
 	    	}
-	    	var that = this;
-	      	cycle.save().then(function(){
-	      		// that.get("applicationController.model.cycles").then(function(){
-		      		that.get("applicationController.model.cycles").pushObject(cycle);
-		      		that.get('applicationController.model').save().then(function(){
-		      			that.transitionToRoute('cycles', that.get('applicationController.model.id'));
-		      		});
-		      	// });
-	      	});
+	      	cycle.save();
+	      	if(!this.get("applicationController.model.selectedCycle")){
+	      		this.set("applicationController.model.selectedCycle", cycle);
+	      	}
 	    },
 	    remove: function(cycle){
 	    	cycle.destroyRecord();

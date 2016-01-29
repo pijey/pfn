@@ -1,10 +1,15 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend(Ember.Evented, {
-  	selectedCycle: null,
-    actions: {
-      selectCycle: function(cycle) {
-          this.set('selectedCycle', cycle);
-      }
-    }
+    queryParams: ['isPopup', 'pageName'],
+	isPopup: false,
+	pageName: false,
+	goBack:false,
+	startDateDesc:["start_date:desc"],
+	lastCycles:Ember.computed.sort("model.cycles.[]", "startDateDesc")
+	// actions:{
+	// 	back(){
+	// 		this.set("goBack", true);
+	// 	}
+	// }
 });

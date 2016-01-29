@@ -21,7 +21,7 @@ export default DS.Model.extend({
     }
   }.property('third_day_hot_temperature', 'cacheTemperature', 'temperatures.[].temperature_corrected'),
   calendarCalculation: function(){
-    if(this.get('profile.cycles').length < 6 || this.get('previousCycle.ovulation') === false) {
+    if(this.get('profile.cycles.length') < 6 || this.get('previousCycle.ovulation') === false) {
       return 1;
     }
     else if(this.get('profile.cycles').length < 12){

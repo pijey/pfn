@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "fr.pfn.app"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "fr.pfn.app"
         }
     },
     "dependent_plugins": {}
