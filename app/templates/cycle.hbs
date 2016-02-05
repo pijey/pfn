@@ -1,5 +1,5 @@
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+    <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
       <h3 class="text-center">
         Cycle
         {{#if model.isNew}}
@@ -26,13 +26,13 @@
         <div class="form-group {{if errors.model.start_date.length "has-error" "has-success"}}">
           <label for="inputStartDate" class="hidden-xs col-sm-3 control-label">Date de début</label>
           <div class="input-group col-xs-12 col-sm-6">
-            {{bs-datetimepicker date=model.start_date format='[Du] DD/MM/YYYY' updateDate=(action (mut model.start_date))}}
+            {{bs-datetimepicker date=model.start_date format='[Du] DD/MM/YYYY' readonly=true updateDate=(action (mut model.start_date))}}
           </div>
         </div>
          <div class="form-group">
           <label for="inputEndDate" class="hidden-xs col-sm-3 control-label">Date de fin</label>
           <div class="input-group col-xs-12 col-sm-6">
-            {{bs-datetimepicker date=model.end_date showClear=true format='[au] DD/MM/YYYY' updateDate=(action (mut model.end_date))}}
+            {{bs-datetimepicker date=model.end_date showClear=true format='[au] DD/MM/YYYY' readonly=true updateDate=(action (mut model.end_date))}}
           </div>
         </div>
         <div class="form-group">
@@ -60,7 +60,7 @@
           {{/if}}
         </div>
         <div class="form-group">
-          <div class="col-sm-offset-3 text-center">
+          <div class="text-center">
             <button {{action "save" model}} class="btn btn-default" disabled="{{and model.isValid model.hasDirtyAttributes null "disabled"}}">
               {{#if model.isSaving}}
                 <img src="assets/images/loader.gif" alt="">
@@ -116,9 +116,12 @@
           </div>
         </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Glaires {{link-to "(Détails...)" "mucus-samples" model.id}}</label>
+            <label for="" class="col-sm-3 control-label">Glaires</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
+                {{#link-to "mucus-samples" model.id tagName="li" classNames="list-group-item"}}
+                  <i class="icon ion-forward"></i> Voir les {{model.mucusSamples.length}} relevés
+                {{/link-to}}
                 {{#if model.first_day_of_mucus_or_wet}}
                 <li class="list-group-item">
                   <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 1er jour de glaire ou d'humidité <span class="badge">Jour {{model.first_day_of_mucus_or_wet.cycle_day_number}}</span>
@@ -138,9 +141,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Col {{link-to "(Détails...)" "cervix-feelings" model.id}}</label>
+            <label for="" class="col-sm-3 control-label">Col</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
+                {{#link-to "cervix-feelings" model.id tagName="li" classNames="list-group-item"}}
+                  <i class="icon ion-forward"></i> Voir les {{model.cervixFeelings.length}} relevés
+                {{/link-to}}
                 {{#if model.first_day_of_cervix_change}}
                 <li class="list-group-item">
                   <i class="icon ion-android-calendar"></i> 1er jour de changement du col <span class="badge">{{model.first_day_of_cervix_change.cycle_day_number}}</span>
@@ -160,9 +166,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Température {{link-to "(Détails...)" "temperatures" model.id}}</label>
+            <label for="" class="col-sm-3 control-label">Températures</label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
+                {{#link-to "temperatures" model.id tagName="li" classNames="list-group-item"}}
+                  <i class="icon ion-forward"></i> Voir les {{model.temperatures.length}} relevés
+                {{/link-to}}
                 {{#if model.cacheTemperature}}
                 <li class="list-group-item">
                   <i class="icon ion-fireball"></i>Seuil de température haute <span class="badge">{{model.cacheTemperature}} °</span>
@@ -177,9 +186,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Règles {{link-to "(Détails...)" "periods" model.id}}</label>
+            <label for="" class="col-sm-3 control-label">Règles </label>
             <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
               <ul class="list-group">
+                {{#link-to "periods" model.id tagName="li" classNames="list-group-item"}}
+                  <i class="icon ion-forward"></i> Voir les {{model.periods.length}} relevés
+                {{/link-to}}
                 {{#if (gt model.periods.length 0)}}
                 <li class="list-group-item">
                   <i class="icon ion-waterdrop"></i> Durée des règles <span class="badge">{{model.periods.length}} jours</span>

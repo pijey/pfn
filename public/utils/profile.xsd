@@ -1,0 +1,155 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="profile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="surname" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="temperature_taking_hour" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="([4-9]|0[0-9]|1[0-1]):[0-5][0-9]"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="temperature_taking_mode" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="RECTAL"/>
+              <xs:enumeration value="VAGINAL"/>
+              <xs:enumeration value="ORAL"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="cycles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cycle" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:boolean" name="ongoing" minOccurs="1" maxOccurs="1"/>
+                    <xs:element type="xs:string" name="start_date" minOccurs="1" maxOccurs="1"/>
+                    <xs:element type="xs:string" name="end_date" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="temperatures">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="temperature" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="temperature" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:float">
+                                      <xs:minInclusive value="35"/>
+                                      <xs:maxInclusive value="40"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element type="xs:string" name="date" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="comment" minOccurs="0" maxOccurs="1"/>
+                                <xs:element type="xs:boolean" name="ignore" minOccurs="1" maxOccurs="1"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="periods">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="period" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:boolean" name="present" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="date" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="comment" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="volume" minOccurs="1" maxOccurs="1"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="mucusSamples">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="mucusSample" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="sensation" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="DRY"/>
+                                      <xs:enumeration value="HUMID"/>
+                                      <xs:enumeration value="WET"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element type="xs:string" name="apparency_at_vulva" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="apparency_at_cervix" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:boolean" name="at_cervix" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="date" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="comment" minOccurs="1" maxOccurs="1"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cervixFeelings">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="cervixFeeling" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="sensation" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="HARD"/>
+                                      <xs:enumeration value="SOFT"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="opening" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="CLOSED"/>
+                                      <xs:enumeration value="SLIGHTLY_OPENNED"/>
+                                      <xs:enumeration value="OPENNED"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="position" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="LOW"/>
+                                      <xs:enumeration value="MEDIUM"/>
+                                      <xs:enumeration value="HIGH"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="inclining" minOccurs="1" maxOccurs="1">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="HORIZONTAL"/>
+                                      <xs:enumeration value="NEARLY_HORIZONTAL"/>
+                                      <xs:enumeration value="NEARLY_VERTICAL"/>
+                                      <xs:enumeration value="VERTICAL"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="date" minOccurs="1" maxOccurs="1"/>
+                                <xs:element type="xs:string" name="comment" minOccurs="1" maxOccurs="1"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,9 +1,9 @@
-import Ember from "ember";
+import SampleController from "./sample-controller";
 import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.Controller.extend(EmberValidations, {
+export default SampleController.extend(EmberValidations, {
+  backRoute: "mucus-samples",
   sensations:[{label: 'Sec', value: 'DRY'},{label: 'Humide', value: 'HUMID'},{label: 'Mouillé', value: 'WET'}],
-  queryParams: ["extended"],
   validations: {
     "model.date": {
       inline: validator(function() {
@@ -24,24 +24,10 @@ export default Ember.Controller.extend(EmberValidations, {
     },
     cycle:true
   },
-  needs: ['application'],
   setValidation: function() {
     // this.set('validations.model.sensation.presence.message', this.t("errors.blank"));
   }.on('init'),
   actions: {
-    save: function() {
-        this.get("model").save();
-    },
-    cancel: function(mucusSample){
-      var cycleId = this.get('model.cycle.id');
-      if(mucusSample.get('isNew')){
-        mucusSample.destroyRecord();
-      }
-      else {
-        mucusSample.rollbackAttributes();
-      } 
-      this.transitionToRoute('mucus-samples', cycleId, {queryParams:{isPopup:false}});
-    },
     selectSensation(sensation){
       this.set('model.sensation', sensation);
     },

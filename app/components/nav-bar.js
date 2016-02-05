@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	goBack:false,
+	currentController:null,
 	actions: {
 		back: function(){
-			this.sendAction("back");
-			this.set("goBack", true);
+			this.get("goBack")();
 		},
 		selectCycle: function(cycle) {
 		    this.set('model.selectedCycle', cycle);

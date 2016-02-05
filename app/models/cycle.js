@@ -115,7 +115,7 @@ export default DS.Model.extend({
   third_day_hot_temperature: null,
   cycle_length: function(){
     if(this.get('start_date') && this.get("end_date")){
-      return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days');
+      return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days') + 1;
     } else {
       return moment().diff(moment(this.get('start_date')), 'days') + 1;
     }

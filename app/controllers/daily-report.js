@@ -74,42 +74,36 @@ export default Ember.Controller.extend({
   	}),
 	actions:{
 		changeDay: function(day){
-			var that = this;
-			
 			var takingDate = moment(this.get("model.start_date")).add(day-1,'days').second(0).millisecond(0);
-			this.store.find('cycle', this.get("model.id")).then(function(m){
-				
-				if(!that.get("newTemperatures").contains(day)){
-					that.store.createRecord('temperature', {
-			          date:takingDate,
-			          cycle:m
-			        });
-			        that.get("newTemperatures").push(day);
-				}
-				if(!that.get("newMucus").contains(day)){
-					that.store.createRecord('mucus-sample', {
-			          date:takingDate,
-			          cycle:m
-			        });
-			        that.get("newMucus").push(day);
-				}
-				if(!that.get("newCervix").contains(day)){
-					that.store.createRecord('cervix-feeling', {
-			          date:takingDate,
-			          cycle:m
-			        });
-			        that.get("newCervix").push(day);
-				}
-				if(!that.get("newPeriods").contains(day)){
-					that.store.createRecord('period', {
-			          date:takingDate,
-			          cycle:m
-			        });
-			        that.set("newPeriod", per);
-			        that.get("newPeriods").push(day);
-				}
-		        that.set('model', m);
-			});
+			if(!this.get("newTemperatures").contains(day)){
+				this.store.createRecord('temperature', {
+		          date:takingDate,
+		          cycle:this.get("model")
+		        });
+		        this.get("newTemperatures").push(day);
+			}
+			if(!this.get("newMucus").contains(day)){
+				this.store.createRecord('mucus-sample', {
+		          date:takingDate,
+		          cycle:this.get("model")
+		        });
+		        this.get("newMucus").push(day);
+			}
+			if(!this.get("newCervix").contains(day)){
+				this.store.createRecord('cervix-feeling', {
+		          date:takingDate,
+		          cycle:this.get("model")
+		        });
+		        this.get("newCervix").push(day);
+			}
+			if(!this.get("newPeriods").contains(day)){
+				this.store.createRecord('period', {
+		          date:takingDate,
+		          cycle:this.get("model")
+		        });
+		        this.get("newPeriods").push(day);
+			}
+			this.set("dayNumber", day);
 		}
 	}
 });

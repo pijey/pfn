@@ -1,10 +1,8 @@
-import Ember from "ember";
+import SampleController from "./sample-controller";
 import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.Controller.extend(EmberValidations, {
-  applicationController: Ember.inject.controller('application'),
-  queryParams: ["extended"],
-  goBack:false,
+export default SampleController.extend(EmberValidations, {
+  backRoute: "periods",
   validations: {
     "model.date": {
       inline: validator(function() {
@@ -19,28 +17,6 @@ export default Ember.Controller.extend(EmberValidations, {
         }
         //TODO Tester que le relevé doit etre unique par jour
       }) 
-    }
-  },
-  cancel: Ember.observer("applicationController.goBack", function(){
-    if(this.get("applicationController.goBack") === true){
-      var cycleId = this.get('model.cycle.id');
-      if(this.get('model').get('isNew')){
-        this.get('model').destroyRecord();
-      }
-      else {
-        this.get('model').rollbackAttributes();
-      } 
-      this.transitionToRoute('periods', cycleId, {queryParams:{isPopup:false}});
-      this.set("applicationController.goBack", false);
-    }
-  }),
-  actions: {
-    save: function() {
-        this.get("model").save();
-    },
-    
-    togglePresent(){
-      this.set("model.present", !this.get("model.present"));
     }
   }
 });

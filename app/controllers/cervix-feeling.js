@@ -1,9 +1,8 @@
-import Ember from "ember";
+import SampleController from "./sample-controller";
 import EmberValidations, {validator} from 'ember-validations';
 
-export default Ember.Controller.extend(EmberValidations, {
-  needs: ['application'],
-  queryParams: ["extended"],
+export default SampleController.extend(EmberValidations, {
+  backRoute: "cervix-feelings",
   sensations: [{label: 'Dur', value: "HARD"},{label: 'Mou', value: "SOFT"}],
   openings: [{label: 'Fermé', value: "CLOSED"},{label: 'Légèrement ouvert', value: "SLIGHTLY_OPENNED"},{label: 'Ouvert', value: "OPENNED"}],
   positions: [{label: 'Bas', value: "LOW"},{label: 'Moyen', value: "MEDIUM"},{label: 'Haut', value: "HIGH"}],
@@ -40,19 +39,6 @@ export default Ember.Controller.extend(EmberValidations, {
     // this.set('validations.position.presence.message', this.t("errors.blank"));
   }.on('init'),
   actions: {
-    save: function() {
-        this.get("model").save();
-    },
-    cancel: function(cervixFeeling){
-      var cycleId = this.get("model.cycle.id");
-      if(cervixFeeling.get('isNew')){
-        cervixFeeling.destroyRecord();
-      }
-      else {
-        cervixFeeling.rollbackAttributes();
-      } 
-      this.transitionToRoute('cervix-feelings', cycleId, {queryParams:{isPopup:false}});
-    },
     selectSensation(sensation){
       this.set('model.sensation', sensation);
     },

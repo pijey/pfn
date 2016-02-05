@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   	needs: ["application"],
+    cyclePage:true,
   	actions: {
 	    remove: function(mucus) {
 	       mucus.destroyRecord(); 

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	needs: ["application"],
+	cyclePage:true,
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
 	chartOptions: Ember.computed("model.highest_temperature", "model.lowest_temperature",function(){

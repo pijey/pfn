@@ -10,7 +10,7 @@
     "loader.js": "^3.5.0",
     "qunit": "~1.20.0",
     "ember-data": "2.3.0",
-    "eonasdan-bootstrap-datetimepicker": "~4.0.0",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "moment": "^2.8.0",
     "bootstrap": "~3.3.6",
     "ember-addons.bs_for_ember": "~0.7.0",
@@ -18,8 +18,9 @@
     "ember-i18n": "~4.2.0",
     "Chart.js": "https://github.com/nnnick/Chart.js.git#master",
     "ionicons": "~2.0.1",
-    "select2": "3.5.2",
-    "moment-timezone": "^0.5.0"
+    "moment-timezone": "^0.5.0",
+    "fastclick": "~1.0.6",
+    "FileSaver.js": "~0.0.2"
   },
   "resolutions": {
     "ember": "2.2.0"

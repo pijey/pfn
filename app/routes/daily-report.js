@@ -44,15 +44,19 @@ export default Ember.Route.extend({
     willTransition: function() {
       this.get("controller.model.temperatures").filterBy('isNew', true).forEach(function(temp){
         temp.destroyRecord();
+        this.get("controller.newTemperatures").splice(this.get("controller.newTemperatures").indexOf(temp.get("cycle_day_number")),1);
       });
       this.get("controller.model.mucusSamples").filterBy('isNew', true).forEach(function(mucus){
         mucus.destroyRecord();
+        this.get("controller.newMucus").splice(this.get("controller.newMucus").indexOf(mucus.get("cycle_day_number")),1);
       });
       this.get("controller.model.cervixFeelings").filterBy('isNew', true).forEach(function(cervix){
         cervix.destroyRecord();
+        this.get("controller.newCervix").splice(this.get("controller.newCervix").indexOf(cervix.get("cycle_day_number")),1);
       });
       this.get("controller.model.periods").filterBy('isNew', true).forEach(function(period){
         period.destroyRecord();
+        this.get("controller.newTemperaturesnewPeriods").splice(this.get("controller.newPeriods").indexOf(period.get("cycle_day_number")),1);
       });
     }
   }

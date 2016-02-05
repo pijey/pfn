@@ -129,25 +129,25 @@ export default Ember.Controller.extend({
 	        }
 	    ];
 
+	    var cacheTemperature = this.get('model.cacheTemperature');
+
 	    for (var i = 0; i < this.get("model.cycle_length"); i++) {
 			chartLabels.push(i+1);
 			chartDatasets[0].data.push(null);
 			chartDatasets[1].data.push(null);
+			if(cacheTemperature > 0){
+	       		chartDatasets[2].data.push(cacheTemperature); 
+	       	}
 		}
-
-	    var cacheTemperature = this.get('model.cacheTemperature');
 
     	this.get('model.temperatures').sortBy('cycle_day_number').forEach(function(temperature){
     		if(!temperature.get('isNew') && temperature.get('ignore') !== true){
     			var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
-    	
 		       	chartDatasets[0].data[temperature.get('cycle_day_number')-1] = parseFloat(temperature.get('temperature'));
 		       	chartDatasets[1].data[temperature.get('cycle_day_number')-1] = myTempCorrected;
-		       	if(cacheTemperature > 0){
-		       		chartDatasets[2].data.push(cacheTemperature); 
-		       	}
 		    }  	
 		});
+		
 	    return {
 	    	labels: chartLabels,
 		    datasets: chartDatasets

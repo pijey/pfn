@@ -1,9 +1,8 @@
-import Ember from "ember";
+import SampleController from "./sample-controller";
 import EmberValidations, { validator } from 'ember-validations';
 
-export default Ember.Controller.extend(EmberValidations, {
-  needs: ['application'],
-  queryParams: ["extended"],
+export default SampleController.extend(EmberValidations, {
+  backRoute: "temperatures",
   validations: {
     "model.date": {
       inline: validator(function() {
@@ -46,23 +45,5 @@ export default Ember.Controller.extend(EmberValidations, {
     // this.set('validations.model.temperature.presence.message', this.get('i18n').t("errors.blank"));
     // this.set('validations.model.temperature_corrected.presence.message', this.get('i18n').t("errors.blank"));
     // this.set('validations.temperature_corrected.numericality.message', this.get('i18n').t("errors.notANumber"));
-  }.on('init'),
-  actions: {
-    save: function() {
-      this.get("model").save();
-    },
-    cancel: function(temperature){
-      var cycleId = this.get('model.cycle.id');
-      if(temperature.get('isNew')){
-        temperature.destroyRecord();
-      }
-      else {
-        temperature.rollbackAttributes();
-      } 
-      this.transitionToRoute('temperatures', cycleId, {queryParams:{isPopup:false}});
-    },
-    toggleIgnoreTemp(){
-      this.set("model.ignore", !this.get("model.ignore"));
-    }
-  }
+  }.on('init')
 });

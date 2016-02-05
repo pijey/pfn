@@ -2,12 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	applicationController: Ember.inject.controller('application'),
+	cyclePage:true,
   	actions: {
 	    remove(cycle){
-    		cycle.destroyRecord();
-    		cycle.save();
-    		this.get('applicationController.model.cycles').removeObject(cycle);
-    		this.get('applicationController.model').save();
+	    	if(confirm("Êtes-vous sûrs de vouloir supprimer ce cycle ?")){
+	    		cycle.destroyRecord();
+    			cycle.save();
+	    	}
 	    },
 	    selectCycle(cycle){
 	    	this.set("applicationController.model.selectedCycle", cycle);

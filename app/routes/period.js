@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Route.extend({
-  model: function(params) {
+  model(params) {
     if(params.period_id === 'new'){
       var that = this;
       return this.store.find('cycle', params.cycle_id).then(function(cycle){

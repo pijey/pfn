@@ -1,6 +1,7 @@
 @import "bootstrap";
 @import "readable/variables";
 @import "readable/bootswatch";
+@import "switch";
 
 @grid-float-breakpoint: 150px;
 
@@ -233,48 +234,57 @@ thead.text-center > tr > th {
     text-align:center;
 }
 
+h3.text-center{
+	margin-top: 8px;
+}
+
 .nav-tabs h3 {
-	margin-top: 11px !important;
+	margin-top: 5px !important;
+	margin-bottom: 0px;
 }
 
 .nav.nav-tabs>li>a {
     position: relative;
     display: block;
      padding: 0px !important; 
-    width: 20vW;
+    width: 25vW;
 }
 
 .panel {
     margin-bottom: 0px;
 }
 
-body { padding-top: 60px; }
-
-// .navbar-right {
-//     float: right !important;
-//     margin-right: -15px;
-// }
-// .navbar-nav {
-//     float: left;
-//     margin: 0;
-// }
-
-// .navbar-nav>li {
-//     float: left;
-// }
-
-.navbar .navbar-nav > li > a {
-    margin: 12.5px 6px !important;
-}
+body { padding-top: 44pt; }
 
 .dropdown-menu {
 	border: 1px solid #e5e5e5 !important; 
 	background-color: #fff !important; 
 }
-.navbar {
-	height: 65px;
+.navbar, .navbar-brand {
+    height: 44pt;
+    min-height: 44pt;
+    max-height: 44pt;
 }
 
+.navbar-brand.back-icon {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	line-height: 1.8;
+}
+
+.navbar-brand.back-icon i {
+	margin-top: 5px;
+	font-size: 1.7em !important;
+}
+
+.back-icon span {
+    position: absolute;
+    top: 9pt;
+}
+
+.navbar .navbar-nav > li > a {
+    margin: 9px 6px 0px 6px !important;
+}
 
 i.check {
 	font-size: 1.3em;
@@ -309,7 +319,22 @@ td.row_label {
 }
 
 @media(min-width:@screen-sm-min){
+	table.synthese {
+		table-layout: fixed;
+	}
+    table.synthese td.row_label2 {
+    	width: 48px !important;
+    }
 
+    table.synthese td.row_label {
+    	width: 24px !important;
+    }
+    table.synthese td {
+    	padding: 0px !important;
+    }
+    table.synthese td:not(.row_label), td:not(.row_label2) { 
+    	width: auto;
+    }
 }
 
 .phases a {
@@ -331,6 +356,7 @@ a[role=button]>i.icon {
 
 .icon-btn {
 	float: left;
+	width: 45vw;
 }
 
 .icon-btn i {
@@ -339,4 +365,161 @@ a[role=button]>i.icon {
 
 .icon-btn h3 {
 	margin-top:0px;
+}
+
+.navbar-nav > li > a:not(.active), .nav-tabs > li:not(.active) > a {
+    color: #8F8E94;
+}
+
+.ion-ios-arrow-back, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li > a:hover, .nav-tabs > li.active > a:hover {
+    color: #4582EC;
+    background-color: #fff;
+}
+.nav-tabs > li > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > li > a:hover, .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    border: 1px solid #fff;
+}
+
+.nav-tabs {
+    position: fixed;
+    bottom: 0px;
+    z-index: 5;
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid rgb(221, 221, 221);
+    width: 100%;
+    left: 0;
+}
+
+.nav-pills > li, .nav-tabs > li {
+    float: left;
+}
+.nav-tabs > li {
+    width: 25vw;
+}
+
+.tab-content {
+    padding-bottom: 50px;
+}
+
+.error-list {
+	margin-top: 10px;
+}
+
+/* Absolute Center Spinner */
+.loading-overlay {
+  position: fixed;
+  z-index: 1050;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading-overlay:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading-overlay:not(:required) {
+  /* hide "loading-overlay..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading-overlay:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 1500ms infinite linear;
+  -moz-animation: spinner 1500ms infinite linear;
+  -ms-animation: spinner 1500ms infinite linear;
+  -o-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

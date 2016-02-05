@@ -3,6 +3,7 @@ import EmberValidations, {validator} from 'ember-validations';
 
 export default Ember.Controller.extend(EmberValidations, {
 	applicationController: Ember.inject.controller('application'),
+	cyclePage:true,
 	validations: {
 	    "model.start_date": {
 	      inline: validator(function() {
@@ -55,12 +56,10 @@ export default Ember.Controller.extend(EmberValidations, {
 	    		}
 	    	}
 	      	cycle.save();
-	      	if(!this.get("applicationController.model.selectedCycle")){
-	      		this.set("applicationController.model.selectedCycle", cycle);
+	      	if(!this.get("model.profile.selectedCycle")){
+	      		this.set("model.profile.selectedCycle", cycle);
+	      		this.get("model.profile").save();
 	      	}
-	    },
-	    remove: function(cycle){
-	    	cycle.destroyRecord();
 	    },
 	    selectPreviousCycle: function(cycle) {
         	this.set('model.previousCycle', cycle);

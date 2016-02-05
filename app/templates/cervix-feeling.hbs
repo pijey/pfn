@@ -1,24 +1,26 @@
 <div class="row">
-  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+  <div class="col-sm-8 col-sm-offset-2 col-xs-12">
     <h4 class="text-center">Col</h4>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
         {{#if extended}}
         <label for="inputCycleDayNumber" class="hidden-xs col-sm-3 control-label">Jour du cycle</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+        <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
           {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
         </div>
         <div class="{{if errors.model.date.length "has-error" "has-success"}}">
-          <label for="inputDate" class="hidden-xs col-sm-3 col-md-3 control-label">Date</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{bs-datetimepicker date=model.date format='DD/MM/YYYY' updateDate=(action (mut model.date))}}
+          <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            {{bs-datetimepicker date=model.date format='DD/MM/YYYY' readonly=true updateDate=(action (mut model.date))}}
             {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
           </div>
         </div>
         {{/if}}
+      </div>
+      <div class="form-group">
         <div class="{{if errors.model.sensation.length "has-error" "has-success"}}">
           <label for="inputSensation" class="hidden-xs col-sm-3 control-label">Sensation</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
             <select class="form-control" onchange={{action "selectSensation" value="target.value"}}>
               <option value="">Sensation</option>
               {{#each sensations as |sensation|}}
@@ -27,30 +29,36 @@
             </select>
           </div>
         </div>
+      </div>
+      <div class="form-group">
         <div class="{{if errors.model.opening.length "has-error" "has-success"}}">
           <label for="inputOpening" class="hidden-xs col-sm-3 control-label">Ouverture</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              <select class="form-control" onchange={{action "selectOpening" value="target.value"}}>
-                <option value="">Ouverture</option>
-                {{#each openings as |opening|}}
-                  <option value={{opening.value}} selected={{eq model.opening opening.value}}>{{opening.label}}</option>
-                {{/each}}
-              </select>
-            </div>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            <select class="form-control" onchange={{action "selectOpening" value="target.value"}}>
+              <option value="">Ouverture</option>
+              {{#each openings as |opening|}}
+                <option value={{opening.value}} selected={{eq model.opening opening.value}}>{{opening.label}}</option>
+              {{/each}}
+            </select>
           </div>
+        </div>
+      </div>
+      <div class="form-group">
         <div class="{{if errors.model.position.length "has-error" "has-success"}}">
           <label for="inputPosition" class="hidden-xs col-sm-3 control-label">Position</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              <select class="form-control" onchange={{action "selectPosition" value="target.value"}}>
-                <option value="">Position</option>
-                {{#each positions as |position|}}
-                  <option value={{position.value}} selected={{eq model.position position.value}}>{{position.label}}</option>
-                {{/each}}
-              </select>
-            </div>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            <select class="form-control" onchange={{action "selectPosition" value="target.value"}}>
+              <option value="">Position</option>
+              {{#each positions as |position|}}
+                <option value={{position.value}} selected={{eq model.position position.value}}>{{position.label}}</option>
+              {{/each}}
+            </select>
           </div>
+        </div>
+      </div>
+      <div class="form-group">
           <label for="inputInclining" class="hidden-xs col-sm-3 control-label">Inclinaison</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
             <select class="form-control" onchange={{action "selectInclining" value="target.value"}}>
               <option value="">Inclinaison</option>
               {{#each inclinings as |inclining|}}
@@ -58,8 +66,10 @@
               {{/each}}
             </select>
           </div>
+      </div>
+      <div class="form-group">
         <label for="inputCervixComment" class="hidden-xs col-sm-3 control-label">Commentaire</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+        <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
           {{input type="text" placeholder="Commentaire" class="form-control" id="inputCervixComment" value=model.comment}}
         </div>
       </div>
@@ -76,16 +86,10 @@
               {{/if}}
             {{/if}}
           </button>
-          {{#if extended}}
-          <button {{action "cancel" model}} class="btn btn-default">
-            <span class="glyphicon glyphicon-remove"></span>
-            &nbsp;Annuler
-          </button>
-          {{/if}}
         </div>
       </div>
     </form>
-    <div>
+    <div class="error-list">
       {{#if errors}}
         <ul class="list-group">
         {{#each errors.model.date as |error|}}

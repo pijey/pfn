@@ -1,33 +1,35 @@
 <div class="row">
-  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+  <div class="col-sm-8 col-sm-offset-2 col-xs-12">
     <h4 class="text-center">Température</h4>
     <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
       <div class="form-group">
         {{#if extended}}
         <label for="inputCycleDayNumber" class="hidden-xs col-sm-3 control-label">Jour du cycle</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-          {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
+        <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+          {{input type="number" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number}}
         </div>
         {{/if}}
         {{#if extended}}
         <div class="{{if errors.model.date.length "has-error" "has-success"}}">
           <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate format='DD/MM/YYYY HH:mm' updateDate=(action (mut model.date))}}
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            {{bs-datetimepicker date=model.date minDate=model.cycle.start_date maxDate=model.cycle.endDate readonly=true format='DD/MM/YYYY HH:mm' updateDate=(action (mut model.date))}}
           </div>
         </div>
         {{else}}
         <div class="{{if errors.model.date.length "has-error" "has-success"}}">
           <label for="inputDate" class="hidden-xs col-sm-3 control-label">Heure</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{bs-datetimepicker date=model.date format='HH:mm' updateDate=(action (mut model.date))}}
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            {{bs-datetimepicker date=model.date format='HH:mm' readonly=true updateDate=(action (mut model.date))}}
           </div>
         </div>
         {{/if}}
+      </div>
+      <div class="form-group">
         <div class="{{if errors.model.temperature.length "has-error" "has-success"}}">
-          <label for="inputTemperature" class="hidden-xs col-sm-3 control-label">T°</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{input type="text" placeholder="Température" class="form-control" id="inputTemperature" value=model.temperature}}
+          <label for="inputTemperature" class="hidden-xs col-sm-3 control-label">Température</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            {{input type="number" step="0.01" placeholder="Température" class="form-control" id="inputTemperature" value=model.temperature}}
             {{#if errors.model.temperature.length}}
               <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             {{else}}
@@ -36,9 +38,9 @@
           </div>
         </div>
         <div class="{{if errors.model.temperature.length "has-error" "has-success"}}">
-          <label for="inputTemperatureCorrected" class="hidden-xs col-sm-3 control-label">T° corrigée</label>
-          <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-            {{input type="text" placeholder="Température corrigée" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
+          <label for="inputTemperatureCorrected" class="hidden-xs col-sm-3 control-label">Température corrigée</label>
+          <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
+            {{input type="number" placeholder="Température corrigée" class="form-control" id="inputTemperatureCorrected" value=model.temperature_corrected readonly="true"}}
             {{#if errors.model.temperature_corrected.length}}
               <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             {{else}}
@@ -46,20 +48,18 @@
             {{/if}}
           </div>
         </div>
-        <label for="inputTemperatureIgnore" class="hidden-xs col-sm-3 control-label">Ignorer</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6" {{action "toggleIgnoreTemp"}}>
-          <input type="text" class="form-control" readonly="true" placeholder="Ignorer le relevé" aria-describedby="basic-addon2">
-          <span class="input-group-addon" id="basic-addon2">
-            {{check-box checked=model.ignore}}
-          </span>
-        </div>
+      </div> 
+      <div class="form-group">
+        {{check-box checked=model.ignore label="Ignorer"}}
+      </div>
+      <div class="form-group">
         <label for="inputTemperatureComment" class="hidden-xs col-sm-3 control-label">Commentaires</label>
-        <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
+        <div class="input-group col-xs-10 col-xs-offset-1 col-sm-9">
           {{input type="text" placeholder="Commentaire" class="form-control" id="inputTemperatureComment" value=model.comment}}
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-3 text-center">
+        <div class="text-center">
           <button {{action "save"}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
             {{#if model.isSaving}}
               <img src="assets/images/loader.gif" alt="">
@@ -70,18 +70,11 @@
                 <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
               {{/if}}
             {{/if}}
-            
           </button>
-          {{#if extended}}
-          <button {{action "cancel" model}} class="btn btn-default">
-            <span class="glyphicon glyphicon-remove"></span>
-            &nbsp;Annuler
-          </button>
-          {{/if}}
         </div>
       </div>
     </form>
-    <div>
+    <div class="error-list">
       {{#if errors}}
         <ul class="list-group">
         {{#each errors.model.date as |error|}}

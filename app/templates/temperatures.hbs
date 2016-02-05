@@ -3,8 +3,7 @@
     <h3 class="text-center">Températures du cycle</h3>
     <div>
     {{#if model.temperatures}}
-      {{!-- {{cc-line-chart data=dataChart width=900 height=400 options=chartOptions reRender=reRender}} --}}
-      {{line-chart idChart="chart-temperatures" data=dataChart width=900 height=400 options=chartOptions}}
+      {{line-chart idChart="chart-temperatures" data=dataChart options=chartOptions}}
       <table class="table">
         <tr class="text-center">
           <td><span class="glyphicon glyphicon-certificate temperature" aria-hidden="true"></span> Températures relevées</td>
@@ -65,7 +64,7 @@
               <td>{{temperature.temperature_corrected}} °</td>
               <td class="hidden-xs">{{temperature.comment}}</td>
               <td>
-                {{#link-to 'temperature' model.id temperature.id (query-params extended="true")classNames="btn btn-default btn-sm"}}
+                {{#link-to 'temperature' model.id temperature.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
                   <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' temperature}} type="button" class="btn btn-default btn-sm">
@@ -80,7 +79,7 @@
     </table>
     {{/if}}
     <div class="text-center">
-      {{#link-to 'temperature' model.id 'new' classNames="btn btn-default btn-sm"}}
+      {{#link-to 'temperature' model.id 'new' (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
         <i class="icon ion-plus-round"></i>Ajouter
       {{/link-to}}
       </div>

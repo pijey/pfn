@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-xs-12 col-md-10 col-md-offset-1">
+  <div class="col-xs-12">
     <h3 class="text-center">{{t "synthese.cycle_synthese"}}</h3>
     <div>
     {{#if model.temperatures}}
-      {{line-chart data=dataChart width=900 height=400 options=chartOptions onClick="selectRow"}}
+      {{line-chart data=dataChart options=chartOptions onClick="selectRow"}}
     {{else}}
       <div class="text-center alert alert-info alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

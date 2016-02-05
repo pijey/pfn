@@ -12,7 +12,7 @@
 		  		<h3>Synthèse</h3>
 		  	{{/link-to}}
 		  	</div>
-		  	{{#if model.selectedCycle}}
+		  	{{#if model.selectedCycle.end_date}}
 		  	{{else}}
 		  	<div class="icon-btn">
 		  		{{#link-to "daily-report" model.selectedCycle.id model.selectedCycle.cycle_length}}
@@ -20,21 +20,34 @@
 		  			<h3>Relevé journalier</h3>
 		  		{{/link-to}}
 		  	</div>
+		  	<div class="clearfix"></div>
 		  	{{/if}}
+		  	<div class="icon-btn">
+		  		{{#link-to "profile" model.id}}
+		  			<i class="icon ion-female"></i>
+		  			<h3>Profil</h3>
+		  		{{/link-to}}
+		  	</div>
+		  	<div class="icon-btn">
+		  		{{#link-to "cycles" model.id}}
+		  			<i class="icon ion-refresh"></i>
+		  			<h3>Cycles</h3>
+		  		{{/link-to}}
+		  	</div>
 		{{else}}
 			<h4>Pour commencer, merci de {{link-to "créer" "cycle" "new"}} un nouveau cycle ou d'en {{link-to "sélectionner" "cycles" model.id}} un.</h4>
 		{{/if}}
 		
 	{{/if}}
 	<div class="clearfix"></div>
-	<div>
-		<div class="alert alert-info alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			Pour plus d'information sur la méthode des indices combinés, vous pouvez consulter le site de l'association <a href="http://pfn.be/">CAF</a> ou l'ouvrage de Milène Clichy <a href="http://livre.fnac.com/a7774831/Milene-Clichy-Vivre-sa-fertilite-naturellement-avec-les-indices-combines">Vivre sa fertilité naturellement</a>
-		</div>
-		<div class="alert alert-danger alert-dismissible" role="alert">
+	<div class="row">
+		<div class="col-xs-10 col-sm-4 col-xs-offset-1 alert alert-danger alert-dismissible" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			Cette application est destinée à des <strong>femmes connaissant et maîtrisant la méthode des indices combinés</strong> (ou planning familial naturel). <strong>L'application ou son auteur ne saurait être tenu responsable en cas de grossesse imprévue</strong>.
+		</div>
+		<div class="col-xs-10 col-sm-4 col-xs-offset-1 alert alert-info alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Pour plus d'information sur la méthode des indices combinés, vous pouvez consulter le site de l'association <a href="http://pfn.be/">CAF</a> ou l'ouvrage de Milène Clichy <a href="http://livre.fnac.com/a7774831/Milene-Clichy-Vivre-sa-fertilite-naturellement-avec-les-indices-combines">Vivre sa fertilité naturellement</a>
 		</div>
 	</div>
 </div> 

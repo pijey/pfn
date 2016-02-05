@@ -15,10 +15,7 @@ module.exports = function(defaults) {
         "bower_components/bootstrap/less",
         "bower_components/bootswatch"
       ]
-    },
-    minifyCSS: {
-      enabled: true
-    }, 
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -35,7 +32,9 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   app.import('bower_components/Chartjs/Chart.js');
-  // app.import('vendor/ember-localstorage-adapter/localstorage_adapter.js');
+  app.import('bower_components/fastclick/lib/fastclick.js');
+  app.import('bower_components/FileSaverjs/FileSaver.js');
+  app.import('bower_components/xmllint/xmllint.js');
 
   return app.toTree();
 };

@@ -27,7 +27,7 @@
               <td>{{cervix-feeling-inclining inclining=cervixFeeling.inclining}}</td>
               <td class="hidden-xs">{{cervixFeeling.comment}}</td>
               <td>
-                {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
+                {{#link-to 'cervix-feeling' model.id cervixFeeling.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
                   <i class="icon ion-edit"></i>
                 {{/link-to}}
                 <button {{action 'remove' cervixFeeling}} type="button" class="btn btn-default btn-sm">
@@ -62,7 +62,7 @@
                 <td>{{cervix-feeling-inclining inclining=cervixFeeling.inclining}}</td>
                 <td class="hidden-xs">{{cervixFeeling.comment}}</td>
                 <td>
-                  {{#link-to 'cervix-feeling' model.id cervixFeeling.id classNames="btn btn-default btn-sm"}}
+                  {{#link-to 'cervix-feeling' model.id cervixFeeling.id (query-params extended=true isPopup=true) classNames="btn btn-default btn-sm"}}
                     <i class="icon ion-edit"></i>
                   {{/link-to}}
                   <button {{action 'remove' cervixFeeling}} type="button" class="btn btn-default btn-sm">

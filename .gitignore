@@ -24,6 +24,8 @@ cordova/platforms/ios/cordova/console.log
 
 # android
 cordova/platforms/android/assets/www
+cordova/platforms/android/CordovaLib/build
+cordova/platforms/android/build
 cordova/platforms/android/bin
 cordova/platforms/android/gen
 cordova/platforms/android/local.properties

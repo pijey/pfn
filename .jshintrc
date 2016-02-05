@@ -4,6 +4,7 @@
     "window",
     "moment",
     "Chart",
+    "xmllint",
     "-Promise"
   ],
   "browser": true,

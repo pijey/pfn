@@ -1,3 +1,4 @@
+<div class="{{if isLoading "loading-overlay" ""}}"></div>
 <header>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div>
@@ -5,10 +6,11 @@
         {{#link-to 'synthese' selectedCycle.id classNames="navbar-brand"}}PFN{{/link-to}}
         {{!-- <p class="navbar-text hidden-xs hidden-sm">{{t "application.my_natural_family_planning"}}</p> --}}
       </div>
-      {{nav-bar model=model selectedCycle=selectedCycle lastCycles=lastCycles isPopup=isPopup goBack=goBack}}
+      {{nav-bar model=model selectedCycle=selectedCycle lastCycles=lastCycles isPopup=isPopup goBack=(action 'goBack') currentController=currentController}}
     </div>
   </nav>
 </header>
+
 <div class="container-fluid">
   {{outlet}}
   {{outlet "modal"}}
