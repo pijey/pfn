@@ -5,32 +5,33 @@ export default DS.Model.extend({
   ongoing: DS.attr('boolean'),
   start_date: DS.attr('mydatetime'),
   end_date: DS.attr('mydatetime'),
-  ovulation:function(){
-    var that = this;
-    if(this.get('third_day_hot_temperature') > 0){
-      this.get('temperatures').sortBy('cycle_day_number').forEach(function(temp){
-        if(temp.get('cycle_day_number') >= that.get('third_day_hot_temperature') - 3 && temp.get('cycle_day_number') <= that.get('third_day_hot_temperature') + 7){
-          if(temp.get('temperature_corrected') < that.get('cacheTemperature')){
-            return false;
-          }
-        }
+  ovulation:Ember.computed('third_day_hot_temperature', 'cacheTemperature', 'temperatures.@each.temperature_corrected', function(){
+    var hotTemperatures = [];
+    var thirdDayHotTemperature = this.get("third_day_hot_temperature");
+    var cacheTemperature = this.get("cacheTemperature");
+    if(thirdDayHotTemperature > 0){
+      this.get('temperatures').sortBy('cycle_day_number').filter(function(item){
+        return !item.get('ignore') && item.get('cycle_day_number') >= thirdDayHotTemperature - 2;
+      }).forEach(function(temp){
+        if(hotTemperatures.length < 10 && temp.get('temperature_corrected') >= cacheTemperature) {
+          hotTemperatures.push(temp.get('cycle_day_number'));
+        } 
       });
-      return true;
-    } else {
-      return false;
     }
-  }.property('third_day_hot_temperature', 'cacheTemperature', 'temperatures.[].temperature_corrected'),
-  calendarCalculation: function(){
-    if(this.get('profile.cycles.length') < 6 || this.get('previousCycle.ovulation') === false) {
+    return hotTemperatures.length === 10;
+  }),
+  calendarCalculation: Ember.computed('profile.shortest_cycle', function(){
+    if(this.get('profile.cycles.length') < 7 || this.get('previousCycle.ovulation') === false) {
       return 1;
     }
-    else if(this.get('profile.cycles').length < 12){
+    else if(this.get('profile.cycles.length') <= 12){
       return this.get('profile.shortest_cycle') - 21;
     }
-    else {
+    else if(this.get('profile.shortest_cycle')){
       return this.get('profile.shortest_cycle') - 20;
     }
-  }.property('profile.shortest_cycle'),
+    return null;
+  }),
   // ovulationPreviousCycle:function(){
   //   var that = this;
   //   return this.get('profile.cycles').sortBy('start_date:desc').filter(function(item){
@@ -42,46 +43,43 @@ export default DS.Model.extend({
   //     return true;
   //   }).objectAt(0).get('ovulation');
   // }.property('cycles.[]'),
-  first_day_of_mucus_or_wet: function(){
+  first_day_of_mucus_or_wet: Ember.computed('mucusSamples.@each.sensation', 'mucusSamples.@each.at_cervix',function(){
+    var firstDayOfMucusOrWet;
+    this.get('mucusSamples').sortBy('cycle_day_number').any(function(mucusSample){
+      if(mucusSample.get('at_cervix') || mucusSample.get('sensation') === "HUMID" || mucusSample.get('sensation') === "WET"){
+        firstDayOfMucusOrWet = mucusSample.get("cycle_day_number");
+        return true;
+      }
+      return false;
+    });
+    return firstDayOfMucusOrWet;
+  }),
+  mucus_peak: Ember.computed('mucusSamples.@each.sensation', function(){
     var previousMucusSample = null;
-    var firstDayWet = null;
-    Ember.$.each(this.get('mucusSamples').sortBy('cycle_day_number'), function(index, mucusSample){
-      if(
-        previousMucusSample !== null && 
-        (
-          previousMucusSample.get('at_cervix') === true && mucusSample.get('position') !== true ||
-          previousMucusSample.get('sensation') === "DRY" && mucusSample.get('sensation') !== "DRY"
-        )
-      ){
-        firstDayWet = previousMucusSample;
-        return false;
+    var mucusPeak;
+    this.get('mucusSamples').sortBy('cycle_day_number').forEach(function(mucusSample){
+      if(previousMucusSample != null && 
+          (previousMucusSample.get('sensation') === 'HUMID' || previousMucusSample.get('sensation') === 'WET') &&
+          mucusSample.get('sensation') === 'DRY'){
+        mucusPeak = previousMucusSample.get("cycle_day_number");
       }
       previousMucusSample = mucusSample;
     });
-    return firstDayWet;
-  }.property('mucusSamples.[].sensation', 'mucusSamples.[].at_cervix'),
-  mucus_peak: function(){
-    var previousMucusSample = null;
-    var mucusPeak = null;
-    Ember.$.each(this.get('mucusSamples').sortBy('cycle_day_number'), function(index, mucusSample){
-      if(previousMucusSample !== null && previousMucusSample.get('sensation') !== 'DRY' && mucusSample.get('position') !== 'DRY'){
-        mucusPeak = previousMucusSample;
-      }
-      previousMucusSample = mucusSample;
-    });
-    return mucusPeak;
-  }.property('mucusSamples.[].sensation'),
-  mucus_peak_plus_3_days: function() {
-    if(this.get('mucus_peak.cycle_day_number')){
-      return this.get('mucus_peak.cycle_day_number') + 3;
+    if(previousMucusSample != null && (previousMucusSample.get('sensation') === 'HUMID' || previousMucusSample.get('sensation') === 'WET')){
+      mucusPeak = previousMucusSample.get("cycle_day_number");
     }
-  }.property('mucus_peak'),
-  first_day_of_cervix_change: function(){
+    return mucusPeak;
+  }),
+  mucus_peak_plus_3_days: Ember.computed('mucus_peak', function() {
+    if(this.get('mucus_peak')){
+      return this.get('mucus_peak') + 3;
+    }
+  }),
+  first_day_of_cervix_change: Ember.computed('cervixFeelings.@each.position', 'cervixFeelings.@each.sensation', 'cervixFeelings.@each.opening', function(){
     var previousCervixFeeling = null;
     var cervixChangeFeeling = null;
-    Ember.$.each(this.get('cervixFeelings').sortBy('cycle_day_number'), function(index, cervixFeeling){
-      if(
-        previousCervixFeeling !== null && 
+    this.get('cervixFeelings').sortBy('cycle_day_number').any(function(cervixFeeling){
+      if(previousCervixFeeling !== null && 
         (
           previousCervixFeeling.get('position') === "LOW" && cervixFeeling.get('position') !== "LOW" ||
           previousCervixFeeling.get('sensation') === "HARD" && cervixFeeling.get('sensation') !== "HARD" ||
@@ -89,37 +87,71 @@ export default DS.Model.extend({
         )
       ){
         cervixChangeFeeling = cervixFeeling;
-        return false;
+        return true;
       }
       previousCervixFeeling = cervixFeeling;
+      return false;
     });
-    return cervixChangeFeeling;
-  }.property('cervixFeelings.[].position', 'cervixFeelings.[].sensation', 'cervixFeelings.[].opening'),
-  cervix_peak: function(){
+    if(cervixChangeFeeling != null){
+      return cervixChangeFeeling.get("cycle_day_number");
+    }
+  }),
+  cervix_peak: Ember.computed('cervixFeelings.@each.position', 'cervixFeelings.@each.opening', 'cervixFeelings.@each.sensation', function(){
     var previousCervixFeeling = null;
-    var cervixPeakFeeling = null;
-    Ember.$.each(this.get('cervixFeelings').sortBy('cycle_day_number'), function(index, cervixFeeling){
-      if(previousCervixFeeling !== null && previousCervixFeeling.get('position') === "HIGH" && cervixFeeling.get('position') !== "HIGH"){
-        cervixPeakFeeling = previousCervixFeeling;
-        return false;
+    var cervixFeelingsChanges = [];
+    this.get('cervixFeelings').sortBy('cycle_day_number').forEach(function(cervixFeeling){
+      if(previousCervixFeeling != null &&
+        (
+          previousCervixFeeling.get('position') === 'MEDIUM' && cervixFeeling.get('position') === 'LOW' || 
+          (
+            (cervixFeeling.get('position') === 'MEDIUM' || cervixFeeling.get('position') === 'LOW') && 
+            previousCervixFeeling.get('position') === 'HIGH'
+          )
+        )
+      )
+      {
+        cervixFeelingsChanges.push(previousCervixFeeling.get("cycle_day_number"));
       }
+
+      if(previousCervixFeeling != null &&
+        (
+          previousCervixFeeling.get('opening') === 'SLIGHTLY_OPENNED' && cervixFeeling.get('opening') === 'CLOSED' || 
+          (
+            (cervixFeeling.get('opening') === 'SLIGHTLY_OPENNED' || cervixFeeling.get('opening') === 'CLOSED') && 
+            previousCervixFeeling.get('opening') === 'OPENNED'
+          )
+        )
+      )
+      {
+        cervixFeelingsChanges.push(previousCervixFeeling.get("cycle_day_number"));
+      }
+
+      if(previousCervixFeeling != null && previousCervixFeeling.get('sensation') === 'SOFT' && cervixFeeling.get('sensation') === 'HARD')
+      {
+        cervixFeelingsChanges.push(previousCervixFeeling.get("cycle_day_number"));
+      }
+
       previousCervixFeeling = cervixFeeling;
     });
-    return cervixPeakFeeling;
-  }.property('cervixFeelings.[].position'),
+    
+    let min = Math.min(...cervixFeelingsChanges);
+    if(min > 0 && min < Infinity){
+      return min;
+    }
+  }),
   cervix_peak_plus_3_days: function() {
-    if(this.get('cervix_peak.cycle_day_number')){
-      return this.get('cervix_peak.cycle_day_number') + 3;
+    if(this.get('cervix_peak')){
+      return this.get('cervix_peak') + 3;
     }
   }.property('cervix_peak'),
-  third_day_hot_temperature: null,
-  cycle_length: function(){
+  cycle_length: Ember.computed('start_date', 'end_date', function(){
     if(this.get('start_date') && this.get("end_date")){
-      return moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days') + 1;
-    } else {
+      var diff = moment(this.get('end_date')).diff(moment(this.get('start_date')), 'days') + 1;
+      return diff > 0 ? diff : undefined;
+    } else if(this.get("start_date")){
       return moment().diff(moment(this.get('start_date')), 'days') + 1;
     }
-  }.property('start_date', 'end_date'),
+  }),
   endOfPhaseI: function(){
     if(this.get('beginningOfPhaseII') > 1){
       return this.get('beginningOfPhaseII') - 1;
@@ -155,18 +187,60 @@ export default DS.Model.extend({
     }
     return null;
   }.property('endOfPhaseII'),
-  cacheTemperature: function(){
-    this.set('third_day_hot_temperature', null);
-    var cacheTemperature = null;
-    var temperatures = [];
-    var maxTemperature = 0.0;
+  third_day_hot_temperature:Ember.computed('cacheTemperature', function(){
+    var cacheTemperature = this.get("cacheTemperature");
+    if(!cacheTemperature){
+      return;
+    }
+    var thirdDayHotTemperature;
     var hotTemperatureDayMinus3 = null;
     var hotTemperatureDayMinus2 = null;
     var hotTemperatureDay = null;
     var notFound = true;
     var checkNextHighValue = false;
-    var that = this;
-    Ember.$.each(this.get('temperatures').sortBy('cycle_day_number'), function(index, temperature){
+    this.get('temperatures').sortBy('cycle_day_number').forEach(function(temperature){
+      var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
+      if(cacheTemperature < myTempCorrected && notFound && temperature.get('ignore') !== true) {
+        //We set the three days before the hot temperature day
+        if(hotTemperatureDayMinus3 === null){
+          hotTemperatureDayMinus3 = temperature;
+        } else if (hotTemperatureDayMinus2 === null){
+          hotTemperatureDayMinus2 = temperature;
+        } else {
+          var maxTmpPlusMargin = Math.round((cacheTemperature + 0.2)*10)/10;
+          if(checkNextHighValue && myTempCorrected > cacheTemperature){
+            hotTemperatureDay = temperature;
+            thirdDayHotTemperature = temperature.get('cycle_day_number');
+            notFound = false;
+          }
+          else if(hotTemperatureDayMinus3.get('temperature_corrected') > cacheTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > cacheTemperature && myTempCorrected > cacheTemperature){
+            //The third hot day of temperature needs to be 0.20 higher than the cache temperature
+            if(myTempCorrected >= maxTmpPlusMargin){
+              hotTemperatureDay = temperature;
+              thirdDayHotTemperature = temperature.get('cycle_day_number');
+              notFound = false;
+            }
+            //If not, check if the next value is above the cache temperature
+            else {
+              checkNextHighValue = true;
+            }
+          } else {
+            hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
+            hotTemperatureDayMinus2 = temperature;
+          }
+        }
+      }
+    });
+    return thirdDayHotTemperature;
+  }),
+  cacheTemperature: Ember.computed('temperatures.@each.temperature', 'temperatures.@each.temperature_corrected', function(){
+    var cacheTemperature = null;
+    var temperatures = [];
+    var maxTemperature = 0.0;
+    var hotTemperatureDayMinus3 = null;
+    var hotTemperatureDayMinus2 = null;
+    var notFound = true;
+    this.get('temperatures').sortBy('cycle_day_number').forEach(function(temperature){
       var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
       //First four days don't count
       if(temperature.get('cycle_day_number') > 4 && notFound && temperature.get('ignore') !== true) {
@@ -176,32 +250,13 @@ export default DS.Model.extend({
           maxTemperature = temperatures.reduce(function (curr, prev) { return curr > prev ? curr : prev; });
         }
         else {
-          //We set the three days before the hot temperature day
           if(hotTemperatureDayMinus3 === null){
             hotTemperatureDayMinus3 = temperature;
           } else if (hotTemperatureDayMinus2 === null){
             hotTemperatureDayMinus2 = temperature;
           } else {
-            var maxTmpPlusMargin = Math.round((maxTemperature + 0.2)*10)/10;
-            console.log(maxTmpPlusMargin);
-            if(checkNextHighValue && myTempCorrected > maxTemperature){
-              hotTemperatureDay = temperature;
-              that.set('third_day_hot_temperature', temperature.get('cycle_day_number'));
-              notFound = false;
-            }
-            else if(hotTemperatureDayMinus3.get('temperature_corrected') > maxTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > maxTemperature && myTempCorrected > maxTemperature){
-              //The third hot day of temperature needs to be 0.10 higher than the cache temperature
-              if(myTempCorrected >= maxTmpPlusMargin){
-                cacheTemperature = maxTemperature;
-                hotTemperatureDay = temperature;
-                that.set('third_day_hot_temperature', temperature.get('cycle_day_number'));
-                notFound = false;
-              }
-              //If not, check if the next value is above the cache temperature
-              else {
-                cacheTemperature = maxTemperature;
-                checkNextHighValue = true;
-              }
+            if(hotTemperatureDayMinus3.get('temperature_corrected') > maxTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > maxTemperature && myTempCorrected > maxTemperature){
+              cacheTemperature = maxTemperature;
             } else {
               temperatures.push(hotTemperatureDayMinus3.get('temperature_corrected'));
               hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
@@ -214,7 +269,7 @@ export default DS.Model.extend({
       }
     });
     return cacheTemperature;
-  }.property('temperatures.[].temperature_corrected'),
+  }),
   periodsPresent: Ember.computed.filterBy('periods', 'present', true),
   temperatures_corrected: Ember.computed.mapBy('temperatures', 'temperature_corrected'),
   lowest_temperature: Ember.computed.min('temperatures_corrected'),

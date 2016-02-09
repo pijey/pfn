@@ -74,7 +74,9 @@ export default Ember.Controller.extend({
   	}),
 	actions:{
 		changeDay: function(day){
-			var takingDate = moment(this.get("model.start_date")).add(day-1,'days').second(0).millisecond(0);
+			var profileTakingHour = moment(this.get("model.profile.temperature_taking_hour"));
+			var takingDate = moment(this.get("model.start_date")).add(day-1,'days').
+				hour(profileTakingHour.hour()).minute(profileTakingHour.minute()).second(0).millisecond(0);
 			if(!this.get("newTemperatures").contains(day)){
 				this.store.createRecord('temperature', {
 		          date:takingDate,

@@ -14,6 +14,7 @@ export default Ember.Route.extend({
 		return this.store.find('cycle', params.cycle_id);
 	},
 	setupController: function(controller, model){
+    this._super(controller, model);
 		controller.set("dayNumber", this.get("dayNumber"));
 		var now = moment();
 		var takingDate = moment(model.get("start_date")).add(this.get("dayNumber")-1,'days').hour(now.hour()).minute(now.minute()).second(0).millisecond(0);
@@ -42,21 +43,22 @@ export default Ember.Route.extend({
 	},
   actions: {
     willTransition: function() {
+      var that = this;
       this.get("controller.model.temperatures").filterBy('isNew', true).forEach(function(temp){
         temp.destroyRecord();
-        this.get("controller.newTemperatures").splice(this.get("controller.newTemperatures").indexOf(temp.get("cycle_day_number")),1);
+        that.set("controller.newTemperatures",[]);
       });
       this.get("controller.model.mucusSamples").filterBy('isNew', true).forEach(function(mucus){
         mucus.destroyRecord();
-        this.get("controller.newMucus").splice(this.get("controller.newMucus").indexOf(mucus.get("cycle_day_number")),1);
+        that.set("controller.newMucus",[]);
       });
       this.get("controller.model.cervixFeelings").filterBy('isNew', true).forEach(function(cervix){
         cervix.destroyRecord();
-        this.get("controller.newCervix").splice(this.get("controller.newCervix").indexOf(cervix.get("cycle_day_number")),1);
+        that.set("controller.newCervix",[]);
       });
       this.get("controller.model.periods").filterBy('isNew', true).forEach(function(period){
         period.destroyRecord();
-        this.get("controller.newTemperaturesnewPeriods").splice(this.get("controller.newPeriods").indexOf(period.get("cycle_day_number")),1);
+        that.set("controller.newPeriods",[]);
       });
     }
   }

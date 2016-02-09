@@ -354,11 +354,6 @@ a[role=button]>i.icon {
 	bottom: 0;
 }
 
-.icon-btn {
-	float: left;
-	width: 45vw;
-}
-
 .icon-btn i {
 	font-size: 3.5em;
 }
@@ -522,4 +517,20 @@ a[role=button]>i.icon {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.control-label.toggle {
+    margin-top: 8px;
+}
+
+.x-toggle-btn {
+  float: right;
+}
+
+.x-toggle-flip.x-toggle-btn:before {
+    background: @brand-danger;
+}
+
+.x-toggle:checked + .x-toggle-flip.x-toggle-btn:after {
+    background: @brand-success;
 }

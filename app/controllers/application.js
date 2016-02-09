@@ -11,7 +11,10 @@ export default Ember.Controller.extend(Ember.Evented, {
 	lastCycles:Ember.computed.sort("model.cycles.[]", "startDateDesc"),
 	actions:{
 	    goBack:function(){
-	      this.get("currentController").send("goBack");
+	      	this.get("currentController").send("goBack");
+	    },
+	    changeSelectedCycle:function(){
+	    	this.set("currentController.model", this.get("model.selectedCycle"));
 	    }
 	}
 });

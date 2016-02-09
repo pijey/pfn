@@ -6,7 +6,7 @@
         {{#link-to 'synthese' selectedCycle.id classNames="navbar-brand"}}PFN{{/link-to}}
         {{!-- <p class="navbar-text hidden-xs hidden-sm">{{t "application.my_natural_family_planning"}}</p> --}}
       </div>
-      {{nav-bar model=model selectedCycle=selectedCycle lastCycles=lastCycles isPopup=isPopup goBack=(action 'goBack') currentController=currentController}}
+      {{nav-bar model=model selectedCycle=selectedCycle lastCycles=lastCycles isPopup=isPopup goBack=(action 'goBack') changeSelectedCycle=(action 'changeSelectedCycle') currentController=currentController}}
     </div>
   </nav>
 </header>

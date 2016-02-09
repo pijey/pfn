@@ -36,6 +36,8 @@ cordova/platforms/android/CordovaLib/ant-gen
 cordova/platforms/android/CordovaLib/bin
 cordova/platforms/android/CordovaLib/gen
 cordova/platforms/android/CordovaLib/local.properties
+*.keystore
+cordova/platforms/android/release-signing.properties
 
 # wp8
 cordova/platforms/wp8/bin

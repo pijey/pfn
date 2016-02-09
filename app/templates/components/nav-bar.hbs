@@ -21,15 +21,12 @@
 		          <i class="icon ion-arrow-graph-up-right"></i>
 		          <span class="hidden-xs">&nbsp;{{t "application.synthesis"}}</span>{{/link-to}}
 		        </li>
-		        {{#if model.selectedCycle.end_date}}
-		        {{else}}
 		        <li>
 		        {{#link-to 'daily-report' model.selectedCycle.id model.selectedCycle.cycle_length role="button"}}
 		          <i class="icon ion-calendar"></i>
 		          <span class="hidden-xs">&nbsp;{{t "application.daily_report"}}</span>
 		        {{/link-to}}
 		        </li>
-		        {{/if}}
 		    {{/if}}
 		    {{!-- {{#if model.temperature_taking_hour}}   --}}
 		        <li class="dropdown">

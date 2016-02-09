@@ -21,15 +21,11 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    cordova: {
-      emberUrl: "http://192.168.1.16:4200",
-      rebuildOnChange: false,
-      emulate: false,
-      liveReload: {
-        enabled: true,
-        platform: "android"
-      }
+    'ember-cli-toggle': {
+      includedThemes: ['ios', 'flip'],
+      defaultTheme: 'ios',   // defaults to 'default' 
     },
+    
     npt: {
       transitionActivated:true,
       defaultTransitionOptions: {
@@ -63,6 +59,15 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.cordova= {
+      emberUrl: "http://192.168.1.16:4200",
+      rebuildOnChange: false,
+      emulate: false,
+      liveReload: {
+        enabled: true,
+        platform: "android"
+      }
+    };
   }
 
   if (environment === 'test') {
@@ -78,7 +83,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.cordova= {
+      rebuildOnChange: false,
+      emulate: false,
+    };
   }
 
   return ENV;

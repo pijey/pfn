@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
 			datasetFill: true,
 			animation:false,
 			scaleOverride: true,
-	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 2,
+	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 1,
 	    	scaleStepWidth: 0.05,
 	    	scaleStartValue: Math.floor(this.get('model.lowest_temperature')*10)/10,
 		};
@@ -67,7 +67,7 @@ export default Ember.Controller.extend({
 	    var cacheTemperature = this.get('model.cacheTemperature');
 
     	this.get('model.temperatures').sortBy('cycle_day_number').forEach(function(temperature){
-    		if(!temperature.get('isDirty') && temperature.get('ignore') !== true) {
+    		if(!temperature.get('hasDirtyAttributes') && temperature.get('ignore') !== true) {
     			var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
     	
 		    	chartDatasets[0].data[temperature.get('cycle_day_number')-1] = parseFloat(temperature.get('temperature'));

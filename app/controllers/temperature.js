@@ -45,5 +45,10 @@ export default SampleController.extend(EmberValidations, {
     // this.set('validations.model.temperature.presence.message', this.get('i18n').t("errors.blank"));
     // this.set('validations.model.temperature_corrected.presence.message', this.get('i18n').t("errors.blank"));
     // this.set('validations.temperature_corrected.numericality.message', this.get('i18n').t("errors.notANumber"));
-  }.on('init')
+  }.on('init'),
+  actions:{
+    toggleIgnore(){
+      this.set("model.ignore", !this.get("model.ignore"));
+    }
+  }
 });

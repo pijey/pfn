@@ -1,10 +1,11 @@
+import Ember from "ember";
 import DS from "ember-data";
 
 export default DS.Model.extend({
   surname: DS.attr('string'),
   temperature_taking_hour: DS.attr('mydatetime'),
   temperature_taking_mode: DS.attr('string'),
-  shortest_cycle: function() {
+  shortest_cycle: Ember.computed('cycles.@each.cycle_length', function() {
       var shortestCycle = 999;
       this.get("cycles").forEach(function(cycle){
           if(cycle.get('end_date') && cycle.get('cycle_length') < shortestCycle){
@@ -12,8 +13,8 @@ export default DS.Model.extend({
           }
       });
       return shortestCycle !== 999 ? shortestCycle : null;
-  }.property('cycles.[].cycle_length'),
-  longest_cycle: function() {
+  }),
+  longest_cycle: Ember.computed('cycles.@each.cycle_length', function() {
       var longest_cycle = 0;
       this.get("cycles").forEach(function(cycle){
           if(cycle.get("ongoing") === false && cycle.get('cycle_length') > longest_cycle){
@@ -21,8 +22,8 @@ export default DS.Model.extend({
           }
       });
       return longest_cycle !== 0 ? longest_cycle : null;
-  }.property('cycles.[].cycle_length'),
-  activeCycle: function() {
+  }),
+  activeCycle: Ember.computed('cycles.@each.ongoing', function() {
       var activeCycle = null;
       this.get("cycles").forEach(function(cycle){
           if(cycle.get('ongoing') === true){
@@ -30,7 +31,7 @@ export default DS.Model.extend({
           }
       });
       return activeCycle;
-  }.property('cycles.[].ongoing'),
+  }),
   cycles: DS.hasMany('cycle', { inverse: "profile" }),
   selectedCycle: DS.belongsTo('cycle', { inverse: null })
 });

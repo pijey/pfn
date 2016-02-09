@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	needs: ["application"],
-	reRender:false,
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
 	cycleDataNotEmpty: Ember.computed("model.mucusSamples.[]","model.periods.[]","model.cervixFeelings.[]", function(){
@@ -153,12 +152,6 @@ export default Ember.Controller.extend({
 		    datasets: chartDatasets
 		};    
  	}),
-  	observesSelectedCycle: function() {
-  	  this.transitionToRoute('synthese', this.get('controllers.application.selectedCycle.id'));
-  	}.observes("controllers.application.selectedCycle"),
-  	reRenderChart: function(){
-		this.set('reRender', true);
-	}.observes("controllers.application.selectedCycle"),
   	actions:{
   		selectRow: function(temperature){
   			Ember.$(".table.synthese > tbody > tr > td.info:not(." + temperature.label + ")").removeClass('info');

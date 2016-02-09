@@ -52,7 +52,12 @@
                 <li class="list-group-item list-group-item-danger"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : Non survenu</li>
               {{/if}}
             </ul>
-            {{check-box checked=model.at_cervix label="Présence au col"}}
+            <div class="form-group" {{action "toggleAtCervix"}}>
+              <label for="" class="col-xs-8 col-xs-offset-1 col-sm-offset-0  col-sm-3 control-label toggle">Présence au col</label>
+              <div class="input-group col-xs-2 col-sm-9">
+                {{x-toggle theme="flip" showLabels=false on="Oui" off="Non" value=model.at_cervix}}
+              </div>
+            </div>
             <label for="inputApparencyAtCervix" class="hidden-xs col-sm-3 control-label">Consistance</label>
             <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
               {{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtCervix" value=model.apparency_at_cervix}}

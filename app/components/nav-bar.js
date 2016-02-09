@@ -9,6 +9,7 @@ export default Ember.Component.extend({
 		selectCycle: function(cycle) {
 		    this.set('model.selectedCycle', cycle);
 		    this.get("model").save();
+		    this.get("changeSelectedCycle")();
 		}
 	}
 });

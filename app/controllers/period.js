@@ -18,5 +18,10 @@ export default SampleController.extend(EmberValidations, {
         //TODO Tester que le relevé doit etre unique par jour
       }) 
     }
+  },
+  actions:{
+    togglePresent(){
+      this.set("model.present", !this.get("model.present"));
+    }
   }
 });

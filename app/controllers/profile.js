@@ -65,7 +65,7 @@ export default Ember.Controller.extend(EmberValidations, {
           cycle.get("temperatures").forEach(function(temperature){
             fileContent += "<temperature>" +
             "<temperature>"+temperature.get("temperature")+"</temperature>" +
-            "<date>"+moment(temperature.get("date")).format("DD/MM/YYYY")+"</date>" +
+            "<date>"+moment(temperature.get("date")).format("DD/MM/YYYY HH:mm")+"</date>" +
             "<comment>"+temperature.get("comment")+"</comment>"+"<ignore>";
             if(temperature.get("ignore")){
               fileContent += "true";
