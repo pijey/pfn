@@ -5,7 +5,10 @@ export default Ember.Controller.extend({
 	cyclePage:true,
 	colorTemperatureCorrected : "rgba(151,187,205,1)",
 	colorTemperature : "rgba(220,220,220,1)",
-	chartOptions: Ember.computed("model.highest_temperature", "model.lowest_temperature",function(){
+	chartOptions: Ember.computed("model.highest_temperature", "model.lowest_temperature","model.highest_temperature_corrected", "model.lowest_temperature_corrected", function(){
+		var maxTemperature = Math.max(this.get('model.highest_temperature'),this.get('model.highest_temperature_corrected'));
+		var minTemperature = Math.min(this.get('model.lowest_temperature'),this.get('model.lowest_temperature_corrected'));
+
 		return {
 			responsive:true,
 			offsetGridLines:true,
@@ -16,9 +19,9 @@ export default Ember.Controller.extend({
 			datasetFill: true,
 			animation:false,
 			scaleOverride: true,
-	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 1,
+	    	scaleSteps: Math.round((maxTemperature - minTemperature) / 0.05) + 2,
 	    	scaleStepWidth: 0.05,
-	    	scaleStartValue: Math.floor(this.get('model.lowest_temperature')*10)/10,
+	    	scaleStartValue: Math.floor(minTemperature*10)/10-0.05,
 		};
 	}),
  	dataChart: function(){

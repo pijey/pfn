@@ -9,7 +9,9 @@ export default Ember.Controller.extend({
 			this.get("model.periods.length") > 0 || 
 			this.get("model.cervixFeelings.length") > 0;
 	}),
-	chartOptions: function(){
+	chartOptions: Ember.computed("model.highest_temperature", "model.lowest_temperature","model.highest_temperature_corrected", "model.lowest_temperature_corrected", function(){
+		var maxTemperature = Math.max(this.get('model.highest_temperature'),this.get('model.highest_temperature_corrected'));
+		var minTemperature = Math.min(this.get('model.lowest_temperature'),this.get('model.lowest_temperature_corrected'));
 		return {
 			responsive:true,
 			offsetGridLines:true,
@@ -20,11 +22,11 @@ export default Ember.Controller.extend({
 			datasetFill: true,
 			animation:false,
 			scaleOverride: true,
-	    	scaleSteps: Math.round((this.get('model.highest_temperature') - this.get('model.lowest_temperature')) / 0.05) + 2,
+	    	scaleSteps: Math.round((maxTemperature - minTemperature) / 0.05) + 2,
 	    	scaleStepWidth: 0.05,
-	    	scaleStartValue: Math.floor(this.get('model.lowest_temperature')*10)/10-0.05,
+	    	scaleStartValue: Math.floor(minTemperature*10)/10-0.05,
 		};
-	}.property('model.lowest_temperature', 'model.highest_temperature'),
+	}),
 	noPhases: function(){
 		return !this.get('phaseIDuration') && !this.get('phaseIIDuration') && !this.get('phaseIIIDuration');
 	}.property('phaseIDuration', 'phaseIIDuration', 'phaseIIIDuration'),
