@@ -22,6 +22,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
+    "LocalFileSystem",
+    "FastClick",
     "moment"
   ],
   "node": false,

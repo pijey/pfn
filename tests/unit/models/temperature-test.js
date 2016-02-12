@@ -1,12 +1,7 @@
-import DS from 'ember-data';
 import Ember from 'ember';
+import { moduleForModel, test } from 'ember-qunit';
 
-import {
-  moduleForModel,
-  test
-} from 'ember-qunit';
-
-moduleForModel('temperature', 'Temperature Model', {
+moduleForModel('temperature', 'Unit | Model | temperature', {
     needs: ['model:profile', 'model:cycle', 'model:period', 'model:mucusSample', 'model:cervixFeeling']
  });
 
@@ -16,7 +11,9 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-/* Cycle day number */
+//================
+//Cycle day number
+//================
 
 /* OK */
 
@@ -87,7 +84,9 @@ test('Cycle day number : No temperature date', function(assert) {
   	assert.equal(temperature.get('cycle_day_number'), null, 'When temperature date is null, cycle day number cannot be computed');
 });
 
-/* Temperature corrected */
+//=====================
+//Temperature corrected
+//=====================
 
 /* OK */
 

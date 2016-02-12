@@ -158,7 +158,7 @@ export default DS.Model.extend({
     }
     return null;
   }.property('beginningOfPhaseII'),
-  endOfPhaseII: function(){
+  endOfPhaseII: Ember.computed('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days', function(){
     var days = [];
     if(this.get('third_day_hot_temperature')){
       days.push(this.get('third_day_hot_temperature'));
@@ -169,24 +169,30 @@ export default DS.Model.extend({
     if(this.get('mucus_peak_plus_3_days')){
       days.push(this.get('mucus_peak_plus_3_days'));
     }
-    return days.length > 0 ? days.reduce(function (curr, prev) { return curr > prev ? curr : prev; }) : null;
-  }.property('third_day_hot_temperature', 'cervix_peak_plus_3_days', 'mucus_peak_plus_3_days', 'temperatures.[]'),
-  beginningOfPhaseII: function(){
-    var days = [this.get('calendarCalculation')];
+    if(days.length > 0) {
+      return days.reduce(function (curr, prev) { return curr > prev ? curr : prev; });
+    }
+  }),
+  beginningOfPhaseII: Ember.computed('first_day_of_cervix_change', 'first_day_of_mucus_or_wet', 'calendarCalculation', function(){
+    var days = [];
+    if(this.get('calendarCalculation')){
+      days.push(this.get('calendarCalculation'));
+    }
     if(this.get('first_day_of_cervix_change')){
-      days.push(this.get('first_day_of_cervix_change.cycle_day_number'));
+      days.push(this.get('first_day_of_cervix_change'));
     }
     if(this.get('first_day_of_mucus_or_wet')){
-      days.push(this.get('first_day_of_mucus_or_wet.cycle_day_number'));
+      days.push(this.get('first_day_of_mucus_or_wet'));
     } 
-    return days.length > 1 ? days.reduce(function (curr, prev) { return curr < prev ? curr : prev; }) : days[0];
-  }.property('first_day_of_cervix_change', 'first_day_of_mucus_or_wet', 'calendarCalculation'),
-  beginningOfPhaseIII: function(){
+    if(days.length > 0){
+      return days.reduce(function (curr, prev) { return curr < prev ? curr : prev; });
+    }
+  }),
+  beginningOfPhaseIII: Ember.computed('endOfPhaseII', function(){
     if(this.get('endOfPhaseII')){
       return this.get('endOfPhaseII') + 1;
     }
-    return null;
-  }.property('endOfPhaseII'),
+  }),
   third_day_hot_temperature:Ember.computed('cacheTemperature', function(){
     var cacheTemperature = this.get("cacheTemperature");
     if(!cacheTemperature){

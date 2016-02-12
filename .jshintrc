@@ -5,7 +5,9 @@
     "moment",
     "Chart",
     "xmllint",
-    "-Promise"
+    "-Promise",
+    "LocalFileSystem",
+    "FastClick"
   ],
   "browser": true,
   "boss": true,

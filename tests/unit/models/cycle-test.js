@@ -1623,3 +1623,288 @@ test('Third day of hot temperature with temperature from 36.5 to 37.1 (with 2 ho
   assert.equal(cycle.get('third_day_hot_temperature'), undefined, 'With temperatures starting from 36.5, and then 37.1 at day 17 for two days, Third day of hot temperature should be undefined (not enough high temperatures)');
     
 });
+
+//============================
+//End of phase I
+//============================
+test('End of phase I without phase II beginning ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, beginningOfPhaseII:null});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseI'), undefined, 'No phase II beginning means no phase I');
+});
+
+test('End of phase I without phase II beginning at day 1', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, beginningOfPhaseII:1});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseI'), undefined, 'Phase II beginning at day 1 means no phase I');
+});
+
+test('End of phase I without phase II beginning at day 5', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, beginningOfPhaseII:5});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseI'), 4, 'Phase II beginning at day 5 means phase I ended at day 4');
+});
+
+//============================
+//Beginnings of phase II
+//============================
+test('Beginnings of phase II without the three signs ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:undefined,first_day_of_mucus_or_wet:undefined,first_day_of_cervix_change:undefined});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), undefined, 'No signs mean no phase I');
+});
+
+test('Beginnings of phase II with calendar calculation ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:5,first_day_of_mucus_or_wet:null,first_day_of_cervix_change:null});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'Just calendar calculation sign at day 5 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with first day of mucus or wet ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:null,first_day_of_mucus_or_wet:5,first_day_of_cervix_change:null});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'Just first day of mucus or wet sign at day 5 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with first day of cervix change ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:null,first_day_of_mucus_or_wet:null,first_day_of_cervix_change:5});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'Just first day of cervix change sign at day 5 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with first day of cervix change and then first day of mucus or wet', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:null,first_day_of_mucus_or_wet:6,first_day_of_cervix_change:5});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'First day of cervix change sign at day 5 and first day of mucus or wet at day 6 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with first day of cervix change and calendarCalculation', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:6,first_day_of_mucus_or_wet:null,first_day_of_cervix_change:5});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'First day of cervix change sign at day 5 and first day of mucus or wet at day 6 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with first day of mucus or wet and calendarCalculation', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:5,first_day_of_mucus_or_wet:6,first_day_of_cervix_change:null});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'First day of mucus or wet sign at day 6 and calendarCalculation at day 5 : Beginnings of phase II at day 4');
+});
+
+test('Beginnings of phase II with the three signs', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, calendarCalculation:6,first_day_of_mucus_or_wet:5,first_day_of_cervix_change:7});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseII'), 5, 'Three signs with the first at day 5 : Beginnings of phase II at day 4');
+});
+
+//============================
+//End of phase II
+//============================
+test('End of phase II without the three signs ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:undefined,mucus_peak_plus_3_days:undefined,third_day_hot_temperature:undefined});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), undefined, 'No signs mean no phase III');
+});
+
+test('End of phase II with cervix peak ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:15,mucus_peak_plus_3_days:undefined,third_day_hot_temperature:undefined});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 15, 'Just cervix peak plus three days at day 15 : End of phase II at day 15');
+});
+
+test('End of phase II with mucus peak ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:undefined,mucus_peak_plus_3_days:15,third_day_hot_temperature:undefined});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 15, 'Just mucus peak plus three days at day 15 : End of phase II at day 15');
+});
+
+test('End of phase II with third day hot temperature ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:undefined,mucus_peak_plus_3_days:undefined,third_day_hot_temperature:15});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 15, 'Just third day hot temperature at day 15 : End of phase II at day 15');
+});
+
+test('End of phase II with cervix peak and then mucus peak', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:15,mucus_peak_plus_3_days:16,third_day_hot_temperature:undefined});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 16, 'Cervix peak plus 3 days at day 15 and cervix peak plus three days at day 16 : End of phase II at day 16');
+});
+
+test('End of phase II with cervix peak and then third day of hot temperature', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:15,mucus_peak_plus_3_days:undefined,third_day_hot_temperature:16});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 16, 'Cervix peak plus 3 days at day 15 and third day hot temperature at day 16 : End of phase II at day 16');
+});
+
+test('End of phase II with mucus peak and third day hot temperature', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:undefined,mucus_peak_plus_3_days:15,third_day_hot_temperature:16});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 16, 'Mucus peak plus three days at day 15 and third day hot temperature at day 16 : End of phase II at day 16');
+});
+
+test('End of phase II with the three signs', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, cervix_peak_plus_3_days:15,mucus_peak_plus_3_days:16,third_day_hot_temperature:17});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('endOfPhaseII'), 17, 'Three signs with the last at day 17 : End of phase II at day 17');
+});
+
+//============================
+//Beginning of phase III
+//============================
+test('Beginning of phase III without phase II beginning ', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, endOfPhaseII:null});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseIII'), undefined, 'No phase II ending means no phase III');
+});
+
+test('Beginning of phase III without phase II beginning at day 5', function(assert) {
+  var store = this.store();
+  var cycle = null;
+  var that = this;
+  Ember.run(function() {
+    var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 01 2015 07:00:00'});
+    cycle = that.subject({start_date:'2015-05-01T00:00:00.000', profile:profile, endOfPhaseII:15});
+  });
+
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('beginningOfPhaseIII'), 16, 'Phase II ended at day 15 means phase III began at day 16');
+});
