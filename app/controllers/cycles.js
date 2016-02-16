@@ -7,7 +7,6 @@ export default Ember.Controller.extend({
 	    remove(cycle){
 	    	if(confirm("Êtes-vous sûrs de vouloir supprimer ce cycle ?")){
 	    		cycle.destroyRecord();
-    			cycle.save();
 	    	}
 	    },
 	    selectCycle(cycle){

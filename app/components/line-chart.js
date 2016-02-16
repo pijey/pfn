@@ -8,10 +8,7 @@ export default Ember.Component.extend({
 	chart:null,
 	options:null,
 	onClick:false,
-	didInsertElement:function(){
-		if(this.get("chart")){
-			this.get("chart").destroy();
-		}
+	drawChart(){
 		Ember.$("#"+this.get("idChart")).attr("height", Math.round(document.documentElement.clientHeight*this.get("viewPortHeightPercentage")/100));
 		Ember.$("#"+this.get("idChart")).attr("width", Math.round(document.documentElement.clientWidth*this.get("viewPortWidthPercentage")/100));
 
@@ -22,5 +19,15 @@ export default Ember.Component.extend({
 		document.getElementById(this.get("idChart")).onclick = function(evt){
 			that.sendAction("onClick", myChart.getPointsAtEvent(evt)[0]);
 		};
+	},
+	didInsertElement(){
+		this.drawChart();
+	    this.addObserver('data.[]', this, this.dataChanged);
+	},
+	dataChanged(){
+		if(this.get("chart")){
+			this.get("chart").destroy();
+		}
+		this.drawChart();
 	}
 });

@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 			scaleOverride: true,
 	    	scaleSteps: Math.round((maxTemperature - minTemperature) / 0.05) + 2,
 	    	scaleStepWidth: 0.05,
-	    	scaleStartValue: Math.floor(minTemperature*10)/10-0.05,
+	    	scaleStartValue: Math.round(minTemperature*10)/10-0.05,
 		};
 	}),
  	dataChart: function(){

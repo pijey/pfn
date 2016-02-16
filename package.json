@@ -34,6 +34,8 @@
     "ember-cli-less": "1.5.3",
     "ember-cli-moment-shim": "0.7.3",
     "ember-cli-toggle": "0.6.0",
+    "ember-gestures": "0.4.0",
+    "ember-hammertime": "1.0.1",
     "ember-i18n": "4.2.0",
     "ember-i18n-inject": "0.0.1",
     "ember-idx-charts": "^0.1.1",
@@ -43,6 +45,7 @@
     "ember-truth-helpers": "1.2.0",
     "express": "^4.12.1",
     "glob": "^4.4.1",
+    "liquid-fire": "0.23.0",
     "moment": "^2.9.0",
     "morgan": "^1.5.1"
   },

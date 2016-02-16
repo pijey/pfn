@@ -19,8 +19,10 @@
     "Chart.js": "https://github.com/nnnick/Chart.js.git#master",
     "ionicons": "~2.0.1",
     "moment-timezone": "^0.5.0",
+    "FileSaver.js": "~0.0.2",
     "fastclick": "~1.0.6",
-    "FileSaver.js": "~0.0.2"
+    "hammer.js": "2.0.6",
+    "hammer-time": "1.0.0"
   },
   "resolutions": {
     "ember": "2.2.0"

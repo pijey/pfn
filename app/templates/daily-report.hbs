@@ -1,58 +1,7 @@
 <div>
-<div class="row">
-	<div class="col-xs-3">
-	{{#if previousNumber}}
-		<div class="col-xs-6" {{action "changeDay" 1}}>
-			<h3 class="text-center"><i class="text-primary icon ion-chevron-left"></i></h3>
-		</div>
-		<div class="col-xs-6" {{action "changeDay" previousNumber}}>
-			<h3 class="text-center"><i class="text-primary icon ion-ios-arrow-back"></i></h3>
-		</div>
-	{{/if}}
-		
-	</div>
-	<div class="col-xs-6">
-		<h3 class="text-center">Jour {{dayNumber}}</h3>
-	</div>
-	<div class="col-xs-3">
-		{{#if nextNumber}}
-		 <div class="col-xs-6" {{action "changeDay" nextNumber}}>
-			<h3 class="text-center"><i class="text-primary icon ion-ios-arrow-forward"></i></h3>
-		</div>
-		<div class="col-xs-6" {{action "changeDay" model.cycle_length}}>
-			<h3 class="text-center"><i class="text-primary icon ion-chevron-right"></i></h3>
-		</div>
-		{{/if}}
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#temperature" aria-controls="temperature" role="tab" data-toggle="tab"><h3><i class="icon ion-thermometer"></i></h3><span>Température</span></a></li>
-			<li role="presentation"><a href="#mucus" aria-controls="mucus" role="tab" data-toggle="tab"><h3><i class="icon ion-paintbucket"></i></h3><span>Glaire</span></a></li>
-			<li role="presentation"><a href="#cervix" aria-controls="cervix" role="tab" data-toggle="tab"><h3><i class="icon ion-disc"></i></h3><span>Col</span></a></li>
-			<li role="presentation"><a href="#period" aria-controls="period" role="tab" data-toggle="tab"><h3><i class="icon ion-waterdrop"></i></h3><span>Règles</span></a></li>
-		</ul>
+{{day-switcher dayNumber=dayNumber model=model changeDay=(action "changeDay")}}
 
-		<!-- Tab panes -->
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="temperature">
-			  	{{render "temperature" temperature}}
-			</div>
-			<div role="tabpanel" class="tab-pane" id="mucus">
-				{{render "mucus-sample" mucus}}
-			</div>
-			<div role="tabpanel" class="tab-pane" id="cervix">
-				{{render "cervix-feeling" cervix}}
-			</div>
-			<div role="tabpanel" class="tab-pane" id="period">
-				{{render "period" period}}
-			</div>
-		</div>
-	</div>
+{{report-panel type=type changeReport=(action "changeReport")}}
 </div>
-</div>
-
-
 
 

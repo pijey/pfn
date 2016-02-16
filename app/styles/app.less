@@ -368,21 +368,26 @@ a[role=button]>i.icon {
 }
 
 .ion-ios-arrow-back, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li > a:hover, .nav-tabs > li.active > a:hover {
-    color: #4582EC;
     background-color: #fff;
 }
+
+.ion-ios-arrow-back, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #4582EC;
+}
+
 .nav-tabs > li > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > li > a:hover, .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
     border: 1px solid #fff;
 }
 
 .nav-tabs {
-    position: fixed;
-    bottom: 0px;
+    // position: fixed;
+    // bottom: 0px;
     z-index: 5;
     background-color: rgb(255, 255, 255);
     border-top: 1px solid rgb(221, 221, 221);
     width: 100%;
-    left: 0;
+    margin-bottom: 10px;
+    // left: 0;
 }
 
 .nav-pills > li, .nav-tabs > li {
@@ -390,6 +395,9 @@ a[role=button]>i.icon {
 }
 .nav-tabs > li {
     width: 25vw;
+}
+.nav-tabs > li.active {
+    margin-bottom: 0px;
 }
 
 .tab-content {
@@ -534,4 +542,8 @@ a[role=button]>i.icon {
 
 .x-toggle:checked + .x-toggle-flip.x-toggle-btn:after {
     background: @brand-success;
+}
+
+h5 {
+  padding-top: 10px;
 }

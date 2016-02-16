@@ -7,7 +7,7 @@
 	{{else}}
 		{{#if model.selectedCycle}}
 		<div class="row">
-			<div class="col-xs-5 col-sm-4 col-xs-offset-1 col-sm-offset-1" role="alert">
+			<div class="col-xs-6 col-sm-4 col-sm-offset-1" role="alert">
 				<div class="icon-btn">
 			  	{{#link-to "synthese" model.selectedCycle.id}}
 			  		<i class="icon ion-arrow-graph-up-right"></i>
@@ -18,9 +18,9 @@
 		  	
 		  	{{#if model.selectedCycle.end_date}}
 		  	{{else}}
-		  	<div class="col-xs-5 col-sm-4 col-xs-offset-1 col-sm-offset-2" role="alert">
+		  	<div class="col-xs-6 col-sm-4 col-sm-offset-2" role="alert">
 				<div class="icon-btn">
-		  		{{#link-to "daily-report" model.selectedCycle.id model.selectedCycle.cycle_length}}
+		  		{{#link-to "daily-report.report" model.selectedCycle.id model.selectedCycle.cycle_length "temperature"}}
 		  			<i class="icon ion-calendar"></i>
 		  			<h3>Relevé journalier</h3>
 		  		{{/link-to}}
@@ -29,7 +29,7 @@
 		  	{{/if}}
 		</div>
 		<div class="row">
-		  	<div class="col-xs-5 col-sm-4 col-xs-offset-1 col-sm-offset-1" role="alert">
+		  	<div class="col-xs-6 col-sm-4 col-sm-offset-1" role="alert">
 				<div class="icon-btn">
 		  		{{#link-to "profile" model.id}}
 		  			<i class="icon ion-female"></i>
@@ -37,7 +37,7 @@
 		  		{{/link-to}}
 		  		</div>
 			</div>
-		  	<div class="col-xs-5 col-sm-4 col-xs-offset-1 col-sm-offset-2" role="alert">
+		  	<div class="col-xs-6 col-sm-4 col-sm-offset-2" role="alert">
 				<div class="icon-btn">
 		  		{{#link-to "cycles" model.id}}
 		  			<i class="icon ion-refresh"></i>

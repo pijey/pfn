@@ -12,7 +12,6 @@ App = Ember.Application.extend({
   podModulePrefix: config.podModulePrefix,
   Resolver,
   ready: function(){
-    FastClick.attach(document.body);
   }
 });
 

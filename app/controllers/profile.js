@@ -312,6 +312,7 @@ export default Ember.Controller.extend(EmberValidations, {
               }
             }
             else {
+              alert("Problème lors de l'intégration du profil");
               that.set("application.isLoading", false);
             } 
             that.set("application.isLoading", false);

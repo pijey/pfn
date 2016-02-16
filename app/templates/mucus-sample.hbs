@@ -1,107 +1,102 @@
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-
-    <h4 class="text-center">Glaire cervicale</h4>
-    <form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
-      <div class="form-group">
-        {{#if extended}}
-        <div class="panel panel-default">
-          <div class="panel-heading">Général</div>
-          <div class="panel-body">
-            <label for="inputCycleDayNumber" class="hidden-xs col-sm-3 control-label">Jour du cycle</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
-            </div>
-            <div class="{{if errors.model.date.length "has-error" "has-success"}}">
-              <label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
-              <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-                {{bs-datetimepicker date=model.date format='DD/MM/YYYY' readonly=true updateDate=(action (mut model.date))}}
-                {{!-- {{input type="text" id="inputDate" value=model.date}} --}}
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/if}}
-        <div class="panel panel-default">
-          <div class="panel-heading">Observations externes</div>
-          <div class="panel-body">
-            <div class="{{if errors.model.sensation.length "has-error" "has-success"}}">
-              <label for="inputSensation" class="hidden-xs col-sm-3 control-label">Sensation</label>
-              <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">  
-                <select class="form-control" onchange={{action "selectSensation" value="target.value"}}>
-                  <option value="null">Sensation</option>
-                  {{#each sensations as |sensation|}}
-                    <option value={{sensation.value}} selected={{eq model.sensation sensation.value}}>{{sensation.label}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
-            <label for="inputApparencyAtVulva" class="hidden-xs col-sm-3 control-label">Consistance</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtVulva" value=model.apparency_at_vulva}}
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">Observations internes</div>
-          <div class="panel-body">
-            <ul class="list-group">
-              {{#if model.cycle.first_day_of_mucus_or_wet}}
-               <li class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : {{model.cycle.first_day_of_mucus_or_wet.cycle_day_number}}</li>
-              {{else}}
-                <li class="list-group-item list-group-item-danger"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : Non survenu</li>
-              {{/if}}
-            </ul>
-            <div class="form-group" {{action "toggleAtCervix"}}>
-              <label for="" class="col-xs-8 col-xs-offset-1 col-sm-offset-0  col-sm-3 control-label toggle">Présence au col</label>
-              <div class="input-group col-xs-2 col-sm-9">
-                {{x-toggle theme="flip" showLabels=false on="Oui" off="Non" value=model.at_cervix}}
-              </div>
-            </div>
-            <label for="inputApparencyAtCervix" class="hidden-xs col-sm-3 control-label">Consistance</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtCervix" value=model.apparency_at_cervix}}
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">Autres</div>
-          <div class="panel-body">
-            
-            <label for="inputMucusComment" class="hidden-xs col-sm-3 control-label">Commentaire</label>
-            <div class="input-group col-xs-10 col-xs-offset-1 col-md-6">
-              {{input type="text" placeholder="Commentaire" class="form-control" id="inputMucusComment" value=model.comment}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center">
-        <div>
-          <button {{action "save" model}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
-            {{#if model.isSaving}}
-              <img src="assets/images/loader.gif" alt="">
-            {{else}}
-              {{#if model.hasDirtyAttributes}}
-                <span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
-              {{else}}
-                <span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
-              {{/if}}
-            {{/if}}
-          </button>
-        </div>
-      </div>
-    </form>
-    <div class="error-list">
-      {{#if errors}}
-        <ul class="list-group">
-        {{#each errors.model.date as |error|}}
-          <li class="list-group-item list-group-item-danger">Date : {{error}}</li>
-        {{/each}}
-        {{#each errors.model.sensation as |error|}}
-          <li class="list-group-item list-group-item-danger">Sensation : {{error}}</li>
-        {{/each}}
-        </ul>
-      {{/if}}
-    </div>
-  </div>
+	<div class="col-sm-8 col-sm-offset-2 col-xs-12">
+		{{#if extended}}
+		<h4 class="text-center">Glaire cervicale</h4>
+		{{/if}}
+		<form class="form-horizontal" role="form" {{action 'ok' on='submit' target=view}}>
+			{{#if extended}}
+			<div class="form-group">
+				<label for="inputCycleDayNumber" class="hidden-xs col-sm-3 control-label">Jour du cycle</label>
+				<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">
+					{{input type="text" class="form-control" id="inputCycleDayNumber" value=model.cycle_day_number readonly=true}}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="{{if errors.model.date.length "has-error" "has-success"}}">
+					<label for="inputDate" class="hidden-xs col-sm-3 control-label">Date</label>
+					<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">
+						{{bs-datetimepicker date=model.date format='DD/MM/YYYY' readonly=true updateDate=(action (mut model.date))}}
+						{{!-- {{input type="text" id="inputDate" value=model.date}} --}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+			<h5 class="text-center">Observations externes</h5>
+			<div class="form-group">
+				<div class="{{if errors.model.sensation.length "has-error" "has-success"}}">
+					<label for="inputSensation" class="hidden-xs col-sm-3 control-label">Sensation</label>
+					<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">  
+						<select class="form-control" onchange={{action "selectSensation" value="target.value"}}>
+							<option value="null">Sensation</option>
+							{{#each sensations as |sensation|}}
+							<option value={{sensation.value}} selected={{eq model.sensation sensation.value}}>{{sensation.label}}</option>
+							{{/each}}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputApparencyAtVulva" class="hidden-xs col-sm-3 control-label">Consistance</label>
+				<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">
+					{{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtVulva" value=model.apparency_at_vulva}}
+				</div>
+			</div>
+			<h5 class="text-center">Observations internes</h5>
+			<div class="form-group">
+			<ul class="list-group text-center col-xs-10 col-xs-offset-1 col-sm-offset-3 col-sm-6">
+				{{#if model.cycle.first_day_of_mucus_or_wet}}
+				<li class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : {{model.cycle.first_day_of_mucus_or_wet}}</li>
+				{{else}}
+				<li class="list-group-item list-group-item-danger"><span class="glyphicon glyphicon-info-sign"></span> 1er jour de glaire au col ou d'humidité : Non survenu</li>
+				{{/if}}
+			</ul>
+			</div>
+			<div class="form-group" {{action "toggleAtCervix"}}>
+				<label for="" class="col-xs-8 col-xs-offset-1 col-sm-offset-0  col-sm-3 control-label toggle">Présence au col</label>
+				<div class="input-group col-xs-2 col-sm-6">
+					{{x-toggle theme="flip" toggled=model.at_cervix showLabels=false on="Oui" off="Non" value=model.at_cervix}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputApparencyAtCervix" class="hidden-xs col-sm-3 control-label">Consistance</label>
+				<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">
+					{{input type="text" placeholder="Consistance" class="form-control" id="inputApparencyAtCervix" value=model.apparency_at_cervix}}
+				</div>
+			</div>
+			<h5 class="text-center">Autres</h5>
+			<div class="form-group">
+				<label for="inputMucusComment" class="hidden-xs col-sm-3 control-label">Commentaire</label>
+				<div class="input-group col-xs-10 col-xs-offset-1 col-sm-6">
+					{{input type="text" placeholder="Commentaire" class="form-control" id="inputMucusComment" value=model.comment}}
+				</div>
+			</div>
+			<div class="text-center">
+				<div>
+					<button {{action "save" model}} class="btn btn-default" disabled="{{and isValid model.hasDirtyAttributes null "disabled"}}">
+						{{#if model.isSaving}}
+						<img src="assets/images/loader.gif" alt="">
+						{{else}}
+						{{#if model.hasDirtyAttributes}}
+						<span class="glyphicon glyphicon-floppy-save"></span>&nbsp;Enregistrer
+						{{else}}
+						<span class="glyphicon glyphicon-floppy-saved"></span>&nbsp;Enregistré
+						{{/if}}
+						{{/if}}
+					</button>
+				</div>
+			</div>
+		</form>
+		<div class="error-list">
+			{{#if errors}}
+			<ul class="list-group">
+				{{#each errors.model.date as |error|}}
+				<li class="list-group-item list-group-item-danger">Date : {{error}}</li>
+				{{/each}}
+				{{#each errors.model.sensation as |error|}}
+				<li class="list-group-item list-group-item-danger">Sensation : {{error}}</li>
+				{{/each}}
+			</ul>
+			{{/if}}
+		</div>
+	</div>
 </div>

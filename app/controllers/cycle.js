@@ -29,7 +29,7 @@ export default Ember.Controller.extend(EmberValidations, {
 		return cycles;
 	}),
   	actions: {
-	    save: function(cycle) {
+	    save(cycle) {
 	    	if(cycle.get('start_date')){
 	    		var startDate = moment(cycle.get('start_date'));
     			startDate.hour(0);
@@ -52,20 +52,15 @@ export default Ember.Controller.extend(EmberValidations, {
 	    		if(cycle.get("previousCycle") && cycle.get("previousCycle.ongoing")){
 	    			cycle.set("previousCycle.end_date",cycle.get("start_date"));
 	    			cycle.set("previousCycle.ongoing",false);
-	    			cycle.get("previousCycle").save();
+	    			cycle.get("previousCycle").then(function(previousCycle){previousCycle.save();});
 	    		}
+	    		this.set("model.profile.selectedCycle", cycle);
+	    		this.get("model.profile").then(function(profile){profile.save();});
 	    	}
 	      	cycle.save();
-	      	if(!this.get("model.profile.selectedCycle")){
-	      		this.set("model.profile.selectedCycle", cycle);
-	      		this.get("model.profile").save();
-	      	}
 	    },
-	    selectPreviousCycle: function(cycle) {
+	    selectPreviousCycle(cycle) {
         	this.set('model.previousCycle', cycle);
       	}
-  	},
-  	observesSelectedCycle: function() {
-  	  this.transitionToRoute('cycle', this.get('controllers.application.selectedCycle.id'));
-  	}.observes("controllers.application.selectedCycle"),
+  	}
 });

@@ -8,9 +8,7 @@
 	          	</i>&nbsp;<span>Retour</span>
 		    </a>
 			{{else}}
-			{{#link-to "index" classNames="navbar-brand"}}
-				&nbsp;&nbsp;PFN
-			{{/link-to}}
+			{{link-to "  PFN" "index" classNames="navbar-brand"}}
 			{{/if}}
 		</div>
 		{{#if isPopup}}
@@ -22,7 +20,7 @@
 		          <span class="hidden-xs">&nbsp;{{t "application.synthesis"}}</span>{{/link-to}}
 		        </li>
 		        <li>
-		        {{#link-to 'daily-report' model.selectedCycle.id model.selectedCycle.cycle_length role="button"}}
+		        {{#link-to 'daily-report.report' model.selectedCycle.id model.selectedCycle.cycle_length type role="button"}}
 		          <i class="icon ion-calendar"></i>
 		          <span class="hidden-xs">&nbsp;{{t "application.daily_report"}}</span>
 		        {{/link-to}}
@@ -65,7 +63,7 @@
 		    {{!-- {{/if}} --}}
 		        <li>
 	        	{{#link-to 'profile' model.id role="button"}}
-	        		<i class="icon ion-female"></i><span class="hidden-xs">&nbsp;{{model.surname}}</span>
+	        		<i class="icon ion-female"></i><span class="hidden-xs">&nbsp;{{if model.surname model.surname "Profil"}}</span>
 	        	{{/link-to}}
 		        </li>
 		    </ul>

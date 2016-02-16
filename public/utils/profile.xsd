@@ -128,6 +128,7 @@
                                 <xs:element name="inclining" minOccurs="1" maxOccurs="1">
                                   <xs:simpleType>
                                     <xs:restriction base="xs:string">
+                                      <xs:enumeration value=""/>
                                       <xs:enumeration value="HORIZONTAL"/>
                                       <xs:enumeration value="NEARLY_HORIZONTAL"/>
                                       <xs:enumeration value="NEARLY_VERTICAL"/>

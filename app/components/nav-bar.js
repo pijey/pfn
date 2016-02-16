@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	currentController:null,
+	type:"temperature",
 	actions: {
 		back: function(){
 			this.get("goBack")();
