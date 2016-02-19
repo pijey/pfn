@@ -42,6 +42,6 @@ export default DS.Model.extend({
 		}
 	}.property('date','temperature', 'cycle.profile.temperature_taking_hour'),
 	comment: DS.attr('string'),
-	ignore: DS.attr('boolean'),
+	ignore: DS.attr('boolean', { defaultValue: false }),
 	cycle: DS.belongsTo('cycle')
 });

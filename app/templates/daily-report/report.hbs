@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-xs-12 text-center">
+		{{!-- <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#temperature" aria-controls="temperature" role="tab" data-toggle="tab"><h3><i class="icon ion-thermometer"></i></h3><span>Température</span></a></li>
+			<li role="presentation"><a href="#mucus" aria-controls="mucus" role="tab" data-toggle="tab"><h3><i class="icon ion-paintbucket"></i></h3><span>Glaire</span></a></li>
+			<li role="presentation"><a href="#cervix" aria-controls="cervix" role="tab" data-toggle="tab"><h3><i class="icon ion-disc"></i></h3><span>Col</span></a></li>
+			<li role="presentation"><a href="#period" aria-controls="period" role="tab" data-toggle="tab"><h3><i class="icon ion-waterdrop"></i></h3><span>Règles</span></a></li>
+		</ul> --}}
+
+		{{!-- <div class="btn-group" role="group" aria-label="...">
+		  <button type="button" class="btn btn-default">{{link-to "Température" "daily-report.report" "temperature"}}</button>
+		  <button type="button" class="btn btn-default">{{link-to "Glaire" "daily-report.report" "mucus-sample"}}</button>
+		  <button type="button" class="btn btn-default">{{link-to "Col" "daily-report.report" "cervix-feeling"}}</button>
+		  <button type="button" class="btn btn-default">{{link-to "Règle" "daily-report.report" "period"}}</button>
+		</div> --}}
+
+		{{liquid-outlet}}
+
+		{{!-- <!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="temperature">
+			  	{{render "temperature" temperature}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="mucus">
+				{{render "mucus-sample" mucus}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="cervix">
+				{{render "cervix-feeling" cervix}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="period">
+				{{render "period" period}}
+			</div>
+		</div> --}}
+	</div>
+</div>

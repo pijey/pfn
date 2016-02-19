@@ -1,23 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
     <h3 class="text-center">{{t "synthese.cycle_synthese"}}</h3>
-    <div>
-    {{#if model.temperatures}}
-      {{line-chart data=dataChart options=chartOptions onClick="selectRow"}}
-    {{else}}
-      <div class="text-center alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        Ajoutez des relevés de température pour voir le graphique
-      </div>
-      
-    {{/if}}
-    {{#if cycleDataNotEmpty}}
-       {{synthesis-table 
-        phaseIDuration=phaseIDuration phaseIIDuration=phaseIIDuration phaseIIIDuration=phaseIIIDuration
-        periods=periods mucusSamples=mucusSamples cervixFeelings=cervixFeelings
-      }} 
-    {{/if}}  
-      
-    </div>
+    {{synthesis-content model=model}}   
   </div>
 </div>

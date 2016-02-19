@@ -1,0 +1,27 @@
+{{#liquid-bind dayNumber use="swipe" class="demo-container" as |myDayNumber|}}
+<div class="row">
+	<div class="col-xs-3">
+	{{#if previousNumber}}
+		<div class="first-day col-xs-6" {{action "changeDay" 1}}>
+			<h3 class="text-center"><i class="text-primary icon ion-chevron-left"></i></h3>
+		</div>
+		<div class="previous-day col-xs-6" {{action "changeDay" previousNumber}}>
+			<h3 class="text-center"><i class="text-primary icon ion-ios-arrow-back"></i></h3>
+		</div>
+	{{/if}}
+	</div>
+	<div class="col-xs-6">
+		<h3 class="text-center">Jour {{myDayNumber}}</h3>
+	</div>
+	<div class="col-xs-3">
+		{{#if nextNumber}}
+		 <div class="next-day col-xs-6" {{action "changeDay" nextNumber}}>
+			<h3 class="text-center"><i class="text-primary icon ion-ios-arrow-forward"></i></h3>
+		</div>
+		<div class="last-day col-xs-6" {{action "changeDay" model.cycle_length}}>
+			<h3 class="text-center"><i class="text-primary icon ion-chevron-right"></i></h3>
+		</div>
+		{{/if}}
+	</div>
+</div>
+{{/liquid-bind}}

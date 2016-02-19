@@ -4,7 +4,7 @@ export default DS.Model.extend({
 	sensation: DS.attr('string'),
 	apparency_at_vulva: DS.attr('string'),
 	apparency_at_cervix: DS.attr('string'),
-	at_cervix: DS.attr('boolean'),
+	at_cervix: DS.attr('boolean', { defaultValue: false }),
 	is_first_day_of_mucus_or_wet: function(){
 		return this.get('cycle.first_day_of_mucus_or_wet.cycle_day_number') === this.get('cycle_day_number');
 	}.property('cycle.first_day_of_mucus_or_wet', 'cycle_day_number'),

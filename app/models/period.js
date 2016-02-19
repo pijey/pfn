@@ -1,7 +1,7 @@
 import DS from "ember-data";
 
 export default DS.Model.extend({
-	present: DS.attr('boolean'),
+	present: DS.attr('boolean', { defaultValue: false }),
   	cycle_day_number: function(){
 		if(this.get('date')){
 			var startCycleDate = moment(this.get('cycle.start_date'));

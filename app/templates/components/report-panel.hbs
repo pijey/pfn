@@ -1,0 +1,27 @@
+<div class="row" id="report-panel">
+	<ul class="nav nav-tabs">
+		<li class="{{if (eq type "temperature") "active"}}" role="presentation">
+			{{#link-to "daily-report.report" "temperature"}}
+				<h3><i class="icon ion-thermometer"></i></h3><span class="hidden-xs">Température</span>
+			{{/link-to}}
+		</li>
+		<li class="{{if (eq type "mucus-sample") "active"}}" role="presentation">
+			{{#link-to "daily-report.report" "mucus-sample"}}
+				<h3><i class="icon ion-paintbucket"></i></h3><span class="hidden-xs">Glaire</span>
+			{{/link-to}}
+		</li>
+		<li class="{{if (eq type "cervix-feeling") "active"}}" role="presentation">
+			{{#link-to "daily-report.report" "cervix-feeling"}}
+				<h3><i class="icon ion-disc"></i></h3><span class="hidden-xs">Col</span>
+			{{/link-to}}
+		</li>
+		<li class="{{if (eq type "period") "active"}}" role="presentation">
+			{{#link-to "daily-report.report" "period"}}
+				<h3><i class="icon ion-waterdrop"></i></h3><span class="hidden-xs">Règles</span>
+			{{/link-to}}
+		</li>
+	</ul>
+	<div class="col-xs-12 text-center">
+		{{liquid-outlet}}
+	</div>
+</div>

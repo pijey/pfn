@@ -35,6 +35,7 @@ module.exports = function(defaults) {
   app.import('bower_components/fastclick/lib/fastclick.js');
   app.import('bower_components/FileSaverjs/FileSaver.js');
   app.import('bower_components/xmllint/xmllint.js');
+  app.import('bower_components/bootstrap-autohidingnavbar/dist/jquery.bootstrap-autohidingnavbar.min.js');
 
   return app.toTree();
 };

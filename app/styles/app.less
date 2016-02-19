@@ -300,6 +300,11 @@ td.row_label {
 	padding:0px !important;
 }
 
+.table.scrollable {
+  max-width: none;
+  width: ;
+}
+
 @media(max-width:@screen-xs-max){
 	table.synthese {
 		table-layout: fixed;
@@ -309,13 +314,13 @@ td.row_label {
     }
 
     table.synthese td.row_label {
-    	width: 22px !important;
+    	min-width: 30px !important;
     }
     table.synthese td {
     	padding: 0px !important;
     }
     table.synthese td:not(.row_label), td:not(.row_label2) { 
-    	width: auto;
+    	min-width: 30px !important;
     }
 }
 

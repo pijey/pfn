@@ -22,9 +22,11 @@
     "FileSaver.js": "~0.0.2",
     "fastclick": "~1.0.6",
     "hammer.js": "2.0.6",
-    "hammer-time": "1.0.0"
+    "hammer-time": "1.0.0",
+    "bootstrap-autohidingnavbar": "~1.0.4"
   },
   "resolutions": {
-    "ember": "2.2.0"
+    "ember": "2.2.0",
+    "bootstrap": "~3.3.6"
   }
 }

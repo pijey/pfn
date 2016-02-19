@@ -1,0 +1,18 @@
+<div id="synthesis-content" style="width:{{width}}px">
+{{#if model.temperatures}}
+  {{line-chart data=dataChart options=chartOptions width=width onClick="selectRow"}}
+{{else}}
+  <div class="text-center alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Ajoutez des relevés de température pour voir le graphique
+  </div>
+  
+{{/if}}
+{{#if cycleDataNotEmpty}}
+   {{synthesis-table 
+    phaseIDuration=phaseIDuration phaseIIDuration=phaseIIDuration phaseIIIDuration=phaseIIIDuration
+    periods=periods mucusSamples=mucusSamples cervixFeelings=cervixFeelings
+  }} 
+{{/if}}  
+  
+</div>
