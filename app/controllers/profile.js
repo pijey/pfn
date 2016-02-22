@@ -182,7 +182,8 @@ export default Ember.Controller.extend(EmberValidations, {
         reader.readAsText(file);
         var that=this;
         reader.onloadend = function(){
-          Ember.$.get('/utils/profile.xsd', function(data) {
+          console.log("6");
+          Ember.$.get('utils/profile.xsd', function(data) {
             var validationResult = xmllint.validateXML({
                xml:reader.result,
                schema:data

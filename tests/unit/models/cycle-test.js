@@ -759,11 +759,26 @@ test('Mucus peak : WET at day 3, then DRY at day 4 but WET at day 6', function(a
     store.createRecord("mucus-sample", {date:'2015-05-02T07:00:00.000', sensation:'DRY', cycle:cycle});
     store.createRecord("mucus-sample", {date:'2015-05-03T07:00:00.000', sensation:'WET', cycle:cycle});
     store.createRecord("mucus-sample", {date:'2015-05-04T07:00:00.000', sensation:'DRY', cycle:cycle});
+    store.createRecord("mucus-sample", {date:'2015-05-05T07:00:00.000', sensation:'WET', cycle:cycle});
+    store.createRecord("mucus-sample", {date:'2015-05-06T07:00:00.000', sensation:'DRY', cycle:cycle});
+  });
+  assert.ok(!!cycle);
+  assert.equal(cycle.get('mucus_peak'), 5, 'Last day of wet/humid sensation at day 5 : Mucus peak should be 5');
+});
+
+test('Mucus peak : WET at last day', function(assert) {
+  let cycle = this.subject({start_date:'2015-05-01T07:00:00.000'});
+  var store = this.store();
+  Ember.run(function(){
+    store.createRecord("mucus-sample", {date:'2015-05-01T07:00:00.000', sensation:'DRY', cycle:cycle});
+    store.createRecord("mucus-sample", {date:'2015-05-02T07:00:00.000', sensation:'DRY', cycle:cycle});
+    store.createRecord("mucus-sample", {date:'2015-05-03T07:00:00.000', sensation:'DRY', cycle:cycle});
+    store.createRecord("mucus-sample", {date:'2015-05-04T07:00:00.000', sensation:'DRY', cycle:cycle});
     store.createRecord("mucus-sample", {date:'2015-05-05T07:00:00.000', sensation:'DRY', cycle:cycle});
     store.createRecord("mucus-sample", {date:'2015-05-06T07:00:00.000', sensation:'WET', cycle:cycle});
   });
   assert.ok(!!cycle);
-  assert.equal(cycle.get('mucus_peak'), 6, 'Last day of wet/humid sensation at day 6 : Mucus peak should be 6');
+  assert.equal(cycle.get('mucus_peak'), undefined, 'Last day : wet/humid sensation : Mucus peak should be undefined');
 });
 
 //======================

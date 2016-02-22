@@ -65,9 +65,6 @@ export default DS.Model.extend({
       }
       previousMucusSample = mucusSample;
     });
-    if(previousMucusSample != null && (previousMucusSample.get('sensation') === 'HUMID' || previousMucusSample.get('sensation') === 'WET')){
-      mucusPeak = previousMucusSample.get("cycle_day_number");
-    }
     return mucusPeak;
   }),
   mucus_peak_plus_3_days: Ember.computed('mucus_peak', function() {
