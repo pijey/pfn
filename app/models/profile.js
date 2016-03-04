@@ -3,6 +3,7 @@ import DS from "ember-data";
 
 export default DS.Model.extend({
   surname: DS.attr('string'),
+  darkMode: DS.attr('boolean'),
   temperature_taking_hour: DS.attr('mydatetime'),
   temperature_taking_mode: DS.attr('string'),
   shortest_cycle: Ember.computed('cycles.@each.cycle_length', function() {

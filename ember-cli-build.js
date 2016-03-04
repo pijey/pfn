@@ -6,7 +6,7 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
     'ember-cli-bootswatch': {
-      'theme': 'readable',
+      'theme': 'flatly',
       'excludeCSS': true
       // 'excludeJS': true
     },

@@ -23,13 +23,15 @@ export default Ember.Component.extend(RecognizerMixin, {
 		return {
 			responsive:false,
 			offsetGridLines:true,
+			scaleLineColor: "#666",
+			scaleGridLineColor: "rgba(102, 102, 102, .2)",
 			scaleIntegersOnly:false,
 			scaleShowGridLines:true,
-			multiTooltipTemplate: "<%= value %> °",
+			multiTooltipTemplate: "<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %> °",
 			scaleLabel: "<%= value %> °",
 			datasetFill: true,
 			animation:false,
-			tooltipEvents:["touchstart"],
+			tooltipEvents:["touchstart", "click"],
 			scaleOverride: true,
 	    	scaleSteps: Math.round((maxTemperature - minTemperature) / 0.05) + 2,
 	    	scaleStepWidth: 0.05,
@@ -106,7 +108,7 @@ export default Ember.Component.extend(RecognizerMixin, {
  		var chartLabels = [];
  		var chartDatasets = [
 	        {
-	            label: "Températures relevées",
+	            label: "Température relevée",
 	            fillColor: "rgba(220,220,220,0.2)",
 	            strokeColor: this.colorTemperature,
 	            pointColor: this.colorTemperature,
@@ -116,7 +118,7 @@ export default Ember.Component.extend(RecognizerMixin, {
 	            data: []
 	        },
 	        {
-	            label: "Températures corrigées",
+	            label: "Température corrigée",
 	            fillColor: "rgba(151,187,205,0.2)",
 	            strokeColor: this.colorTemperatureCorrected,
 	            pointColor: this.colorTemperatureCorrected,
@@ -128,10 +130,10 @@ export default Ember.Component.extend(RecognizerMixin, {
 	        {
 	            label: "Ligne de cache",
 	            fillColor: "rgba(0,0,0,0)",
-	            strokeColor: "rgba(0,0,0,1)",
-	            pointColor: "rgba(0,0,0,0)",
+	            strokeColor: "#F39C12",
+	            pointColor: "#F39C12",
 	            pointStrokeColor: "rgba(0,0,0,0)",
-	            pointHighlightFill: "rgba(0,0,0,0)",
+	            pointHighlightFill: "rgba(0,0,0,1)",
 	            pointHighlightStroke: "rgba(0,0,0,1)",
 	            pointDot: false,
                 pointDotRadius: 0,

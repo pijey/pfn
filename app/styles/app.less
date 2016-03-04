@@ -1,6 +1,6 @@
 @import "bootstrap";
-@import "readable/variables";
-@import "readable/bootswatch";
+@import "flatly/variables";
+
 @import "switch";
 
 @grid-float-breakpoint: 150px;
@@ -10,6 +10,83 @@
 	width: 5px;
 }
 
+.dark-mode {
+  @gray-base:              #000;
+  @gray-darker:            lighten(@gray-base, 13.5%); // #222
+  @gray-dark:              #303030;   // #333
+  @gray:                   #464545;
+  @gray-light:             #999;   // #999
+  @gray-lighter:           #EBEBEB; // #eee
+
+  @brand-primary:         #375a7f;
+  @brand-success:         #00bc8c;
+  @brand-info:            #3498DB;
+  @brand-warning:         #F39C12;
+  @brand-danger:          #E74C3C;
+
+
+  //== Scaffolding
+  //
+  //## Settings for some of the most global styles.
+
+  //** Background color for `<body>`.
+  @body-bg:               @gray-darker;
+  //** Global text color on `<body>`.
+  @text-color:            #fff;
+
+  //** Global textual link color.
+  @link-color:            desaturate(lighten(@brand-success, 10%),10%);
+  //** Link hover color set via `darken()` function.
+  @link-hover-color:      @link-color;
+  //** Link hover decoration.
+  @link-hover-decoration: underline;
+
+  background-color: @gray-darker;
+  color: @text-color;
+  .table {
+    background-color: @gray-darker;
+  }
+
+  .table a:not(.text-danger) {
+    color: @text-color;
+  }
+
+  .nav-tabs {
+    background-color: @gray-darker;
+  }
+
+  .nav-tabs > li.active > a, .nav-tabs > li > a:hover, .nav-tabs > li.active > a:hover {
+    background-color: @gray-darker;
+  }
+
+  input, select {
+    background-color: @gray-darker;
+    color: @text-color;
+  }
+
+  .dropdown-menu {
+    background-color: @gray-dark;
+  }
+
+  .dropdown-menu > li > a {
+    color: @text-color;
+  }
+
+  .form-control[disabled], .form-control[readonly] {
+    background-color: @gray-darker;
+    color: @text-color;
+  }
+
+  .list-group-item:not(.list-group-item-danger) {
+    background-color: @gray-dark;
+  }
+
+  .navbar-nav > li > a:not(.active), .nav-tabs > li:not(.active) > a{
+    color: @text-color;
+}
+}
+
+@import "flatly/bootswatch";
 /* Temperature */
 
 span.temperature {
@@ -240,7 +317,7 @@ h3.text-center{
 
 .nav-tabs h3 {
 	margin-top: 5px !important;
-	margin-bottom: 0px;
+  margin-bottom: 5px !important;
 }
 
 .nav.nav-tabs>li>a {
@@ -248,6 +325,7 @@ h3.text-center{
     display: block;
      padding: 0px !important; 
     width: 25vW;
+    border: none;
 }
 
 .panel {
@@ -257,9 +335,13 @@ h3.text-center{
 body { padding-top: 44pt; }
 
 .dropdown-menu {
-	border: 1px solid #e5e5e5 !important; 
-	background-color: #fff !important; 
+  background-color: @gray-lighter;
 }
+
+.dropdown-menu > li > a {
+  color: @text-color;
+}
+
 .navbar, .navbar-brand {
     height: 44pt;
     min-height: 44pt;
@@ -284,8 +366,13 @@ body { padding-top: 44pt; }
 }
 
 .navbar .navbar-nav > li > a {
-    margin: 9px 6px 0px 6px !important;
+    //margin: 9px 6px 0px 6px !important;
 }
+
+.navbar .navbar-nav > li > a:hover {
+    border: none !important;
+}
+
 
 i.check {
 	font-size: 1.3em;
@@ -293,6 +380,15 @@ i.check {
 
 .navbar-nav .open .dropdown-menu {
     position: absolute !important;
+    background-color: @gray-lighter;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: @text-color;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+    color: #fff;
 }
 
 td.row_label {
@@ -303,6 +399,22 @@ td.row_label {
 .table.scrollable {
   max-width: none;
   width: ;
+}
+
+table a:not(.btn), .table a:not(.btn) {
+    text-decoration: none;
+}
+
+a.text-danger:hover, a.text-danger:focus {
+    color: @brand-danger;
+}
+
+@media (min-width: 150px) {
+  .navbar-nav > li > a {
+      padding-top: 16.5px;
+      padding-bottom: 0px;
+      height: 59px;
+  }
 }
 
 @media(max-width:@screen-xs-max){
@@ -368,20 +480,28 @@ a[role=button]>i.icon {
 	margin-top:0px;
 }
 
-.navbar-nav > li > a:not(.active), .nav-tabs > li:not(.active) > a {
-    color: #8F8E94;
+.nav-tabs > li:not(.active) > a {
+    color: @brand-primary;
+}
+
+.navbar-nav > li > a:not(.active){
+    color: #fff;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li.active > a:hover {
+  background-color: #fff; 
 }
 
 .ion-ios-arrow-back, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li > a:hover, .nav-tabs > li.active > a:hover {
-    background-color: #fff;
+    border: none;
 }
 
-.ion-ios-arrow-back, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-    color: #4582EC;
+.nav-tabs > li.active > a:hover, .ion-ios-arrow-back, .ion-ios-arrow-forward, .ion-chevron-right, .ion-chevron-left, .navbar-nav > li > a.active, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li > a:hover {
+    color: @brand-success;
 }
 
 .nav-tabs > li > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > li > a:hover, .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
-    border: 1px solid #fff;
+    //border: 1px solid #fff;
 }
 
 .nav-tabs {
@@ -539,6 +659,7 @@ a[role=button]>i.icon {
 
 .x-toggle-btn {
   float: right;
+  margin-top: 10px;
 }
 
 .x-toggle-flip.x-toggle-btn:before {
@@ -551,4 +672,12 @@ a[role=button]>i.icon {
 
 h5 {
   padding-top: 10px;
+}
+
+.has-feedback .form-control {
+    padding-right: 35px;
+}
+
+.form-horizontal .has-feedback .form-control-feedback {
+    right: 0px;
 }

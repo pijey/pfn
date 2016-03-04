@@ -16,8 +16,6 @@
 			  	</div>
 			</div>
 		  	
-		  	{{#if model.selectedCycle.end_date}}
-		  	{{else}}
 		  	<div class="col-xs-6 col-sm-4 col-sm-offset-2" role="alert">
 				<div class="icon-btn">
 		  		{{#link-to "daily-report.report" model.selectedCycle.id model.selectedCycle.cycle_length "temperature"}}
@@ -26,7 +24,6 @@
 		  		{{/link-to}}
 		  		</div>
 			</div>
-		  	{{/if}}
 		</div>
 		<div class="row">
 		  	<div class="col-xs-6 col-sm-4 col-sm-offset-1" role="alert">

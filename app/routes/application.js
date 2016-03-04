@@ -9,7 +9,8 @@ export default Ember.Route.extend({
     	}
     	else {
     		return that.store.createRecord('profile', {
-          cycles:[]
+          cycles:[],
+          darkMode:false
         }).save();
     	}
     });

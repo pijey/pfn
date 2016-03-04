@@ -4,19 +4,19 @@
     <form class="form-horizontal">
       <div class="form-group">
         <label for="inputSurname" class="col-sm-3 control-label">Surnom</label>
-        <div class="input-group col-xs-12 col-sm-9">
+        <div class="input-group col-xs-12 col-sm-6">
           {{input type="text" class="form-control" value=model.surname id="inputSurname" placeholder="Surnom"}}
         </div>
       </div>
       <div class="form-group {{if errors.model.temperature_taking_hour.length "has-error" "has-success"}}">
         <label for="inputTemperatureTakingHour" class="col-sm-3 control-label">Heure de prise de température</label>
-        <div class="input-group col-xs-12 col-sm-9">
+        <div class="input-group col-xs-12 col-sm-6">
           {{bs-datetimepicker date=model.temperature_taking_hour format='HH:mm' updateDate=(action (mut model.temperature_taking_hour)) readonly=true}}
         </div>
       </div>
       <div class="form-group {{if errors.model.temperature_taking_mode.length "has-error" "has-success"}}">
         <label for="inputTemperatureTakingMode" class="col-sm-3 control-label">Mode de prise de température</label>
-        <div class="input-group col-xs-12 col-sm-9">
+        <div class="input-group col-xs-12 col-sm-6">
           <select class="form-control" onchange={{action "selectTemperatureTakingMode" value="target.value"}}>
             <option value="null">Mode</option>
             {{#each temperatureTakingModes as |temperatureTakingMode|}}
@@ -25,10 +25,16 @@
           </select>
         </div>
       </div>
+      <div class="form-group" {{action "toggleDarkMode"}}>
+        <label for="" class="col-xs-8 col-xs-offset-1 col-sm-offset-0 col-sm-3 control-label toggle">Mode sombre</label>
+        <div class="input-group col-xs-2 col-sm-6">
+          {{x-toggle theme="flip" showLabels=false on="Oui" off="Non" toggled=model.darkMode}}
+        </div>
+      </div>
       {{#if model.cycles}}
       <div class="form-group">
         <label for="" class="col-sm-3 control-label">Cycles</label>
-        <div class="input-group col-xs-12 col-sm-9 col-sm-offset-3">
+        <div class="input-group col-xs-12 col-sm-6 col-sm-offset-3">
           <ul class="list-group">
             <li class="list-group-item">
               <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Nombre de cycles<span class="badge">{{model.cycles.length}}</span>
@@ -61,15 +67,13 @@
       </div>  
       <div class="form-group">
         <label for="inputImportFile" class="col-sm-3 control-label">Importer un profil</label>
-        <div class="input-group col-xs-12 col-sm-9">
-           {{!-- <input type="file" id="importFile" {{action "importProfile" on="change"}}> --}}
-           {{!-- {{input id="importFile" type="file" value=fileName change="importProfile"}} --}}
+        <div class="input-group col-xs-12 col-sm-6 text-center">
            {{input-file fileName=fileName importFile=(action "importProfile")}} 
         </div>
       </div>
       <div class="form-group">
         <label for="inputImportFile" class="col-sm-3 control-label">Exporter le profil</label>
-        <div class="input-group col-xs-12 col-sm-9">
+        <div class="input-group col-xs-12 col-sm-6 text-center">
            <button class="btn btn-default" {{action "exportProfile"}} disabled="{{and model.isValid (not model.hasDirtyAttributes) null "disabled"}}">
             <i class="icon ion-ios-download"></i>&nbsp;Exporter le profil
           </button>

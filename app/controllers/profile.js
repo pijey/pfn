@@ -307,6 +307,7 @@ export default Ember.Controller.extend(EmberValidations, {
                 that.get("application.model").destroyRecord();
                 that.set("application.model", profile);
                 alert("Le profil a été importé avec succès");
+                that.transitionToRoute('profile', profile.get("id"));
               }
               else{
                 profile.destroyRecord();
@@ -322,6 +323,9 @@ export default Ember.Controller.extend(EmberValidations, {
       },
       selectTemperatureTakingMode(takingMode) {
         this.set('model.temperature_taking_mode', takingMode);
+      },
+      toggleDarkMode(){
+        this.set("model.darkMode", !this.get("model.darkMode"));
       }
   	},
 });

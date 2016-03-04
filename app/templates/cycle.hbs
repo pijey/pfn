@@ -149,17 +149,17 @@
                 {{/link-to}}
                 {{#if model.first_day_of_cervix_change}}
                 <li class="list-group-item">
-                  <i class="icon ion-android-calendar"></i> 1er jour de changement du col <span class="badge">{{model.first_day_of_cervix_change}}</span>
+                  <i class="icon ion-android-calendar"></i> 1er jour de changement du col <span class="badge">Jour {{model.first_day_of_cervix_change}}</span>
                 </li>
                 {{/if}}
                 {{#if model.cervix_peak}}
                 <li class="list-group-item">
-                  <i class="icon ion-android-calendar"></i> Jour de pic du col <span class="badge">{{model.cervix_peak.cycle_day_number}}</span>
+                  <i class="icon ion-android-calendar"></i> Jour de pic du col <span class="badge">Jour {{model.cervix_peak}}</span>
                 </li>
                 {{/if}}
                 {{#if model.cervix_peak_plus_3_days}}
                 <li class="list-group-item">
-                  <i class="icon ion-android-calendar"></i> Pic du col + 3j <span class="badge">{{model.cervix_peak_plus_3_days}}</span>
+                  <i class="icon ion-android-calendar"></i> Pic du col + 3j <span class="badge">Jour {{model.cervix_peak_plus_3_days}}</span>
                 </li>
                 {{/if}}
               </ul>
@@ -179,7 +179,7 @@
                 {{/if}}
                 {{#if model.third_day_hot_temperature}}
                 <li class="list-group-item">
-                  <i class="icon ion-android-calendar"></i> 3e jour de température haute <span class="badge">{{model.third_day_hot_temperature}}</span>
+                  <i class="icon ion-android-calendar"></i> 3e jour de température haute <span class="badge">Jour {{model.third_day_hot_temperature}}</span>
                 </li>
                 {{/if}}
               </ul>

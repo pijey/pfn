@@ -14,7 +14,18 @@ export default Ember.Controller.extend(Ember.Evented, {
 	      	this.get("currentController").send("goBack");
 	    },
 	    changeSelectedCycle:function(){
-	    	this.set("currentController.model", this.get("model.selectedCycle"));
+	    	if(this.get("currentController.model.constructor.modelName") === "cycle"){
+	    		this.set("currentController.model", this.get("model.selectedCycle"));
+	    	}
+	    	
 	    }
-	}
+	},
+	darkMode: Ember.computed('model.darkMode', function(){
+		if(this.get("model.darkMode")){
+			Ember.$('body').addClass('dark-mode');
+		}
+    	else {
+    		Ember.$('body').removeClass('dark-mode');
+    	}
+    })
 });
