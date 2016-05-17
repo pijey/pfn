@@ -5,6 +5,7 @@ export default DS.Model.extend({
   ongoing: DS.attr('boolean'),
   start_date: DS.attr('mydatetime'),
   end_date: DS.attr('mydatetime'),
+  cache_temperature_cycle_day: DS.attr('number'),
   ovulation:Ember.computed('third_day_hot_temperature', 'cacheTemperature', 'temperatures.@each.temperature_corrected', function(){
     var hotTemperatures = [];
     var thirdDayHotTemperature = this.get("third_day_hot_temperature");
@@ -190,9 +191,10 @@ export default DS.Model.extend({
       return this.get('endOfPhaseII') + 1;
     }
   }),
-  third_day_hot_temperature:Ember.computed('cacheTemperature', function(){
+  third_day_hot_temperature:Ember.computed('cache_temperature_cycle_day', 'cache_temperature', function(){
     var cacheTemperature = this.get("cacheTemperature");
-    if(!cacheTemperature){
+    var cacheTemperatureCycleDay = this.get("cache_temperature_cycle_day");
+    if(!cacheTemperature || !cacheTemperatureCycleDay){
       return;
     }
     var thirdDayHotTemperature;
@@ -201,36 +203,44 @@ export default DS.Model.extend({
     var hotTemperatureDay = null;
     var notFound = true;
     var checkNextHighValue = false;
+    var maxTmpPlusMargin = Math.round((cacheTemperature + 0.2)*10)/10;
     this.get('temperatures').sortBy('cycle_day_number').forEach(function(temperature){
-      var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
-      if(cacheTemperature < myTempCorrected && notFound && temperature.get('ignore') !== true) {
+      if(temperature.get('cycle_day_number') >= cacheTemperatureCycleDay){
+        var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
+        
         //We set the three days before the hot temperature day
         if(hotTemperatureDayMinus3 === null){
           hotTemperatureDayMinus3 = temperature;
         } else if (hotTemperatureDayMinus2 === null){
           hotTemperatureDayMinus2 = temperature;
-        } else {
-          var maxTmpPlusMargin = Math.round((cacheTemperature + 0.2)*10)/10;
-          if(checkNextHighValue && myTempCorrected > cacheTemperature){
-            hotTemperatureDay = temperature;
-            thirdDayHotTemperature = temperature.get('cycle_day_number');
-            notFound = false;
-          }
-          else if(hotTemperatureDayMinus3.get('temperature_corrected') > cacheTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > cacheTemperature && myTempCorrected > cacheTemperature){
-            //The third hot day of temperature needs to be 0.20 higher than the cache temperature
-            if(myTempCorrected >= maxTmpPlusMargin){
+        }
+        else if(cacheTemperature < myTempCorrected && notFound && temperature.get('ignore') !== true) {
+            //Test of the fourth high temperature
+            if(checkNextHighValue && myTempCorrected > cacheTemperature){
               hotTemperatureDay = temperature;
               thirdDayHotTemperature = temperature.get('cycle_day_number');
               notFound = false;
             }
-            //If not, check if the next value is above the cache temperature
-            else {
-              checkNextHighValue = true;
+            else if(hotTemperatureDayMinus3.get('temperature_corrected') > cacheTemperature && 
+              hotTemperatureDayMinus2.get('temperature_corrected') > cacheTemperature && 
+              myTempCorrected > cacheTemperature){
+              //The third hot day of temperature needs to be 0.20 higher than the cache temperature
+              if(myTempCorrected >= maxTmpPlusMargin){
+                hotTemperatureDay = temperature;
+                thirdDayHotTemperature = temperature.get('cycle_day_number');
+                notFound = false;
+              }
+              //If not, check if the next value is above the cache temperature
+              else {
+                checkNextHighValue = true;
+              }
             }
-          } else {
-            hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
-            hotTemperatureDayMinus2 = temperature;
-          }
+          hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
+          hotTemperatureDayMinus2 = temperature;
+        }
+        else {
+          hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
+          hotTemperatureDayMinus2 = temperature;
         }
       }
     });
@@ -243,6 +253,7 @@ export default DS.Model.extend({
     var hotTemperatureDayMinus3 = null;
     var hotTemperatureDayMinus2 = null;
     var notFound = true;
+    var that = this;
     this.get('temperatures').sortBy('cycle_day_number').forEach(function(temperature){
       var myTempCorrected = parseFloat(temperature.get('temperature_corrected'));
       //First four days don't count
@@ -260,6 +271,8 @@ export default DS.Model.extend({
           } else {
             if(hotTemperatureDayMinus3.get('temperature_corrected') > maxTemperature && hotTemperatureDayMinus2.get('temperature_corrected') > maxTemperature && myTempCorrected > maxTemperature){
               cacheTemperature = maxTemperature;
+                that.set("cache_temperature_cycle_day", hotTemperatureDayMinus3.get('cycle_day_number'));
+                notFound=false;
             } else {
               temperatures.push(hotTemperatureDayMinus3.get('temperature_corrected'));
               hotTemperatureDayMinus3 = hotTemperatureDayMinus2;
