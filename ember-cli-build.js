@@ -1,6 +1,5 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+/* eslint-env node */
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
@@ -16,6 +15,7 @@ module.exports = function(defaults) {
         "bower_components/bootswatch"
       ]
     }
+
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -31,11 +31,11 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  app.import('bower_components/Chartjs/Chart.js');
+  app.import('bower_components/Chart.js/dist/Chart.js');
   app.import('bower_components/fastclick/lib/fastclick.js');
-  app.import('bower_components/FileSaverjs/FileSaver.js');
-  app.import('bower_components/xmllint/xmllint.js');
+  app.import('bower_components/FileSaver.js/FileSaver.js');
   app.import('bower_components/bootstrap-autohidingnavbar/dist/jquery.bootstrap-autohidingnavbar.min.js');
+
 
   return app.toTree();
 };

@@ -6,7 +6,11 @@
           	</i>&nbsp;<span>Retour</span>
 	    </a>
 		{{else}}
-		{{link-to "  PFN" "index" classNames="navbar-brand"}}
+		<div class="no-margin">
+			{{#link-to "index"}}
+			<img src="assets/images/logopfn.png" alt=""><span class="hidden-xs">&nbsp;PFN</span>
+			{{/link-to}}
+		</div>
 		{{/if}}
 	</div>
 	{{#if isPopup}}

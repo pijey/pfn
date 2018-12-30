@@ -15,6 +15,9 @@
         },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "fr.pfn.app"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "fr.pfn.app"
         }
     },
     "dependent_plugins": {}

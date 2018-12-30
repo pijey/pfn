@@ -1,32 +1,23 @@
 {
   "name": "pfn",
   "dependencies": {
-    "ember": "2.2.0",
-    "ember-cli-shims": "0.1.0",
-    "ember-cli-test-loader": "0.2.2",
-    "ember-load-initializers": "0.1.7",
-    "ember-qunit-notifications": "0.1.0",
-    "jquery": "1.11.3",
-    "loader.js": "^3.5.0",
-    "qunit": "~1.20.0",
-    "ember-data": "2.3.0",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
-    "moment": "^2.8.0",
-    "bootstrap": "~3.3.6",
+    "jquery": "3.1.1",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.47",
+    "moment": "^2.18.1",
+    "bootstrap": "~3.3.7",
     "ember-addons.bs_for_ember": "~0.7.0",
-    "bootswatch": "~3.3.6",
-    "ember-i18n": "~4.2.0",
-    "Chart.js": "https://github.com/nnnick/Chart.js.git#master",
+    "bootswatch": "~3.3.7",
+    "ember-i18n": "~5.0.1",
+    "Chart.js": "2.5.0",
     "ionicons": "~2.0.1",
-    "moment-timezone": "^0.5.0",
+    "moment-timezone": "^0.5.13",
     "FileSaver.js": "~0.0.2",
     "fastclick": "~1.0.6",
-    "hammer.js": "2.0.6",
-    "hammer-time": "1.0.0",
-    "bootstrap-autohidingnavbar": "~1.0.4"
+    "hammer.js": "2.0.8",
+    "hammer-time": "1.1.0",
+    "bootstrap-autohidingnavbar": "~1.0.6"
   },
   "resolutions": {
-    "ember": "2.2.0",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.7"
   }
 }

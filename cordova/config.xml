@@ -29,4 +29,22 @@
     <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
     <preference name="xwalkMode" value="embedded" />
     <preference name="xwalkMultipleApk" value="true" />
+
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false"/>
+    
+    <platform name="android">
+        <!-- you can use any density that exists in the Android project -->
+        <splash src="platforms/android/res/land-hdpi/screen.png" density="land-hdpi"/>
+        <splash src="platforms/android/res/land-ldpi/screen.png" density="land-ldpi"/>
+        <splash src="platforms/android/res/land-mdpi/screen.png" density="land-mdpi"/>
+        <splash src="platforms/android/res/land-xhdpi/screen.png" density="land-xhdpi"/>
+        <splash src="platforms/android/res/land-xxhdpi/screen.png" density="land-xxhdpi"/>
+        <splash src="platforms/android/res/land-xxxhdpi/screen.png" density="land-xxxhdpi"/>
+
+        <splash src="platforms/android/res/port-hdpi/screen.png" density="port-hdpi"/>
+        <splash src="platforms/android/res/port-ldpi/screen.png" density="port-ldpi"/>
+        <splash src="platforms/android/res/port-mdpi/screen.png" density="port-mdpi"/>
+        <splash src="platforms/android/res/port-xhdpi/screen.png" density="port-xhdpi"/>
+    </platform>
 </widget>

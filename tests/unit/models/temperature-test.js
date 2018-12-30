@@ -95,8 +95,7 @@ test('Temperature corrected : Temperature taken at profile taking hour ', functi
   	var temperature = this.subject({date:'2015-05-15T07:00:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -111,8 +110,7 @@ test('Temperature corrected : Temperature taken 30 minutes before taking hour ',
   	var temperature = this.subject({date:'2015-05-15T06:30:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -126,8 +124,7 @@ test('Temperature corrected : Temperature taken 60 minutes before taking hour ',
   	var temperature = this.subject({date:'2015-05-15T06:00:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -140,8 +137,7 @@ test('Temperature corrected : Temperature taken before 4 AM is not relevant', fu
   	var temperature = this.subject({date:'2015-05-15T03:30:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -157,8 +153,7 @@ test('Temperature corrected : Temperature taken 30 minutes after taking hour ', 
   	var temperature = this.subject({date:'2015-05-15T07:30:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -172,8 +167,7 @@ test('Temperature corrected : Temperature taken 60 minutes after taking hour ', 
   	var temperature = this.subject({date:'2015-05-15T08:00:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -186,8 +180,7 @@ test('Temperature corrected : Temperature taken after 11 AM ', function(assert) 
   	var temperature = this.subject({date:'2015-05-15T11:00:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00'});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:'Sat Mar 07 2015 07:00:00', start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
@@ -195,18 +188,17 @@ test('Temperature corrected : Temperature taken after 11 AM ', function(assert) 
   	assert.equal(temperature.get('temperature_corrected'), null, 'When the temperature is taken after 11 AM, the temperature corrected is not relevant');
 });
 
-/* Profile without temperature_taking_hour */
+/* Cycle without temperature_taking_hour */
 
 test('Temperature corrected : No temperature taking hour ', function(assert) {
 	var store = this.store();
   	var temperature = this.subject({date:'2015-05-15T07:00:00.000', temperature:37});
   	
   	Ember.run(function() {
-  		var profile = store.createRecord('profile', {temperature_taking_hour:null});
-  		var cycle = store.createRecord('cycle', {profile: profile, start_date:'2015-05-15T00:00:00.000'});
+  		var cycle = store.createRecord('cycle', {temperature_taking_hour:null, start_date:'2015-05-15T00:00:00.000'});
   		temperature.set('cycle', cycle);
   	});
 
   	assert.ok(!!temperature);
-  	assert.equal(temperature.get('temperature_corrected'), null, 'When the profile\'s temperature taking hour is null, the temperature corrected cannot be computed');
+  	assert.equal(temperature.get('temperature_corrected'), null, 'When the cycle\'s temperature taking hour is null, the temperature corrected cannot be computed');
 });

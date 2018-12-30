@@ -1,5 +1,5 @@
-import DS from 'ember-data';
+import LSAdapter from 'ember-localstorage-adapter/adapters/ls-adapter';
 
-export default DS.LSAdapter.extend({
-  namespace: 'api',
-});
+export default LSAdapter.extend({
+  namespace: 'api'
+})

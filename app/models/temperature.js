@@ -27,8 +27,8 @@ export default DS.Model.extend({
 	}.property('cycle.third_day_hot_temperature', 'cycle_day_number'),
 	date: DS.attr('mydatetime'),
 	temperature_corrected: function(){
-		if(this.get('cycle.profile.temperature_taking_hour') && this.get('date') && !isNaN(parseFloat(this.get('temperature')))){
-			var temperatureTakingDateFixed = moment(this.get('cycle.profile.temperature_taking_hour'));
+		if(this.get('cycle.temperature_taking_hour') && this.get('date') && !isNaN(parseFloat(this.get('temperature')))){
+			var temperatureTakingDateFixed = moment(this.get('cycle.temperature_taking_hour'));
 			var temperatureTakingDate = moment(this.get('date'));
 			if(temperatureTakingDate.hour() >= 4 && temperatureTakingDate.hour() < 11){
 				temperatureTakingDate.hour(temperatureTakingDateFixed.hour());
@@ -40,7 +40,7 @@ export default DS.Model.extend({
 				return Math.round((parseFloat(this.get('temperature'))-diff/10)*100)/100;
 			}
 		}
-	}.property('date','temperature', 'cycle.profile.temperature_taking_hour'),
+	}.property('date','temperature', 'cycle.temperature_taking_hour'),
 	comment: DS.attr('string'),
 	ignore: DS.attr('boolean', { defaultValue: false }),
 	cycle: DS.belongsTo('cycle')

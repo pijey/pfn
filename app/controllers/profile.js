@@ -54,6 +54,7 @@ export default Ember.Controller.extend(EmberValidations, {
           }
           fileContent +="</ongoing>" +
           "<start_date>"+moment(cycle.get("start_date")).format("DD/MM/YYYY")+"</start_date>";
+          "<temperature_taking_hour>"+moment(cycle.get("temperature_taking_hour")).format("HH:mm")+"</temperature_taking_hour>";
           fileContent += "<end_date>";
           if(cycle.get("end_date")){
              fileContent += moment (cycle.get("end_date")).format("DD/MM/YYYY");
@@ -263,6 +264,7 @@ export default Ember.Controller.extend(EmberValidations, {
 
                 var cycle=that.store.createRecord('cycle', {
                   ongoing:xmlCycle.find("ongoing").text().toLowerCase() === 'true',
+                  temperature_taking_hour:xmlCycle.find("temperature_taking_hour").text().toLowerCase() === 'true',
                   start_date:moment(xmlCycle.find("start_date").text(),"DD/MM/YYYY"),
                   end_date:endDate,
                   temperatures:temperatures,

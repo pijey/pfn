@@ -5,6 +5,7 @@ export default DS.Model.extend({
   ongoing: DS.attr('boolean'),
   start_date: DS.attr('mydatetime'),
   end_date: DS.attr('mydatetime'),
+  temperature_taking_hour: DS.attr('mydatetime'),
   cache_temperature_cycle_day: DS.attr('number'),
   ovulation:Ember.computed('third_day_hot_temperature', 'cacheTemperature', 'temperatures.@each.temperature_corrected', function(){
     var hotTemperatures = [];

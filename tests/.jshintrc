@@ -24,7 +24,8 @@
     "currentRouteName",
     "LocalFileSystem",
     "FastClick",
-    "moment"
+    "moment",
+    "currentRouteName"
   ],
   "node": false,
   "browser": false,
@@ -50,6 +51,6 @@
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true,
+  "esversion": 6,
   "unused": true
 }

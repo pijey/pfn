@@ -4,7 +4,8 @@ export default Ember.Route.extend({
   model: function(params) {
   	if(params.cycle_id === 'new'){
   		return this.store.createRecord('cycle', {
-  			start_date:moment(),
+        start_date:moment(),
+  			temperature_taking_hour:this.controllerFor("application").get('model.temperature_taking_hour'),
   		});
   	}
   	else {
